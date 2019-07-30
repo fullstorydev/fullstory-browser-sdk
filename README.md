@@ -24,7 +24,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Examples
 
-Once FullStory is initialized, you can make calls to FullStory SDK.
+Once FullStory is initialized, you can make calls to FullStory the SDK.
 
 ### Sending custom events
 
