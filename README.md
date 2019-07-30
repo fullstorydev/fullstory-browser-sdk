@@ -1,0 +1,2 @@
+# fullstory-browser-sdk
+WIP

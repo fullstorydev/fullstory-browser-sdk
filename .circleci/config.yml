@@ -1,0 +1,53 @@
+version: 2.1
+executors:
+  browser-executor:
+    docker:
+      - image: circleci/node:12-browsers
+    working_directory: ~/repo
+jobs:
+  build-browser-sdk:
+    executor: browser-executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install
+          command: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Audit
+          command: npm audit --audit-level=low
+      - run:
+          name: Test
+          command: npm test
+      - persist_to_workspace:
+          root: .
+          paths: .
+  deploy-browser-sdk:
+    executor: browser-executor
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - build-browser-sdk
+#      - deploy-browser-sdk:
+#          requires:
+#           - build-browser-sdk
+#         filters:
+#           branches:
+#             only: "master"
