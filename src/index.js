@@ -1,5 +1,5 @@
 const fs = () => window[window._fs_namespace];
-let didInint = false;
+let didInit = false;
 
 const ensureSnippetLoaded = () => {
   const snippetLoaded = !!fs();
@@ -37,7 +37,7 @@ const { shutdown } = wrappedFS;
 const { restart } = wrappedFS;
 
 const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.com') => {
-  if (didInint) {
+  if (didInit) {
     // eslint-disable-next-line no-console
     console.warn('FullStory init has already been called once. Additional invocations are ignored');
     return;
@@ -68,7 +68,7 @@ const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.
   })(window,document,window['_fs_namespace'],'script','user');
   /* eslint-enable */
   /* end FullStory snippet */
-  didInint = true;
+  didInit = true;
 };
 
 export {
