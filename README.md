@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk.svg?style=svg)](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk)
 
+## This is a WIP and is not currently published to NPM
+
 FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory's browser SDK and HTTP API can be found at [link to new dev portal site].
 
 ## Initialize the SDK
