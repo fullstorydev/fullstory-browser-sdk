@@ -1,17 +1,15 @@
 const fs = () => window[window._fs_namespace];
-let didInit = false;
 
 const ensureSnippetLoaded = () => {
   const snippetLoaded = !!fs();
   if (!snippetLoaded) {
     throw Error('FullStory is not loaded, please ensure the FullStory snippet is executed before calling FullStory API functions');
   }
-  return true;
 };
 
 const hasFullStoryWithFunction = (...testNames) => {
-  const functionsCreated = () => testNames.reduce((acc, current) => acc && fs()[current], true);
-  return ensureSnippetLoaded() && functionsCreated();
+  ensureSnippetLoaded();
+  return testNames.every(current => fs()[current]);
 };
 
 const wrapFunction = name => (...params) => {
@@ -27,21 +25,7 @@ const wrappedFS = ['event', 'log', 'getCurrentSessionURL', 'identify', 'setUserV
   return acc;
 }, {});
 
-const { event } = wrappedFS;
-const { log } = wrappedFS;
-const { getCurrentSessionURL } = wrappedFS;
-const { identify } = wrappedFS;
-const { setUserVars } = wrappedFS;
-const { consent } = wrappedFS;
-const { shutdown } = wrappedFS;
-const { restart } = wrappedFS;
-
 const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.com') => {
-  if (didInit) {
-    // eslint-disable-next-line no-console
-    console.warn('FullStory init has already been called once. Additional invocations are ignored');
-    return;
-  }
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
@@ -68,17 +52,22 @@ const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.
   })(window,document,window['_fs_namespace'],'script','user');
   /* eslint-enable */
   /* end FullStory snippet */
-  didInit = true;
 };
 
-export {
-  event,
-  log,
-  getCurrentSessionURL,
-  identify,
-  setUserVars,
-  consent,
-  shutdown,
-  restart,
-  init,
+const once = (fn, message) => {
+  let called = false;
+
+  return (...args) => {
+    if (called) {
+      // eslint-disable-next-line no-console
+      if (message) console.warn(message);
+      return;
+    }
+    fn(...args);
+    called = true;
+  };
 };
+
+wrappedFS.init = once(init, 'FullStory init has already been called once. Additional invocations are ignored');
+
+export default wrappedFS;
