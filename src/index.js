@@ -10,7 +10,7 @@ const ensureSnippetLoaded = () => {
 };
 
 const hasFullStoryWithFunction = (...testNames) => {
-  const functionsCreated = () => testNames.reduce((acc, current) => acc && fs()[current], true);
+  const functionsCreated = () => testNames.every(current => fs()[current]);
   return ensureSnippetLoaded() && functionsCreated();
 };
 
@@ -26,15 +26,6 @@ const wrappedFS = ['event', 'log', 'getCurrentSessionURL', 'identify', 'setUserV
   acc[current] = wrapFunction(current);
   return acc;
 }, {});
-
-const { event } = wrappedFS;
-const { log } = wrappedFS;
-const { getCurrentSessionURL } = wrappedFS;
-const { identify } = wrappedFS;
-const { setUserVars } = wrappedFS;
-const { consent } = wrappedFS;
-const { shutdown } = wrappedFS;
-const { restart } = wrappedFS;
 
 const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.com') => {
   if (didInit) {
@@ -71,14 +62,6 @@ const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.
   didInit = true;
 };
 
-export {
-  event,
-  log,
-  getCurrentSessionURL,
-  identify,
-  setUserVars,
-  consent,
-  shutdown,
-  restart,
-  init,
-};
+wrappedFS.init = init;
+
+export default wrappedFS;
