@@ -1,5 +1,4 @@
-
-export default (
+const snippet = (
   {
     fsOrgId,
     fsNamespace = 'FS',
@@ -28,3 +27,5 @@ export default (
   /* eslint-enable */
   /* end FullStory snippet */
 };
+
+export default snippet;
