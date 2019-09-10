@@ -13,7 +13,7 @@
     "test": "npm run lint && npm run test:karma",
     "test:karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "lint": "eslint src test",
-    "build": "rollup -c",
+    "build": "./node_modules/.bin/rollup -c",
     "prepublishOnly": "npm run clean && npm run test && npm run build"
   },
   "files": [
