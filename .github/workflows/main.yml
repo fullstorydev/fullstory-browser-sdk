@@ -5,21 +5,17 @@ on: push
   #  - cron:  '*/5 * * * *'
 
 jobs:
-  build:
-
+  sync:
     runs-on: ubuntu-latest
-    
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: "npm ci"
+    - name: cd into action directory
+      run: cd ./.github/actions/sync-snippet-action
+    - name: npm ci
       run: npm ci
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TEST: 'test'
       uses: ./.github/actions/sync-snippet-action
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
