@@ -9,11 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: cd into action directory
-      run: cd ./.github/actions/sync-snippet-action
+      uses: actions/checkout@v1  
     - name: npm ci
-      run: pwd && npm ci
+      run: cd ./.github/actions/sync-snippet-action && npm ci
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
