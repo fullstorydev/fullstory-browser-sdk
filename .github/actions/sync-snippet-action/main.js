@@ -11,7 +11,7 @@ console.log(process.env.TEST);
 const run = async () => {
   const snippetText = fs.readFileSync(`./src/snippet.js`, 'utf-8');
   const hash = crypto.createHash('md5').update(snippetText).digest('hex');
-  console.log(snippetText);
+  console.log(hash);
 }
 
 run();
