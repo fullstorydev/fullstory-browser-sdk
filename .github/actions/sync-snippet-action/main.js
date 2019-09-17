@@ -9,7 +9,7 @@ const realPathSync = promisify(fs.realpath);
 console.log(process.env.TEST);
 const run = async () => {
   const pwd = await realPathSync('.');
-  const snippetText = fs.readFileSync(`${pwd}/src/snippet.js`);
+  const snippetText = fs.readFileSync(`${pwd}/src/snippet.js`, 'utf-8');
   console.log(snippetText);
 }
 
