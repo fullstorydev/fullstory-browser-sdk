@@ -13,7 +13,7 @@ jobs:
     - name: cd into action directory
       run: cd ./.github/actions/sync-snippet-action
     - name: npm ci
-      run: npm ci
+      run: pwd && npm ci
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
