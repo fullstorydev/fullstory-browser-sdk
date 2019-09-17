@@ -1,8 +1,8 @@
 name: FOO
 
-on:
-  schedule:
-    - cron:  '*/5 * * * *'
+on: push
+  #schedule:
+  #  - cron:  '*/5 * * * *'
 
 jobs:
   build:
