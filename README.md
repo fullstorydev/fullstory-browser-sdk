@@ -16,7 +16,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as FullStory from 'TBD/package-to-be-deployed';
+import FullStory from 'TBD/package-to-be-deployed';
 
 
 FullStory.init('<your org id here>');
