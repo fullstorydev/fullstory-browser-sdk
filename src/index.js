@@ -27,35 +27,26 @@ const wrappedFS = ['event', 'log', 'getCurrentSessionURL', 'identify', 'setUserV
   return acc;
 }, {});
 
-const init = (fsOrgId, fsNamespace = 'FS', fsDebug = false, fsHost = 'fullstory.com') => {
+const init = (options) => {
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
     return;
   }
 
-  snippet({
-    fsOrgId,
-    fsNamespace,
-    fsDebug,
-    fsHost
-  });
+  snippet(options);
 };
 
-const once = (fn, message) => {
-  let called = false;
-
-  return (...args) => {
-    if (called) {
-      // eslint-disable-next-line no-console
-      if (message) console.warn(message);
-      return;
-    }
-    fn(...args);
-    called = true;
-  };
+const checkInit = (fn, message) => (...args) => {
+  if (window._fs_initialized) {
+    // eslint-disable-next-line no-console
+    if (message) console.warn(message);
+    return;
+  }
+  fn(...args);
+  window._fs_initialized = true;
 };
 
-wrappedFS.init = once(init, 'FullStory init has already been called once. Additional invocations are ignored');
+wrappedFS.init = checkInit(init, 'FullStory init has already been called once. Additional invocations are ignored');
 
 export default wrappedFS;
