@@ -24,17 +24,17 @@ describe('core', () => {
 
     functions.forEach(i => assert(typeof FullStory[i] === 'function', `${i} has not been exported from the FullStory module`));
   });
-
-  it('should throw error if API called before init', () => {
-    expect(() => { FullStory.log(); }).to.throw();
-    FullStory.init({ orgId: testOrg });
-    expect(() => { FullStory.log(); }).to.not.throw();
-  });
 });
 
 describe('init', () => {
   it('should throw error if not initialized with an orgId', () => {
     expect(() => { FullStory.init(); }).to.throw();
+  });
+
+  it('should throw error if API called before init', () => {
+    expect(() => { FullStory.log(); }).to.throw();
+    FullStory.init({ orgId: testOrg });
+    expect(() => { FullStory.log(); }).to.not.throw();
   });
 
   it('should add _fs_org value to window object', () => {
