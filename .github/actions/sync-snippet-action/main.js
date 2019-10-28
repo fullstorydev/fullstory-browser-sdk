@@ -31,7 +31,7 @@ const run = async () => {
   const context = github.context;
   // console.log(JSON.stringify(context));
   const ref = {
-    owner: context.payload.owner.name,
+    owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
     ref: 'refs/heads/snippetbot/updated-snippet-datehere',
     sha: context.sha,
