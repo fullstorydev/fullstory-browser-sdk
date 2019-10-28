@@ -7,6 +7,7 @@ const axios = require('axios').default;
 // read: https://github.com/actions/toolkit/tree/master/packages/github
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
+const LOCAL_SNIPPET = `${__dirname}/src/snippet.js`;
 
 console.log(process.env.TEST);
 
@@ -14,7 +15,7 @@ const md5Hash = (text) => {
   return crypto.createHash('md5').update(text).digest('hex');
 }
 const run = async () => {
-  const snippetText = fs.readFileSync(`./src/snippet.js`, 'utf-8');
+  const snippetText = fs.readFileSync(LOCAL_SNIPPET, 'utf-8');
   const localSnippetHash = md5Hash(snippetText);
   console.log(`local snippet file hash: ${localSnippetHash}`);
 
@@ -38,13 +39,11 @@ const run = async () => {
     sha: context.sha,
   };
 
-  // console.log(`ref: ${JSON.stringify(ref)}`);
-
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   const ref = await octokit.git.createRef(refData);
-  console.log(`ref: ${JSON.stringify(ref)}`);
+  // console.log(`ref: ${JSON.stringify(ref)}`);
 
   // TODO: overwrite local snippet.js
 
