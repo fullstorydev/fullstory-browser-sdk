@@ -7,7 +7,7 @@ const axios = require('axios').default;
 // read: https://github.com/actions/toolkit/tree/master/packages/github
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
-const LOCAL_SNIPPET = `${__dirname}/src/snippet.js`;
+const LOCAL_SNIPPET = `${__dirname}/../../../src/snippet.js`;
 
 console.log(process.env.TEST);
 
@@ -41,9 +41,15 @@ const run = async () => {
 
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
+  // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
+  octokit.git.createTree({
+    owner: refData.owner,
+    repo: refData.repo,
+    tree
+  })
+
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  const ref = await octokit.git.createRef(refData);
-  // console.log(`ref: ${JSON.stringify(ref)}`);
+  // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
 
   // TODO: overwrite local snippet.js
 
