@@ -15,8 +15,8 @@ const md5Hash = (text) => {
   return crypto.createHash('md5').update(text).digest('hex');
 }
 const run = async () => {
-  const snippetText = fs.readFileSync(LOCAL_SNIPPET, 'utf-8');
-  const localSnippetHash = md5Hash(snippetText);
+  const localSnippetText = fs.readFileSync(LOCAL_SNIPPET, 'utf-8');
+  const localSnippetHash = md5Hash(localSnippetText);
   console.log(`local snippet file hash: ${localSnippetHash}`);
 
   let remoteSnippetText;
@@ -42,11 +42,19 @@ const run = async () => {
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
-  octokit.git.createTree({
+  const treeResponse = octokit.git.createTree({
     owner: refData.owner,
     repo: refData.repo,
-    tree
-  })
+    tree: [{
+      path: LOCAL_SNIPPET,
+      content: Buffer.from(remoteSnippetText).toString('base64'),
+      mode: '100644',
+      type: 'blob',
+      base_tree: refData.sha
+    }]
+  });
+
+  console.log(`treeResponse: ${JSON.stringify(treeResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
