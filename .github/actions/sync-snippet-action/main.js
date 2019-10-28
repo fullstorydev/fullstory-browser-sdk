@@ -20,10 +20,10 @@ const run = async () => {
 
   const remoteSnippetText = await axios.get(SNIPPET_ENDPOINT);
   console.log(`remoteSnippetText: ${remoteSnippetText.data}`);
-  const remotsSnippetHash = md5Hash(remoteSnippetText.data);
+  const remoteSnippetHash = md5Hash(remoteSnippetText.data);
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
-  //console.log(`hashes equal? ${localSnippetHash === remotsSnippetHash}`);
+  console.log(`hashes equal? ${localSnippetHash === remoteSnippetHash}`);
 
   // TODO:
   // 1. Request snippet from api.fullstory.com/code/v1/snippet
