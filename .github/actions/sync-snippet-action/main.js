@@ -42,7 +42,7 @@ const run = async () => {
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
-  const treeResponse = octokit.git.createTree({
+  const treeResponse = await octokit.git.createTree({
     owner: refData.owner,
     repo: refData.repo,
     tree: [{
@@ -54,7 +54,7 @@ const run = async () => {
     }]
   });
 
-  console.log(`treeResponse: ${treeResponse}`);
+  console.log(`treeResponse: ${JSON.stringify(treeResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
