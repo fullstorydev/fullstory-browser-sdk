@@ -33,12 +33,13 @@ const run = async () => {
   const ref = {
     owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
-    ref: 'refs/heads/snippetbot/updated-snippet-datehere',
+    ref: `refs/heads/snippetbot/updated-snippet-${Date.now()}`,
     sha: context.sha,
   };
 
   console.log(`ref: ${JSON.stringify(ref)}`);
 
+  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
   octokit.git.createRef(ref);
 
 
