@@ -53,7 +53,7 @@ const run = async () => {
     owner: ref.owner,
     repo: ref.repo,
     message: 'updated snippet.js',
-    tree: ref.sha,
+    tree: { sha: ref.sha },
     parents: [context.payload.before],
   });
 
