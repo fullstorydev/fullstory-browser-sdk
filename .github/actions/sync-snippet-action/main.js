@@ -29,7 +29,7 @@ const run = async () => {
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
   const context = github.context;
-  console.log(JSON.stringify(context));
+  //console.log(JSON.stringify(context));
   const ref = {
     owner: context.owner.name,
     repo: context.repository.name,
