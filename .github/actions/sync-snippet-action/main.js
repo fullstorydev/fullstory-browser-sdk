@@ -6,7 +6,7 @@ const axios = require('axios').default;
 
 // read: https://github.com/actions/toolkit/tree/master/packages/github
 
-const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
+const SNIPPET_ENDPOINT = 'http://dev-f-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 
 console.log(process.env.TEST);
 
@@ -22,8 +22,7 @@ const run = async () => {
   try {
     remoteSnippetText = (await axios.get(SNIPPET_ENDPOINT)).data
   } catch (e) {
-    console.error(e);
-    throw e;
+    core.setFailed(e.message);
   }
 
   const remoteSnippetHash = md5Hash(remoteSnippetText);
