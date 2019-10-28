@@ -33,7 +33,8 @@ const run = async () => {
     return;
   }
 
-
+  const context = github.context;
+  console.log(JSON.stringify(context));
 
   // TODO:
   // 1. Request snippet from api.fullstory.com/code/v1/snippet
