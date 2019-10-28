@@ -7,7 +7,7 @@ const axios = require('axios').default;
 // read: https://github.com/actions/toolkit/tree/master/packages/github
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
-const LOCAL_SNIPPET = `${__dirname}/../../../src/snippet.js`;
+const LOCAL_SNIPPET = `./src/snippet.js`;
 
 console.log(process.env.TEST);
 
