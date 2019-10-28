@@ -30,6 +30,17 @@ const run = async () => {
 
   const context = github.context;
   console.log(JSON.stringify(context));
+  const ref = {
+    owner: context.owner.name,
+    repo: context.repository.name,
+    ref: 'refs/heads/snippetbot/updated-snippet-datehere',
+    sha: context.sha,
+  };
+
+  console.log(`ref: ${JSON.stringify(ref)}`);
+
+  octokit.git.createRef(ref);
+
 
   if (localSnippetHash === remoteSnippetHash)  {
     console.log('no changes to snippet'); 
