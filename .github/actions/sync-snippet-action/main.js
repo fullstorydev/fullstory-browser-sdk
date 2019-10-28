@@ -63,6 +63,8 @@ const run = async () => {
     }]
   });
 
+  console.log(`tree response: ${JSON.stringify(treeResponse)}`);
+
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
   const commitResponse = await octokit.git.createCommit({
     owner: refData.owner,
