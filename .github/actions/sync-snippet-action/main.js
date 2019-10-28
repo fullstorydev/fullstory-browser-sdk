@@ -19,7 +19,7 @@ const run = async () => {
   console.log(`local snippet file hash: ${localSnippetHash}`);
 
   const remoteSnippetText = await axios.get(SNIPPET_ENDPOINT);
-  console.log(`remoteSnippetText: ${JSON.stringify(remoteSnippetText.data)}`);
+  console.log(`remoteSnippetText: ${remoteSnippetText.data}`);
   //const remotsSnippetHash = md5Hash(remoteSnippetText);
   //console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
