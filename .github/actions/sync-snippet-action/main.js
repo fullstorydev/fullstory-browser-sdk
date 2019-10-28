@@ -1,5 +1,5 @@
 const core = require('@actions/core'); // https://github.com/actions/toolkit
-const github = require('@actions/github');
+const github = require('@actions/github'); // https://github.com/actions/toolkit/tree/master/packages/github
 const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
@@ -28,13 +28,15 @@ const run = async () => {
   const remoteSnippetHash = md5Hash(remoteSnippetText);
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
+  const context = github.context;
+  console.log(JSON.stringify(context));
+
   if (localSnippetHash === remoteSnippetHash)  {
     console.log('no changes to snippet'); 
     return;
   }
 
-  const context = github.context;
-  console.log(JSON.stringify(context));
+  
 
   // TODO:
   // 1. Request snippet from api.fullstory.com/code/v1/snippet
