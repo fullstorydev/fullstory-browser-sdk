@@ -57,7 +57,7 @@ const run = async () => {
       content: Buffer.from(remoteSnippetText).toString('base64'),
       mode: '100644',
       type: 'blob',
-      base_tree: refData.sha
+      base_tree: context.sha,
     }]
   });
   // console.log(`tree response: ${JSON.stringify(treeResponse)}`);
