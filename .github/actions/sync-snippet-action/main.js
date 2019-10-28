@@ -28,20 +28,45 @@ const run = async () => {
   const remoteSnippetHash = md5Hash(remoteSnippetText);
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
+  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
+
   const context = github.context;
-  // console.log(JSON.stringify(context));
   const ref = {
     owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
-    ref: `refs/heads/snippetbot/updated-snippet-${Date.now()}`,
+    ref: branchName,
     sha: context.sha,
   };
 
-  console.log(`ref: ${JSON.stringify(ref)}`);
+  // console.log(`ref: ${JSON.stringify(ref)}`);
 
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+
+  // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   octokit.git.createRef(ref);
 
+  // TODO: overwrite local snippet.js
+
+  
+  // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
+  octokit.git.createCommit({
+    owner: ref.owner,
+    repo: ref.repo,
+    message: 'updated snippet.js',
+    tree: ref.sha,
+    parents: context.payload.before,
+  });
+
+  // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
+  /* 
+  octokit.pulls.create({
+    owner,
+    repo,
+    title,
+    head,
+    base
+  })
+  */
 
   if (localSnippetHash === remoteSnippetHash)  {
     console.log('no changes to snippet'); 
