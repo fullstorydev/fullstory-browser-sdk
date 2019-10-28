@@ -54,7 +54,7 @@ const run = async () => {
     repo: ref.repo,
     message: 'updated snippet.js',
     tree: ref.sha,
-    parents: context.payload.before,
+    parents: [context.payload.before],
   });
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
