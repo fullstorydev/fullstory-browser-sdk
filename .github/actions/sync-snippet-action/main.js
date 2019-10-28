@@ -12,7 +12,7 @@ const run = async () => {
   console.log(localSnippetHash);
 
   // TODO:
-  // 1. Request snippet from app.fullstory.com/snippet
+  // 1. Request snippet from api.fullstory.com/code/v1/snippet
   // 2. md5 hash the snippet from step 1
   // 3. compare localSnippetHash with has from step 2
   // 4. if they are the same, exit, if they are different:

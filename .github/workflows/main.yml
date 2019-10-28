@@ -1,4 +1,4 @@
-name: FOO
+name: sync-snippet
 
 on: push
   #schedule:
