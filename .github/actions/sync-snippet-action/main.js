@@ -46,7 +46,7 @@ const run = async () => {
     owner: refData.owner,
     repo: refData.repo,
     tree: [{
-      path: LOCAL_SNIPPET,
+      path: 'src/snippet.js',
       content: Buffer.from(remoteSnippetText).toString('base64'),
       mode: '100644',
       type: 'blob',
