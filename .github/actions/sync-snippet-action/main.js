@@ -19,7 +19,6 @@ const run = async () => {
   console.log(`local snippet file hash: ${localSnippetHash}`);
 
   let remoteSnippetText;
-
   try {
     remoteSnippetText = (await axios.get(SNIPPET_ENDPOINT)).data
   } catch (e) {
@@ -30,7 +29,12 @@ const run = async () => {
   const remoteSnippetHash = md5Hash(remoteSnippetText);
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
-  console.log(`hashes equal? ${localSnippetHash === remoteSnippetHash}`);
+  if (localSnippetHash === remoteSnippetHash)  {
+    console.log('no changes to snippet'); 
+    return;
+  }
+
+
 
   // TODO:
   // 1. Request snippet from api.fullstory.com/code/v1/snippet
