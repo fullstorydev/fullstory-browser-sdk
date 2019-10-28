@@ -31,7 +31,7 @@ const run = async () => {
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
   const context = github.context;
-  const ref = {
+  const refData = {
     owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
     ref: branchName,
@@ -43,19 +43,22 @@ const run = async () => {
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  octokit.git.createRef(ref);
+  const ref = await octokit.git.createRef(refData);
+  console.log(`ref: ${JSON.stringify(ref)}`);
 
   // TODO: overwrite local snippet.js
 
   
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
+  /*
   octokit.git.createCommit({
-    owner: ref.owner,
-    repo: ref.repo,
+    owner: refData.owner,
+    repo: refData.repo,
     message: 'updated snippet.js',
-    tree: { sha: ref.sha },
+    tree: { sha: refData.sha },
     parents: [context.payload.before],
   });
+  */
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
   /* 
