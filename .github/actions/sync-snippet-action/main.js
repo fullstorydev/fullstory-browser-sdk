@@ -5,6 +5,10 @@ const crypto = require('crypto');
 const axios = require('axios').default;
 
 // read: https://github.com/actions/toolkit/tree/master/packages/github
+// and: https://developer.github.com/v3/git/trees/#create-a-tree
+// 1. create a tree
+// 2. create a commit
+// 3. update a reference
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const LOCAL_SNIPPET = `./src/snippet.js`;
@@ -28,6 +32,11 @@ const run = async () => {
 
   const remoteSnippetHash = md5Hash(remoteSnippetText);
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
+  
+  if (localSnippetHash === remoteSnippetHash)  {
+    console.log('no changes to snippet'); 
+    return;
+  }
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
@@ -54,7 +63,16 @@ const run = async () => {
     }]
   });
 
-  console.log(`treeResponse: ${JSON.stringify(treeResponse)}`);
+  // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
+  const commitResponse = await octokit.git.createCommit({
+    owner: refData.owner,
+    repo: refData.repo,
+    message: 'updated snippet.js',
+    tree: treeResponse.data.tree,
+    parents: [context.payload.before],
+  });
+
+  console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
@@ -83,11 +101,6 @@ const run = async () => {
     base
   })
   */
-
-  if (localSnippetHash === remoteSnippetHash)  {
-    console.log('no changes to snippet'); 
-    return;
-  }
 
   
 
