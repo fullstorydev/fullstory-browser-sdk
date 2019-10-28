@@ -54,7 +54,7 @@ const run = async () => {
     }]
   });
 
-  console.log(`treeResponse: ${JSON.stringify(treeResponse)}`);
+  console.log(`treeResponse: ${treeResponse}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
