@@ -41,19 +41,17 @@ const run = async () => {
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
   const context = github.context;
-  const refData = {
+
+  const repoInfo = {
     owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
-    ref: branchName,
-    sha: context.sha,
-  };
-
+  }
+  
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   const treeResponse = await octokit.git.createTree({
-    owner: refData.owner,
-    repo: refData.repo,
+    ...repoInfo,
     tree: [{
       path: 'src/snippet.js',
       content: Buffer.from(remoteSnippetText).toString('base64'),
@@ -62,36 +60,26 @@ const run = async () => {
       base_tree: refData.sha
     }]
   });
-
-  console.log(`tree response: ${JSON.stringify(treeResponse)}`);
+  // console.log(`tree response: ${JSON.stringify(treeResponse)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
   const commitResponse = await octokit.git.createCommit({
-    owner: refData.owner,
-    repo: refData.repo,
+    ...repoInfo,
     message: 'updated snippet.js',
     tree: treeResponse.data.tree[0].sha,
     parents: [context.payload.before],
   });
-
-  console.log(`commit response: ${JSON.stringify(commitResponse)}`);
+  // console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  // const ref = await octokit.git.createRef(refData); // thie creates a ref using the current master commit - will need to update ref
+  const createRefResponse = await octokit.git.createRef({
+    ...repoInfo,
+    ref: branchName,
+    sha: commitResponse.data.sha,
+  }); // thie creates a ref using the current master commit - will need to update ref
+  console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
 
   // TODO: overwrite local snippet.js
-
-  
-  // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
-  /*
-  octokit.git.createCommit({
-    owner: refData.owner,
-    repo: refData.repo,
-    message: 'updated snippet.js',
-    tree: { sha: refData.sha },
-    parents: [context.payload.before],
-  });
-  */
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
   /* 
