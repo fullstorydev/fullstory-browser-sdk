@@ -6,6 +6,7 @@ const axios = require('axios').default;
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const SNIPPET_PATH = 'src/snippet.js';
+const PR_TITLE = 'The FullStory snippet has been updated';
 
 const md5Hash = (text) => {
   return crypto.createHash('md5').update(text).digest('hex');
@@ -31,16 +32,22 @@ const run = async () => {
   }
 
   // TODO: check to ensure there are no open PRs with "updated snippet" title created by the github-actions[bot] user
+  const repoInfo = {
+    owner: context.payload.repository.owner.name,
+    repo: context.payload.repository.name,
+  };
+
+  const openPRs = await octokit.pulls.list({
+    ...repoInfo,
+    state: 'open',
+    head: 'user:github-actions[bot]'
+  });
+  console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
   const context = github.context;
   console.log(`current commit on refs/heads/master: ${context.sha}`);
-
-  const repoInfo = {
-    owner: context.payload.repository.owner.name,
-    repo: context.payload.repository.name,
-  }
   
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
   const getTreeResponse = await octokit.git.getTree({
@@ -87,7 +94,7 @@ const run = async () => {
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
   const prResponse = await octokit.pulls.create({
     ...repoInfo,
-    title: 'The FullStory snippet has been updated',
+    title: PR_TITLE,
     head: branchName,
     base: 'refs/heads/master'
   });
