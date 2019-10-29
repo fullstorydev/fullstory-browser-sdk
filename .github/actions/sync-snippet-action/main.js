@@ -63,7 +63,7 @@ const run = async () => {
     type: 'blob',
     base_tree: srcTree.sha,
   });
-  // console.log(`srcTree: ${JSON.stringify(srcTree)}`);
+  console.log(`theWholeTree: ${JSON.stringify(theWholeTree)}`);
 
   
 
