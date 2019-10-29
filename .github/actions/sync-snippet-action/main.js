@@ -37,6 +37,9 @@ const run = async () => {
     repo: context.payload.repository.name,
   };
 
+  const context = github.context;
+  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+
   const openPRs = await octokit.pulls.list({
     ...repoInfo,
     state: 'open',
@@ -44,12 +47,7 @@ const run = async () => {
   });
   console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
 
-  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
-
-  const context = github.context;
-  console.log(`current commit on refs/heads/master: ${context.sha}`);
-  
-  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;  
   const getTreeResponse = await octokit.git.getTree({
     ...repoInfo,
     tree_sha: context.payload.head_commit.tree_id,
