@@ -107,8 +107,7 @@ const run = async () => {
   await octokit.issues.addAssignees({
     ...repoInfo,
     issue_number: prResponse.data.number,
-    // avoid assigning the PR to the latest committer
-    assignees: maintainers.filter(el => el !== prResponse.data.head.user.login),
+    assignees: maintainers,
   });
 
   console.log(`created PR: ${prResponse.data.html_url}`);
