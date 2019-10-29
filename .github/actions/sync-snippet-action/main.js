@@ -38,6 +38,7 @@ const run = async () => {
   };
 
   const context = github.context;
+  console.log(`current commit on refs/heads/master: ${context.sha}`);
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   const openPRs = await octokit.pulls.list({
