@@ -42,7 +42,6 @@ const run = async () => {
   const openPRs = await octokit.pulls.list({
     ...repoInfo,
     state: 'open',
-    head: 'user:github-actions[bot]'
   });
   console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
 
