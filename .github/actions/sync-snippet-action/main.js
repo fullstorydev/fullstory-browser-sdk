@@ -3,6 +3,7 @@ const github = require('@actions/github'); // https://github.com/actions/toolkit
 const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
+const maintainers = require('MAINTAINERS');
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const SNIPPET_PATH = 'src/snippet.js';
@@ -92,6 +93,14 @@ const run = async () => {
     base: 'refs/heads/master'
   });
   //console.log(`create PR response: ${JSON.stringify(prResponse)}`);
+
+  //TODO" add assignee using https://octokit.github.io/rest.js/#octokit-routes-issues-add-assignees
+  const assigneeResponse = await octokit.issues.addAssignees({
+    ...repoInfo,
+    issue_number: prResponse.data.number,
+    assignees: maintainers.filter(el => el !== prResponse.data.head.user.login), // avoid assigning the PR to the latest committer
+  });
+  console.log(`asiignee response: ${JSON.stringify(assigneeResponse)}`);
 
   console.log(`created PR: ${prResponse.data.html_url}`);
 }
