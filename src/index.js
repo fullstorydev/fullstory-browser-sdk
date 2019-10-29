@@ -37,7 +37,7 @@ const init = (options) => {
   snippet(options);
 };
 
-const checkInit = (fn, message) => (...args) => {
+const initOnce = (fn, message) => (...args) => {
   if (window._fs_initialized) {
     // eslint-disable-next-line no-console
     if (message) console.warn(message);
@@ -47,6 +47,6 @@ const checkInit = (fn, message) => (...args) => {
   window._fs_initialized = true;
 };
 
-wrappedFS.init = checkInit(init, 'FullStory init has already been called once. Additional invocations are ignored');
+wrappedFS.init = initOnce(init, 'FullStory init has already been called once. Additional invocations are ignored');
 
 export default wrappedFS;
