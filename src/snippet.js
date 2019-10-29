@@ -29,4 +29,3 @@ const snippet = (
 };
 
 export default snippet;
-// 4
