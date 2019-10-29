@@ -30,4 +30,3 @@ const snippet = (
   /* end FullStory snippet */
 };
 export default snippet;
-// 1
