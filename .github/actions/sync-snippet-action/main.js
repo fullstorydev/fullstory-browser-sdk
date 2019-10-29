@@ -31,15 +31,13 @@ const run = async () => {
     return;
   }
 
-  // TODO: check to ensure there are no open PRs with "updated snippet" title created by the github-actions[bot] user
+  const context = github.context;
+  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+
   const repoInfo = {
     owner: context.payload.repository.owner.name,
     repo: context.payload.repository.name,
   };
-
-  const context = github.context;
-  console.log(`current commit on refs/heads/master: ${context.sha}`);
-  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   const openPRs = await octokit.pulls.list({
     ...repoInfo,
