@@ -70,7 +70,7 @@ const run = async () => {
       base_tree: srcTree.sha,
     }]
   });
-  console.log(`create tree response: ${JSON.stringify(snippetTree)}`);
+  console.log(`create snippet tree response: ${JSON.stringify(snippetTree)}`);
   const wholeTree = octokit.git.createTree({
     ...repoInfo,
     tree: [{
@@ -78,6 +78,7 @@ const run = async () => {
       base_tree: context.payload.head_commit.tree_id,
     }]
   });
+  console.log(`create whole tree response: ${JSON.stringify(wholeTree)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
   const commitResponse = await octokit.git.createCommit({
