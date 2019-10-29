@@ -60,31 +60,25 @@ const run = async () => {
   
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
-  const snippetTree = await octokit.git.createTree({
+  const treeResponse = await octokit.git.createTree({
     ...repoInfo,
     tree: [{
       path: 'src/snippet.js',
       content: remoteSnippetText,
       mode: '100644',
       type: 'blob',
-      base_tree: srcTree.sha,
+      //base_tree: srcTree.sha,
+      base_tree: getTreeResponse.data.sha,
+      //base_tree: context.payload.head_commit.tree_id,
     }]
   });
-  console.log(`create snippet tree response: ${JSON.stringify(snippetTree)}`);
-  const wholeTree = octokit.git.createTree({
-    ...repoInfo,
-    tree: [{
-      sha: snippetTree.data.sha,
-      base_tree: context.payload.head_commit.tree_id,
-    }]
-  });
-  console.log(`create whole tree response: ${JSON.stringify(wholeTree)}`);
+  //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
   const commitResponse = await octokit.git.createCommit({
     ...repoInfo,
     message: 'updated snippet.js',
-    tree: wholeTree.data.sha,
+    tree: treeResponse.data.sha,
     parents: [context.sha],
   });
   console.log(`commit response: ${JSON.stringify(commitResponse)}`);
