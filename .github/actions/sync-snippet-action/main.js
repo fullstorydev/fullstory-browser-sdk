@@ -66,7 +66,7 @@ const run = async () => {
     ...repoInfo,
     message: 'updated snippet.js',
     tree: treeResponse.data.tree[0].sha,
-    parents: [context.payload.before],
+    parents: [context.sha],
   });
   // console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
