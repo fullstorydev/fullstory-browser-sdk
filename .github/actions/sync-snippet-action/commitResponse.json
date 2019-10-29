@@ -1,0 +1,63 @@
+{
+    "status": 201,
+    "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/commits",
+    "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type",
+        "cache-control": "private, max-age=60, s-maxage=60",
+        "connection": "close",
+        "content-length": "1927",
+        "content-security-policy": "default-src 'none'",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 29 Oct 2019 02:25:39 GMT",
+        "etag": "\"2de9f8976d919bb66dd7d4c35a4ad2bd\"",
+        "location": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/commits/f3e94d96d250ebac2eab98e116c3a76e18c8a60f",
+        "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "server": "GitHub.com",
+        "status": "201 Created",
+        "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+        "vary": "Accept, Authorization, Cookie, X-GitHub-OTP, Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny",
+        "x-github-media-type": "github.v3; format=json",
+        "x-github-request-id": "07C0:3F59:1C7C50:221B09:5DB7A323",
+        "x-ratelimit-limit": "1000",
+        "x-ratelimit-remaining": "986",
+        "x-ratelimit-reset": "1572319511",
+        "x-xss-protection": "1; mode=block"
+    },
+    "data": {
+        "sha": "f3e94d96d250ebac2eab98e116c3a76e18c8a60f",
+        "node_id": "MDY6Q29tbWl0MjA5MTExOTc0OmYzZTk0ZDk2ZDI1MGViYWMyZWFiOThlMTE2YzNhNzZlMThjOGE2MGY=",
+        "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/commits/f3e94d96d250ebac2eab98e116c3a76e18c8a60f",
+        "html_url": "https://github.com/patrick-fs/fullstory-browser-sdk/commit/f3e94d96d250ebac2eab98e116c3a76e18c8a60f",
+        "author": {
+            "name": "github-actions[bot]",
+            "email": "41898282+github-actions[bot]@users.noreply.github.com",
+            "date": "2019-10-29T02:25:39Z"
+        },
+        "committer": {
+            "name": "GitHub",
+            "email": "noreply@github.com",
+            "date": "2019-10-29T02:25:39Z"
+        },
+        "tree": {
+            "sha": "21422b6550b925c19fc99e80867bc5d63b3d345a",
+            "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/21422b6550b925c19fc99e80867bc5d63b3d345a"
+        },
+        "message": "updated snippet.js",
+        "parents": [
+            {
+                "sha": "46db11118ab7713fbe65b9b4de2d5ca94acf3d4a",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/commits/46db11118ab7713fbe65b9b4de2d5ca94acf3d4a",
+                "html_url": "https://github.com/patrick-fs/fullstory-browser-sdk/commit/46db11118ab7713fbe65b9b4de2d5ca94acf3d4a"
+            }
+        ],
+        "verification": {
+            "verified": true,
+            "reason": "valid",
+            "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJdt6MjCRBK7hj4Ov3rIwAAdHIIAF9OExRw+NlXwF9ho19g1Nfa\nqHMdI5Hs5TnxtVPfUqHvMzSWP679KAgTJDzyRTowq2oGsCfh7BXq7u8QMlFoECp9\ne+OX8S6wLq5FUUHTBPEb00b0jdZyIdEVQ+hU4NgrVFEQNZ0mkulPYdF/r4Tr215Y\n0k7B9zh6vZlC3ru+fpUXt/dEZISgfgmRqow1R7W985US/P8hPN+EsrAhEwpju2EL\nNdBQATjbB90e0WevpcAi5LeOYdsh20s+g3lW3VSgn7z4A6zy5zOsN4Lh4xWnuN8m\npQwlZE6prAfk+yMFmRmLNG0M1LtD8431O/GyZmVxxH0lgUxUfiMabF5qukJjWB8=\n=fDZD\n-----END PGP SIGNATURE-----\n",
+            "payload": "tree 21422b6550b925c19fc99e80867bc5d63b3d345a\nparent 46db11118ab7713fbe65b9b4de2d5ca94acf3d4a\nauthor github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com> 1572315939 +0000\ncommitter GitHub <noreply@github.com> 1572315939 +0000\n\nupdated snippet.js"
+        }
+    }
+}

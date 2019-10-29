@@ -1,0 +1,254 @@
+{
+    "status": 200,
+    "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/9f1b81bc188e604f5a78e05ed97dc590556853b5?recursive=1",
+    "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type",
+        "cache-control": "private, max-age=60, s-maxage=60",
+        "connection": "close",
+        "content-encoding": "gzip",
+        "content-security-policy": "default-src 'none'",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 29 Oct 2019 02:37:50 GMT",
+        "etag": "W/\"3af3a9086bbd4107062b5148d6f71fc1\"",
+        "last-modified": "Tue, 29 Oct 2019 02:37:18 GMT",
+        "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "server": "GitHub.com",
+        "status": "200 OK",
+        "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+        "transfer-encoding": "chunked",
+        "vary": "Accept, Authorization, Cookie, X-GitHub-OTP",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny",
+        "x-github-media-type": "github.v3; format=json",
+        "x-github-request-id": "07C1:7CB8:4C314:900FA:5DB7A5FE",
+        "x-ratelimit-limit": "1000",
+        "x-ratelimit-remaining": "985",
+        "x-ratelimit-reset": "1572319511",
+        "x-xss-protection": "1; mode=block"
+    },
+    "data": {
+        "sha": "9f1b81bc188e604f5a78e05ed97dc590556853b5",
+        "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/9f1b81bc188e604f5a78e05ed97dc590556853b5",
+        "tree": [
+            {
+                "path": ".babelrc",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "01dafdc262dd3f02bb08e25fec7999784e60e9a2",
+                "size": 112,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/01dafdc262dd3f02bb08e25fec7999784e60e9a2"
+            },
+            {
+                "path": ".circleci",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "e33302e0ce4caacc3522f72ddeaf93057391b2e1",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/e33302e0ce4caacc3522f72ddeaf93057391b2e1"
+            },
+            {
+                "path": ".circleci/config.yml",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "df1baf436fd25bae6d4ce5981218763976d54364",
+                "size": 1296,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/df1baf436fd25bae6d4ce5981218763976d54364"
+            },
+            {
+                "path": ".editorconfig",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "ed5699bd11a460bab0476e42d9d879ffd7d0580b",
+                "size": 304,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/ed5699bd11a460bab0476e42d9d879ffd7d0580b"
+            },
+            {
+                "path": ".eslintignore",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "9f4e8d7d622763902f3fdd4749dda7d4e3b8c029",
+                "size": 6,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/9f4e8d7d622763902f3fdd4749dda7d4e3b8c029"
+            },
+            {
+                "path": ".eslintrc",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "1eb619f651745fb6019cd5c939475cecd0c80b58",
+                "size": 210,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/1eb619f651745fb6019cd5c939475cecd0c80b58"
+            },
+            {
+                "path": ".github",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "4fbb85dc8991ef58f5d90ba606e783f62070b8a1",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/4fbb85dc8991ef58f5d90ba606e783f62070b8a1"
+            },
+            {
+                "path": ".github/actions",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "a3c3cd7f35c0dd871fcaee81f4bb0d1d81b68342",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/a3c3cd7f35c0dd871fcaee81f4bb0d1d81b68342"
+            },
+            {
+                "path": ".github/actions/sync-snippet-action",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "3971d3f9e65c4bf130296c4c0a4ea14e5d596e18",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/3971d3f9e65c4bf130296c4c0a4ea14e5d596e18"
+            },
+            {
+                "path": ".github/actions/sync-snippet-action/action.yml",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "abc3305199923ec060fef5ce4c74283acd0f2155",
+                "size": 231,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/abc3305199923ec060fef5ce4c74283acd0f2155"
+            },
+            {
+                "path": ".github/actions/sync-snippet-action/main.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "acc54465372ce2a565969b9bfbbc36b3dc32dfd8",
+                "size": 3985,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/acc54465372ce2a565969b9bfbbc36b3dc32dfd8"
+            },
+            {
+                "path": ".github/actions/sync-snippet-action/package-lock.json",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "b66c42095ed12ee679cd2e15254954203e04e1ec",
+                "size": 14420,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/b66c42095ed12ee679cd2e15254954203e04e1ec"
+            },
+            {
+                "path": ".github/actions/sync-snippet-action/package.json",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "633efe2ad4c2b9e1ff00faa5d4bef6e704346bd4",
+                "size": 326,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/633efe2ad4c2b9e1ff00faa5d4bef6e704346bd4"
+            },
+            {
+                "path": ".github/workflows",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "67c2b02ae995e1d496c21a4d59f59af1b4734e8e",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/67c2b02ae995e1d496c21a4d59f59af1b4734e8e"
+            },
+            {
+                "path": ".github/workflows/main.yml",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "0ca3b25dd0aa827d9136e2ae43361338d3771e02",
+                "size": 395,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/0ca3b25dd0aa827d9136e2ae43361338d3771e02"
+            },
+            {
+                "path": ".gitignore",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "71150ad8e87d520d45e6254adaafd6d68e1c6976",
+                "size": 491,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/71150ad8e87d520d45e6254adaafd6d68e1c6976"
+            },
+            {
+                "path": ".npmignore",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "45c2f4af977257682ddf719853e27869c9b09480",
+                "size": 297,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/45c2f4af977257682ddf719853e27869c9b09480"
+            },
+            {
+                "path": "LICENSE",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "5f75176f86be56dd9f099dc4b645326f1e9b086d",
+                "size": 1081,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/5f75176f86be56dd9f099dc4b645326f1e9b086d"
+            },
+            {
+                "path": "README.md",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "406bcd80a4721c7994e602aa2286a3c0ac160dab",
+                "size": 1465,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/406bcd80a4721c7994e602aa2286a3c0ac160dab"
+            },
+            {
+                "path": "karma.conf.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "b4cd3639965df8483643356f14bd9aea496a0fc1",
+                "size": 856,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/b4cd3639965df8483643356f14bd9aea496a0fc1"
+            },
+            {
+                "path": "package-lock.json",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "6fd0ed864cf87ee6dc2682aa0942068a6cf94c54",
+                "size": 327898,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/6fd0ed864cf87ee6dc2682aa0942068a6cf94c54"
+            },
+            {
+                "path": "package.json",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "d056ae6f892a11ce8b99fd8231f1b6a69c67b5bb",
+                "size": 1420,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/d056ae6f892a11ce8b99fd8231f1b6a69c67b5bb"
+            },
+            {
+                "path": "rollup.config.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "67285393d9e57644c26d2ec65c557007fa3c7821",
+                "size": 249,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/67285393d9e57644c26d2ec65c557007fa3c7821"
+            },
+            {
+                "path": "src",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "6bc0954a3d542e3f6e645cc14173a8bd8e70672f",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/6bc0954a3d542e3f6e645cc14173a8bd8e70672f"
+            },
+            {
+                "path": "src/index.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "f97f6f2ea88e6b99f2e3be211964fb5cca0d700b",
+                "size": 1613,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/f97f6f2ea88e6b99f2e3be211964fb5cca0d700b"
+            },
+            {
+                "path": "src/snippet.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "280f68b039435ca740af8af9057d9ad5ca36faae",
+                "size": 1305,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/280f68b039435ca740af8af9057d9ad5ca36faae"
+            },
+            {
+                "path": "test",
+                "mode": "040000",
+                "type": "tree",
+                "sha": "1f72bd16d9e375cbe167f12b08c1e4cabd8d61cf",
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/trees/1f72bd16d9e375cbe167f12b08c1e4cabd8d61cf"
+            },
+            {
+                "path": "test/index.js",
+                "mode": "100644",
+                "type": "blob",
+                "sha": "db689b4a7b0dd087cbbc20ca323acf45a6c5b87e",
+                "size": 843,
+                "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/blobs/db689b4a7b0dd087cbbc20ca323acf45a6c5b87e"
+            }
+        ],
+        "truncated": false
+    }
+}

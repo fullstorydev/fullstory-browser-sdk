@@ -1,0 +1,39 @@
+{
+    "status": 201,
+    "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/refs",
+    "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type",
+        "cache-control": "private, max-age=60, s-maxage=60",
+        "connection": "close",
+        "content-length": "475",
+        "content-security-policy": "default-src 'none'",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Mon, 28 Oct 2019 17:57:15 GMT",
+        "etag": "\"33e0295a24559001acee6fb1ebd99acd\"",
+        "location": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/refs/heads/snippetbot/updated-snippet-1572285434812",
+        "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "server": "GitHub.com",
+        "status": "201 Created",
+        "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+        "vary": "Accept, Authorization, Cookie, X-GitHub-OTP, Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "deny",
+        "x-github-media-type": "github.v3; format=json",
+        "x-github-request-id": "07C1:3A1D:5A08DA:ACD5DC:5DB72BFA",
+        "x-ratelimit-limit": "1000",
+        "x-ratelimit-remaining": "993",
+        "x-ratelimit-reset": "1572287964",
+        "x-xss-protection": "1; mode=block"
+    },
+    "data": {
+        "ref": "refs/heads/snippetbot/updated-snippet-1572285434812",
+        "node_id": "MDM6UmVmMjA5MTExOTc0OnNuaXBwZXRib3QvdXBkYXRlZC1zbmlwcGV0LTE1NzIyODU0MzQ4MTI=",
+        "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/refs/heads/snippetbot/updated-snippet-1572285434812",
+        "object": {
+            "sha": "6be729ac505a1f70a631267c399643e988d044dd",
+            "type": "commit",
+            "url": "https://api.github.com/repos/patrick-fs/fullstory-browser-sdk/git/commits/6be729ac505a1f70a631267c399643e988d044dd"
+        }
+    }
+}
