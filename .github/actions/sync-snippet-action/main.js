@@ -70,7 +70,8 @@ const run = async () => {
       //base_tree: srcTree.sha,
       base_tree: getTreeResponse.data.sha,
       //base_tree: context.payload.head_commit.tree_id,
-    }]
+    },
+    ...getTreeResponse.data.tree]
   });
   //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
 
