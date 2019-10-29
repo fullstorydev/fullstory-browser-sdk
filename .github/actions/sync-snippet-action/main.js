@@ -75,7 +75,7 @@ const run = async () => {
   const commitResponse = await octokit.git.createCommit({
     ...repoInfo,
     message: 'updated snippet.js',
-    tree: treeResponse.data.tree.sha,
+    tree: treeResponse.data.sha,
     parents: [context.sha],
   });
   console.log(`commit response: ${JSON.stringify(commitResponse)}`);
