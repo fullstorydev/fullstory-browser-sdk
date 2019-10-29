@@ -99,7 +99,7 @@ const run = async () => {
     issue_number: prResponse.data.number,
     assignees: maintainers.filter(el => el !== prResponse.data.head.user.login), // avoid assigning the PR to the latest committer
   });
-  console.log(`asiignee response: ${JSON.stringify(assigneeResponse)}`);
+  //console.log(`asiignee response: ${JSON.stringify(assigneeResponse)}`);
 
   console.log(`created PR: ${prResponse.data.html_url}`);
 }
