@@ -57,8 +57,6 @@ const run = async () => {
   const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src/snippet.js');
   // console.log(`srcTree: ${JSON.stringify(srcTree)}`);
 
-  
-
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
@@ -84,39 +82,23 @@ const run = async () => {
   //console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
- 
   const createRefResponse = await octokit.git.createRef({
     ...repoInfo,
     ref: branchName,
     sha: commitResponse.data.sha,
-  }); // thie creates a ref using the current master commit - will need to update ref
+  });
   //console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
 
-  // TODO: overwrite local snippet.js
-
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
-  
   const prResponse = await octokit.pulls.create({
     ...repoInfo,
     title: 'The FullStory snippet has been updated',
     head: branchName,
     base: 'refs/heads/master'
   });
-  console.log(`create PR response: ${JSON.stringify(prResponse)}`);
+  //console.log(`create PR response: ${JSON.stringify(prResponse)}`);
 
-  
-
-  // TODO:
-  // 1. Request snippet from api.fullstory.com/code/v1/snippet
-  // 2. md5 hash the snippet from step 1
-  // 3. compare localSnippetHash with has from step 2
-  // 4. if they are the same, exit, if they are different:
-  // 5. update local snippet file with the content of the remote snippet
-  // 6. create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  // 7. commit changes to the branch: https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
-  // 8. Create a PR: https://octokit.github.io/rest.js/#octokit-routes-pulls-create
-
-  //fake endpoint: http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js
+  console.log(`created PR: ${prResponse.data.html_url}`);
 }
 
 run();
