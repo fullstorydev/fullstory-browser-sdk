@@ -52,9 +52,9 @@ const run = async () => {
     tree_sha: context.payload.head_commit.tree_id,
     recursive: 1,
   });
-  console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
+  // console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
 
-  const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src');
+  const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src/snippet.js');
   console.log(`srcTree: ${JSON.stringify(srcTree)}`);
 
   
@@ -63,7 +63,7 @@ const run = async () => {
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
     tree: [{
-      path: 'snippet.js',
+      path: 'src/snippet.js',
       content: remoteSnippetText,
       mode: '100644',
       type: 'blob',
