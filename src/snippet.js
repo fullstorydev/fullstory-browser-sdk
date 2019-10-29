@@ -13,11 +13,11 @@ const snippet = (
     throw new Error('FullStory orgId is a required parameter');
   }
   /* begin FullStory snippet */
-  window['_fs_debug'] = debug;
-  window['_fs_host'] = host;
-  window['_fs_script'] = script;
-  window['_fs_org'] = orgId;
-  window['_fs_namespace'] = namespace;
+  window._fs_debug = debug;
+  window._fs_host = host;
+  window._fs_script = script;
+  window._fs_org = orgId;
+  window._fs_namespace = namespace;
   (function(m,n,e,t,l,o,g,y){
     if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
     g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
