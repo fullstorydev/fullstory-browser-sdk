@@ -74,8 +74,8 @@ const run = async () => {
     tree: treeResponse.data.sha,
     parents: [context.sha],
   });
-  console.log(`commit created: ${commitResponse.data.html_url}`);
-/*
+  //console.log(`commit created: ${commitResponse.data.html_url}`);
+
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   const createRefResponse = await octokit.git.createRef({
     ...repoInfo,
@@ -93,7 +93,7 @@ const run = async () => {
   });
   //console.log(`create PR response: ${JSON.stringify(prResponse)}`);
 
-  console.log(`created PR: ${prResponse.data.html_url}`);*/
+  console.log(`created PR: ${prResponse.data.html_url}`);
 }
 
 run();
