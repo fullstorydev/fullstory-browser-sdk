@@ -50,14 +50,15 @@ const run = async () => {
   const getTreeResponse = await octokit.git.getTree({
     ...repoInfo,
     tree_sha: context.payload.head_commit.tree_id,
+    recursive: 1,
   });
-  //console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
+  console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
 
   const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src');
-  //console.log(`srcTree: ${JSON.stringify(srcTree)}`);
+  console.log(`srcTree: ${JSON.stringify(srcTree)}`);
 
   
-
+/*
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
@@ -79,7 +80,7 @@ const run = async () => {
     parents: [context.sha],
   });
   console.log(`commit response: ${JSON.stringify(commitResponse)}`);
-
+*/
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   /*
   const createRefResponse = await octokit.git.createRef({
