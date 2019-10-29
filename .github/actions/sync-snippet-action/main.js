@@ -49,6 +49,7 @@ const run = async () => {
   const existingPR = openPRs.data.filter(pr => pr.title === PR_TITLE && pr.user.login === 'github-actions[bot]');
   if (existingPR.length > 0) {
     core.setFailed(`There is already an open PR for snippet syncronization. Please close or merge this PR: ${existingPR[0].html_url}`);
+    return;
   }
 
   console.log('getting source tree from master');
