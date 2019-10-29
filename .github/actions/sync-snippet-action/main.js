@@ -71,7 +71,7 @@ const run = async () => {
       //base_tree: getTreeResponse.data.sha,
       //base_tree: context.payload.head_commit.tree_id,
     },
-    ...getTreeResponse.data.tree.filter(el => el.type === 'blob'),
+    ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path != 'src/snippet.js'),
   ]
   });
   //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
