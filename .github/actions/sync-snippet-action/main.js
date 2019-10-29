@@ -76,9 +76,9 @@ const run = async () => {
     ...repoInfo,
     message: 'updated snippet.js',
     tree: treeResponse.data.sha,
-    parents: [context.sha],
+    parents: [srcTree.sha],
   });
-  // console.log(`commit response: ${JSON.stringify(commitResponse)}`);
+  console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   const createRefResponse = await octokit.git.createRef({
