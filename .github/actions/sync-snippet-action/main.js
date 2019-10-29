@@ -20,6 +20,7 @@ const run = async () => {
     remoteSnippetText = (await axios.get(process.env.SNIPPET_ENDPOINT)).data
   } catch (e) {
     core.setFailed(e.message);
+    throw e;
   }
 
   const remoteSnippetHash = md5Hash(remoteSnippetText);
