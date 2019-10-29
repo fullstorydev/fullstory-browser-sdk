@@ -43,7 +43,11 @@ const run = async () => {
     ...repoInfo,
     state: 'open',
   });
-  console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
+  // console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
+  const existingPR = openPRs.data.filter(pr => pr.title === PR_TITLE && pr.user.login === 'github-actions[bot]');
+  if (existingPR.length > 0) {
+    core.setFailed(`There is already an open PR for snippet syncronization. Please close or merge this PR: ${existingPR[0].html_url}`);
+  }
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;  
   const getTreeResponse = await octokit.git.getTree({
