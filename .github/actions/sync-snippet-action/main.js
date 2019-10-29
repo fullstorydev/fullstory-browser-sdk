@@ -69,7 +69,7 @@ const run = async () => {
       type: 'blob',
       base_tree: srcTree.sha,
     },
-    ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path != 'src/snippet.js'),
+    ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path !== 'src/snippet.js'),
   ]
   });
   //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
@@ -90,20 +90,19 @@ const run = async () => {
     ref: branchName,
     sha: commitResponse.data.sha,
   }); // thie creates a ref using the current master commit - will need to update ref
-  console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
+  //console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
 
   // TODO: overwrite local snippet.js
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
-  /* 
-  octokit.pulls.create({
-    owner,
-    repo,
-    title,
-    head,
-    base
-  })
-  */
+  
+  const prResponse = await octokit.pulls.create({
+    ...repoInfo,
+    title: 'The FullStory snippet has been updated',
+    head: branchName,
+    base: 'refs/heads/master'
+  });
+  console.log(`create PR response: ${JSON.stringify(prResponse)}`);
 
   
 
