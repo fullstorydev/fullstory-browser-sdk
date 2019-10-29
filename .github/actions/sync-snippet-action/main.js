@@ -68,8 +68,6 @@ const run = async () => {
       mode: '100644',
       type: 'blob',
       base_tree: srcTree.sha,
-      //base_tree: getTreeResponse.data.sha,
-      //base_tree: context.payload.head_commit.tree_id,
     },
     ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path != 'src/snippet.js'),
   ]
@@ -83,17 +81,17 @@ const run = async () => {
     tree: treeResponse.data.sha,
     parents: [context.sha],
   });
-  console.log(`commit response: ${JSON.stringify(commitResponse)}`);
+  //console.log(`commit response: ${JSON.stringify(commitResponse)}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  /*
+ 
   const createRefResponse = await octokit.git.createRef({
     ...repoInfo,
     ref: branchName,
     sha: commitResponse.data.sha,
   }); // thie creates a ref using the current master commit - will need to update ref
   console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
-*/
+
   // TODO: overwrite local snippet.js
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
