@@ -71,8 +71,7 @@ const run = async () => {
       //base_tree: getTreeResponse.data.sha,
       //base_tree: context.payload.head_commit.tree_id,
     },
-    getTreeResponse.data.tree[0],
-    getTreeResponse.data.tree[2],
+    ...getTreeResponse.data.tree.filter(el => el.sha != srcTree.sha),
   ]
   });
   //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
