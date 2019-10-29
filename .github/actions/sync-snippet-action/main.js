@@ -3,7 +3,7 @@ const github = require('@actions/github'); // https://github.com/actions/toolkit
 const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
-const maintainers = require('./MAINTAINERS');
+const maintainers = require('./MAINTAINERS.json');
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const SNIPPET_PATH = 'src/snippet.js';
