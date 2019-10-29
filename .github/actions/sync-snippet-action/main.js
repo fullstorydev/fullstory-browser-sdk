@@ -3,7 +3,6 @@ const github = require('@actions/github'); // https://github.com/actions/toolkit
 const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
-const maintainers = require('maintainers');
 
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const SNIPPET_PATH = 'src/snippet.js';
@@ -11,10 +10,10 @@ const SNIPPET_PATH = 'src/snippet.js';
 const md5Hash = (text) => {
   return crypto.createHash('md5').update(text).digest('hex');
 }
+
 const run = async () => {
-  const localSnippetText = fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8');
-  const localSnippetHash = md5Hash(localSnippetText);
-  console.log(`local snippet file hash: ${localSnippetHash}`);
+  const localSnippetHash = md5Hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
+  const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
 
   let remoteSnippetText;
   try {
