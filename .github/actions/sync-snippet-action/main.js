@@ -4,12 +4,6 @@ const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
 
-// read: https://github.com/actions/toolkit/tree/master/packages/github
-// and: https://developer.github.com/v3/git/trees/#create-a-tree
-// 1. create a tree
-// 2. create a commit
-// 3. update a reference
-
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const LOCAL_SNIPPET = `./src/snippet.js`;
 
@@ -35,6 +29,8 @@ const run = async () => {
     console.log('no changes to snippet'); 
     return;
   }
+
+  // TODO: check to ensure there are no open PRs with "updated snippet" title created by the github-actions[bot] user
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
@@ -67,8 +63,7 @@ const run = async () => {
       type: 'blob',
       base_tree: srcTree.sha,
     },
-    ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path !== 'src/snippet.js'),
-  ]
+    ...getTreeResponse.data.tree.filter(el => el.type === 'blob' && el.path !== 'src/snippet.js')]
   });
   //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
 
