@@ -2,7 +2,7 @@ name: sync-snippet
 
 on:
   schedule:
-    - cron:  '*/2 * * * *' # 0 */24 * * * every 24 hours
+    - cron:  '0 */24 * * *' # every 24 hours
 
 jobs:
   sync:
