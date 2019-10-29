@@ -43,7 +43,5 @@
     "rollup-plugin-babel": "^4.3.3",
     "webpack": "^4.38.0"
   },
-  "dependencies": {
-    "maintainers": "file:MAINTAINERS.json"
-  }
+  "dependencies": {}
 }
