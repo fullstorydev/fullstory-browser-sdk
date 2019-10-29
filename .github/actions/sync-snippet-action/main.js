@@ -47,7 +47,13 @@ const run = async () => {
   }
   
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
-
+  const getTreeResponse = await octokit.git.getTree({
+    ...repoInfo,
+    tree_sha: context.payload.head_commit.tree_id,
+  });
+  console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
+  
+/*
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
@@ -77,7 +83,7 @@ const run = async () => {
     sha: commitResponse.data.sha,
   }); // thie creates a ref using the current master commit - will need to update ref
   console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
-
+*/
   // TODO: overwrite local snippet.js
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
