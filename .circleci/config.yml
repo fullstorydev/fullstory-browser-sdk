@@ -15,7 +15,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Install
-          command: npm install
+          command: npm ci
 
       - save_cache:
           paths:
@@ -26,7 +26,7 @@ jobs:
           command: npm audit --audit-level=low
       - run:
           name: Test
-          command: npm test
+          command: npm run test
       - persist_to_workspace:
           root: .
           paths: .
