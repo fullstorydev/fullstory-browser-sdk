@@ -55,24 +55,22 @@ const run = async () => {
   // console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
 
   const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src/snippet.js');
-  const theWholeTree = getTreeResponse.data.tree.filter(el => el.path !== 'src/snippet.js');
-  theWholeTree.push({
-    path: 'src/snippet.js',
-    content: remoteSnippetText,
-    mode: '100644',
-    type: 'blob',
-    base_tree: srcTree.sha,
-  });
-  console.log(`theWholeTree: ${JSON.stringify(theWholeTree)}`);
+  // console.log(`srcTree: ${JSON.stringify(srcTree)}`);
 
   
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
-    tree: theWholeTree,
+    tree: [{
+      path: 'src/snippet.js',
+      content: remoteSnippetText,
+      mode: '100644',
+      type: 'blob',
+      base_tree: srcTree.sha,
+    }]
   });
-  console.log(`tree response: ${JSON.stringify(treeResponse)}`);
+  console.log(`create tree response: ${JSON.stringify(treeResponse)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
   const commitResponse = await octokit.git.createCommit({
