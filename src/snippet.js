@@ -9,6 +9,9 @@ const snippet = (
     script = 'edge.fullstory.com/s/fs.js'
   }
 ) => {
+  if (!orgId) {
+    throw new Error('FullStory orgId is a required parameter');
+  }
   /* begin FullStory snippet */
   window['_fs_debug'] = debug;
   window['_fs_host'] = host;
