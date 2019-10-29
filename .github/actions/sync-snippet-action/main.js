@@ -13,8 +13,6 @@ const axios = require('axios').default;
 const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const LOCAL_SNIPPET = `./src/snippet.js`;
 
-console.log(process.env.TEST);
-
 const md5Hash = (text) => {
   return crypto.createHash('md5').update(text).digest('hex');
 }
@@ -41,6 +39,7 @@ const run = async () => {
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
 
   const context = github.context;
+  console.log(`current commit on refs/heads/master: ${context.sha}`);
 
   const repoInfo = {
     owner: context.payload.repository.owner.name,
@@ -54,7 +53,7 @@ const run = async () => {
     ...repoInfo,
     tree: [{
       path: 'src/snippet.js',
-      content: Buffer.from(remoteSnippetText).toString('base64'),
+      content: remoteSnippetText,
       mode: '100644',
       type: 'blob',
       base_tree: context.sha,

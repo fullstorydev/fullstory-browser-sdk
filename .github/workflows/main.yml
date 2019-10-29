@@ -15,5 +15,4 @@ jobs:
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TEST: 'test'
       uses: ./.github/actions/sync-snippet-action
