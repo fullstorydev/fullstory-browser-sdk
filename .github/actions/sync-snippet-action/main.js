@@ -56,7 +56,7 @@ const run = async () => {
       content: remoteSnippetText,
       mode: '100644',
       type: 'blob',
-      base_tree: context.sha,
+      base_tree: context.payload.head_commit.tree_id,
     }]
   });
   // console.log(`tree response: ${JSON.stringify(treeResponse)}`);
