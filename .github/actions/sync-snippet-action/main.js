@@ -51,7 +51,11 @@ const run = async () => {
     ...repoInfo,
     tree_sha: context.payload.head_commit.tree_id,
   });
-  console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
+  //console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
+
+  const srcTree = getTreeResponse.data.tree.find(el => el.path === 'src');
+  console.log(`srcTree: ${JSON.stringify(srcTree)}`);
+
   
 /*
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
