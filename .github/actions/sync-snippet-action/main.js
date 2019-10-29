@@ -4,7 +4,6 @@ const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
 
-const SNIPPET_ENDPOINT = 'http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js';
 const SNIPPET_PATH = 'src/snippet.js';
 const PR_TITLE = 'The FullStory snippet has been updated';
 
@@ -18,7 +17,7 @@ const run = async () => {
 
   let remoteSnippetText;
   try {
-    remoteSnippetText = (await axios.get(SNIPPET_ENDPOINT)).data
+    remoteSnippetText = (await axios.get(process.env.SNIPPET_ENDPOINT)).data
   } catch (e) {
     core.setFailed(e.message);
   }
@@ -31,6 +30,7 @@ const run = async () => {
     return;
   }
 
+  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
   const context = github.context;
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
@@ -43,24 +43,25 @@ const run = async () => {
     ...repoInfo,
     state: 'open',
   });
-  // console.log(`openPRs response: ${JSON.stringify(openPRs)}`);
+
+  console.log('checking for an on open snippet sync PR');
+  // NOTE: possible that searching for github-actions[bot] user might be too greedy. Assuming GH won't change this name.
   const existingPR = openPRs.data.filter(pr => pr.title === PR_TITLE && pr.user.login === 'github-actions[bot]');
   if (existingPR.length > 0) {
     core.setFailed(`There is already an open PR for snippet syncronization. Please close or merge this PR: ${existingPR[0].html_url}`);
   }
 
-  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;  
+  console.log('getting source tree from master');
   const getTreeResponse = await octokit.git.getTree({
     ...repoInfo,
     tree_sha: context.payload.head_commit.tree_id,
     recursive: 1,
   });
-  // console.log(`getTree response: ${JSON.stringify(getTreeResponse)}`);
 
   const srcTree = getTreeResponse.data.tree.find(el => el.path === SNIPPET_PATH);
-  // console.log(`srcTree: ${JSON.stringify(srcTree)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
+  console.log('creating updated source tree with new snippet file');
   const treeResponse = await octokit.git.createTree({
     ...repoInfo,
     tree: [{
@@ -72,41 +73,40 @@ const run = async () => {
     },
     ...getTreeResponse.data.tree.filter(el => el.type !== 'tree' && el.path !== SNIPPET_PATH)]
   });
-  //console.log(`tree response: ${JSON.stringify(treeResponse)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
+  console.log('committing new snippet file');
   const commitResponse = await octokit.git.createCommit({
     ...repoInfo,
     message: `updated ${SNIPPET_PATH}`,
     tree: treeResponse.data.sha,
     parents: [context.sha],
   });
-  //console.log(`commit created: ${commitResponse.data.html_url}`);
 
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
-  const createRefResponse = await octokit.git.createRef({
+  console.log(`creating new branch named ${branchName}`);
+  await octokit.git.createRef({
     ...repoInfo,
     ref: branchName,
     sha: commitResponse.data.sha,
   });
-  //console.log(`create ref response: ${JSON.stringify(createRefResponse)}`);
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
+  console.log(`creating PR for branch ${branchName}`);
   const prResponse = await octokit.pulls.create({
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
     base: 'refs/heads/master'
   });
-  //console.log(`create PR response: ${JSON.stringify(prResponse)}`);
 
-  //TODO" add assignee using https://octokit.github.io/rest.js/#octokit-routes-issues-add-assignees
-  const assigneeResponse = await octokit.issues.addAssignees({
+  // https://octokit.github.io/rest.js/#octokit-routes-issues-add-assignees
+  console.log('assigning PR to reviewers');
+  await octokit.issues.addAssignees({
     ...repoInfo,
     issue_number: prResponse.data.number,
     assignees: maintainers.filter(el => el !== prResponse.data.head.user.login), // avoid assigning the PR to the latest committer
   });
-  //console.log(`asiignee response: ${JSON.stringify(assigneeResponse)}`);
 
   console.log(`created PR: ${prResponse.data.html_url}`);
 }

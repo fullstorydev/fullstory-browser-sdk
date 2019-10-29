@@ -15,4 +15,5 @@ jobs:
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SNIPPET_ENDPOINT: http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js
       uses: ./.github/actions/sync-snippet-action
