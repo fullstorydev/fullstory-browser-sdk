@@ -21,7 +21,6 @@ const run = async () => {
 
   const remoteSnippetHash = md5Hash(remoteSnippetText);
   const localSnippetHash = md5Hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
-  console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
   if (localSnippetHash === remoteSnippetHash) {
     console.log('no changes to snippet');
