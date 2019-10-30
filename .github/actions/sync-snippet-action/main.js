@@ -64,7 +64,7 @@ const run = async () => {
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   console.log('creating updated source tree with new snippet file');
-  const treeResponse = await octokit.git.createTree({
+  const createTreeResponse = await octokit.git.createTree({
     ...repoInfo,
     tree: [{
       path: SNIPPET_PATH,
@@ -81,7 +81,7 @@ const run = async () => {
   const commitResponse = await octokit.git.createCommit({
     ...repoInfo,
     message: `updated ${SNIPPET_PATH}`,
-    tree: treeResponse.data.sha,
+    tree: createTreeResponse.data.sha,
     parents: [context.sha],
   });
 
