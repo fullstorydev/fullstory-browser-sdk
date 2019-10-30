@@ -11,7 +11,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1  
     - name: npm ci
-      run: cd ./.github/actions/sync-snippet-action && npm ci
+      run: npm ci
+      working-directory: ./.github/actions/sync-snippet-action
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
