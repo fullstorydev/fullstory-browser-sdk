@@ -4,3 +4,4 @@ description: Synchronize the browser-sdk recording snippet with the latest versi
 runs:
   using: 'node12'
   main: 'main.js'
+  
