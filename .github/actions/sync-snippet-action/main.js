@@ -96,7 +96,7 @@ const run = async () => {
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: 'refs/heads/master'
+    base: context.ref, // 'refs/heads/master' since action is running on master branch
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
