@@ -11,9 +11,6 @@ const PR_TITLE = 'The FullStory snippet has been updated';
 const md5Hash = text => crypto.createHash('md5').update(text).digest('hex');
 
 const run = async () => {
-  const localSnippetHash = md5Hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
-  const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
-
   let remoteSnippetText;
   try {
     remoteSnippetText = (await axios.get(process.env.SNIPPET_ENDPOINT)).data;
@@ -23,6 +20,7 @@ const run = async () => {
   }
 
   const remoteSnippetHash = md5Hash(remoteSnippetText);
+  const localSnippetHash = md5Hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
   console.log(`remote snippet file hash: ${remoteSnippetHash}`);
 
   if (localSnippetHash === remoteSnippetHash) {
@@ -30,7 +28,6 @@ const run = async () => {
     return;
   }
 
-  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
   const { context } = github;
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
@@ -85,6 +82,7 @@ const run = async () => {
     parents: [context.sha],
   });
 
+  const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
   // create a branch https://octokit.github.io/rest.js/#octokit-routes-git-create-ref
   console.log(`creating new branch named ${branchName}`);
   await octokit.git.createRef({
@@ -102,6 +100,7 @@ const run = async () => {
     base: 'refs/heads/master'
   });
 
+  const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
   // https://octokit.github.io/rest.js/#octokit-routes-issues-add-assignees
   console.log('assigning PR to reviewers');
   await octokit.issues.addAssignees({
