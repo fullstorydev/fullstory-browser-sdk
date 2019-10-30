@@ -1,0 +1,6 @@
+# https://help.github.com/en/articles/metadata-syntax-for-github-actions
+name: Sync Snippet
+description: Synchronize the browser-sdk recording snippet with the latest version from FullStory
+runs:
+  using: 'node12'
+  main: 'main.js'
