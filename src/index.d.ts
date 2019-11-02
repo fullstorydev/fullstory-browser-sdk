@@ -13,7 +13,7 @@ export type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 export function consent(userConsents?: boolean): void;
 export function disableConsole(): void;
 export function enableConsole(): void;
-export function event(eventName: string, eventProperties: BrowserApiArg): string | null;
+export function event(eventName: string, eventProperties: BrowserApiArg): void;
 export function identify(uid: string, customVars?: BrowserApiArg): void;
 export function log(level: LogLevel, ...msg: any[]): void;
 export function log(...msg: any[]): void;
