@@ -43,9 +43,8 @@
     "rollup": "^1.20.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-copy": "^3.1.0",
+    "typescript": "^3.6.4",
     "webpack": "^4.38.0"
   },
-  "dependencies": {
-    "typescript": "^3.6.4"
-  }
+  "dependencies": {}
 }
