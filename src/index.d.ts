@@ -12,7 +12,7 @@ interface UserVars {
   [key: string]: any;
 }
 
-export type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
+type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 
 // API functions that are available as soon as the snippet has executed.
 export function anonymize(): void;
