@@ -21,12 +21,12 @@ export function disableConsole(): void;
 export function enableConsole(): void;
 export function event(eventName: string, eventProperties: { [key: string]: any }): void;
 export function identify(uid: string, customVars?: UserVars): void;
+export function init(options: SnippetOptions): void;
 export function log(level: LogLevel, ...msg: any[]): void;
 export function log(...msg: any[]): void;
 export function restart(): void;
 export function shutdown(): void;
 export function setUserVars(customVars: UserVars): void;
-export function init(options: SnippetOptions): void;
 
 // API functions that are available after /rec/page returns.
 // FullStory bootstrapping details: https://help.fullstory.com/hc/en-us/articles/360032975773
