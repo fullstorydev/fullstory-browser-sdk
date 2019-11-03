@@ -1,15 +1,15 @@
 interface SnippetOptions {
-  orgId: string,
-  namespace?: string,
-  debug?: boolean,
-  host?: string,
-  script?: string
+  orgId: string;
+  namespace?: string;
+  debug?: boolean;
+  host?: string;
+  script?: string;
 }
 
 interface UserVars {
-  displayName?: string,
-  email?: string,
-  [key: string]: any
+  displayName?: string;
+  email?: string;
+  [key: string]: any;
 }
 
 type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
