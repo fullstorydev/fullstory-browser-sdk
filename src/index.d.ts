@@ -29,4 +29,5 @@ export function setUserVars(customVars: UserVars): void;
 export function init(options: SnippetOptions): void;
 
 // API functions that are available after /rec/page returns.
+// FullStory bootstrapping details: https://help.fullstory.com/hc/en-us/articles/360032975773
 export function getCurrentSessionURL(now?: boolean): string | null;
