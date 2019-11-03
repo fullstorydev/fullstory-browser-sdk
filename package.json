@@ -14,7 +14,7 @@
     "test": "npm run lint && npm run test:karma",
     "test:karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "lint": "eslint src test .github/actions",
-    "build": "rollup -c",
+    "build": "tsc src/index.d.ts && rollup -c",
     "prepublishOnly": "npm run clean && npm run test && npm run build"
   },
   "files": [
@@ -45,5 +45,7 @@
     "rollup-plugin-copy": "^3.1.0",
     "webpack": "^4.38.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "typescript": "^3.6.4"
+  }
 }
