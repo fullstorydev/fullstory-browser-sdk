@@ -48,5 +48,6 @@ const initOnce = (fn, message) => (...args) => {
 };
 
 wrappedFS.init = initOnce(init, 'FullStory init has already been called once. Additional invocations are ignored');
+wrappedFS.anonymize = () => wrappedFS.identify(false);
 
 export default wrappedFS;
