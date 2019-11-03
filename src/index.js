@@ -5,7 +5,7 @@ const fs = () => window[window._fs_namespace];
 const ensureSnippetLoaded = () => {
   const snippetLoaded = !!fs();
   if (!snippetLoaded) {
-    throw Error('FullStory is not loaded, please ensure the FullStory snippet is executed before calling FullStory API functions');
+    throw Error('FullStory is not loaded, please ensure the init function is inviked before calling FullStory API functions');
   }
 };
 
