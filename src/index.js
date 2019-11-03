@@ -5,7 +5,7 @@ const fs = () => window[window._fs_namespace];
 const ensureSnippetLoaded = () => {
   const snippetLoaded = !!fs();
   if (!snippetLoaded) {
-    throw Error('FullStory is not loaded, please ensure the init function is inviked before calling FullStory API functions');
+    throw Error('FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions');
   }
 };
 
@@ -47,7 +47,7 @@ const initOnce = (fn, message) => (...args) => {
   window._fs_initialized = true;
 };
 
-wrappedFS.init = initOnce(init, 'FullStory init has already been called once. Additional invocations are ignored');
+wrappedFS.init = initOnce(init, 'FullStory init has already been called once, additional invocations are ignored');
 wrappedFS.anonymize = () => wrappedFS.identify(false);
 
 export default wrappedFS;
