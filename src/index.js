@@ -14,9 +14,9 @@ const hasFullStoryWithFunction = (...testNames) => {
   return testNames.every(current => fs()[current]);
 };
 
-const wrapFunction = name => (...params) => {
+const wrapFunction = name => (...args) => {
   if (hasFullStoryWithFunction(name)) {
-    return fs()[name](...params);
+    return fs()[name](...args);
   }
   console.warn(`FS.${name} not ready`); // eslint-disable-line no-console
   return null;
