@@ -7,9 +7,9 @@ interface SnippetOptions {
 }
 
 interface UserVars {
-  displayName?: string;
-  email?: string;
-  [key: string]: any;
+  displayName?: string,
+  email?: string,
+  [key: string]: any
 }
 
 type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
