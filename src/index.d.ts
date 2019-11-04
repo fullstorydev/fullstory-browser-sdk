@@ -23,8 +23,8 @@ export function init(options: SnippetOptions): void;
 export function log(level: LogLevel, msg: string): void;
 export function log(msg: string): void;
 export function restart(): void;
-export function shutdown(): void;
 export function setUserVars(customVars: UserVars): void;
+export function shutdown(): void;
 
 // API functions that are available after /rec/page returns.
 // FullStory bootstrapping details: https://help.fullstory.com/hc/en-us/articles/360032975773
