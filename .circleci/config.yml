@@ -1,3 +1,8 @@
+masterBranchOnly: &masterBranchOnly
+  filters:
+    branches:
+      only: "master"
+
 version: 2.1
 executors:
   browser-executor:
@@ -46,9 +51,12 @@ workflows:
   test-deploy:
     jobs:
       - build-browser-sdk
-#      - deploy-browser-sdk:
-#          requires:
-#           - build-browser-sdk
-#         filters:
-#           branches:
-#             only: "master"
+      - hold:
+          type: approval
+          requires:
+            - build-browser-sdk
+          <<: *masterBranchOnly
+      - deploy-browser-sdk:
+          requires:
+            - hold
+          <<: *masterBranchOnly
