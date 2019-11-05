@@ -12,11 +12,13 @@ beforeEach(() => {
 });
 
 describe('core', () => {
-  it('should define snippet functions', () => {
-    const functions = ['event',
+  it('should define browser API functions', () => {
+    const functions = ['anonymize',
+      'event',
       'log',
       'getCurrentSessionURL',
       'identify',
+      'init',
       'setUserVars',
       'consent',
       'shutdown',

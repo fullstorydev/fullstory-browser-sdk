@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
+import copy from 'rollup-plugin-copy';
 
 export default [	
 	{
@@ -10,7 +11,12 @@ export default [
 		plugins: [
 			babel({
 				exclude: ['node_modules/**']
-			})
+			}),
+			copy({
+				targets: [
+					{ src: 'src/index.d.ts', dest: 'dist' },
+				]
+			}),
 		]
 	}
 ];

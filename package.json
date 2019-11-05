@@ -8,12 +8,13 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
     "test": "npm run lint && npm run test:karma",
     "test:karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "lint": "eslint src test .github/actions",
-    "build": "rollup -c",
+    "build": "tsc src/index.d.ts && rollup -c",
     "prepublishOnly": "npm run clean && npm run test && npm run build"
   },
   "files": [
@@ -41,6 +42,8 @@
     "rimraf": "^2.6.2",
     "rollup": "^1.20.3",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-copy": "^3.1.0",
+    "typescript": "^3.6.4",
     "webpack": "^4.38.0"
   },
   "dependencies": {}
