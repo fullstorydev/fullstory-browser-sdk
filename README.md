@@ -19,7 +19,7 @@ import App from './App';
 import FullStory from 'TBD/package-to-be-deployed';
 
 
-FullStory.init('<your org id here>');
+FullStory.init({ orgId: '<your org id here>' });
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```

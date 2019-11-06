@@ -14,8 +14,7 @@
     "test": "npm run lint && npm run test:karma",
     "test:karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "lint": "eslint src test .github/actions",
-    "build": "tsc src/index.d.ts && rollup -c",
-    "prepublishOnly": "npm run clean && npm run test && npm run build"
+    "build": "tsc src/index.d.ts && rollup -c"
   },
   "files": [
     "dist",

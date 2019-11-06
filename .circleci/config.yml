@@ -15,7 +15,6 @@ jobs:
       - run:
           name: Install
           command: npm ci && (cd .github/actions/sync-snippet-action && npm ci)
-
       - save_cache:
           paths:
             - node_modules
@@ -27,6 +26,9 @@ jobs:
       - run:
           name: Test
           command: npm test
+      - run:
+          name: Build
+          command: npm run build
       - persist_to_workspace:
           root: .
           paths: .
@@ -46,9 +48,13 @@ workflows:
   test-deploy:
     jobs:
       - build-browser-sdk
-#      - deploy-browser-sdk:
-#          requires:
-#           - build-browser-sdk
-#         filters:
-#           branches:
-#             only: "master"
+      - hold:
+          type: approval
+          requires:
+            - build-browser-sdk
+          filters:
+            branches:
+              only: "master"
+      - deploy-browser-sdk:
+          requires:
+            - hold
