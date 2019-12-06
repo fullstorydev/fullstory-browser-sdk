@@ -16,5 +16,5 @@ jobs:
     - name: Sync snippet
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SNIPPET_ENDPOINT: http://dev-fs-com.s3-website-us-east-1.amazonaws.com/snippet.js
+        SNIPPET_ENDPOINT: https://api.staging.fullstory.com/code/v1/snippet?type=esm
       uses: ./.github/actions/sync-snippet-action
