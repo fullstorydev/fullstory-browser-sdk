@@ -28,8 +28,6 @@ const run = async () => {
   }
 
   const { context } = github;
-  console.log(JSON.stringify(github));
-  console.log(JSON.stringify(context));
   const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   const repoInfo = {
