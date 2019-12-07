@@ -48,7 +48,7 @@ const run = async () => {
   }
 
   console.log('getting source tree from master');
-  const getCommitResponse  = await octokit.git.getCommit({
+  const getCommitResponse = await octokit.git.getCommit({
     ...repoInfo,
     commit_sha: LATEST_COMMIT_SHA,
   });
