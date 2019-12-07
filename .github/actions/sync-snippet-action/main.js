@@ -7,6 +7,7 @@ const axios = require('axios').default;
 
 const SNIPPET_PATH = 'src/snippet.js';
 const PR_TITLE = 'The FullStory snippet has been updated';
+const LATEST_COMMIT_SHA = process.env.GITHUB_SHA;
 
 const md5Hash = text => crypto.createHash('md5').update(text).digest('hex');
 
@@ -27,13 +28,10 @@ const run = async () => {
     return;
   }
 
-  const { context } = github;
-  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+  const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+  const repoInfo = { owner, repo };
 
-  const repoInfo = {
-    owner: context.payload.repository.owner.name,
-    repo: context.payload.repository.name,
-  };
+  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
 
   const openPRs = await octokit.pulls.list({
     ...repoInfo,
@@ -50,9 +48,14 @@ const run = async () => {
   }
 
   console.log('getting source tree from master');
+  const getCommitResponse  = await octokit.git.getCommit({
+    ...repoInfo,
+    commit_sha: LATEST_COMMIT_SHA,
+  });
+
   const getTreeResponse = await octokit.git.getTree({
     ...repoInfo,
-    tree_sha: context.payload.head_commit.tree_id,
+    tree_sha: getCommitResponse.data.tree.sha,
     recursive: 1,
   });
 
@@ -78,7 +81,7 @@ const run = async () => {
     ...repoInfo,
     message: `updated ${SNIPPET_PATH}`,
     tree: createTreeResponse.data.sha,
-    parents: [context.sha],
+    parents: [LATEST_COMMIT_SHA],
   });
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
@@ -96,7 +99,7 @@ const run = async () => {
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: context.ref, // 'refs/heads/master' if action is running on master branch
+    base: process.env.GITHUB_REF, // 'refs/heads/master' if action is running on master branch
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
