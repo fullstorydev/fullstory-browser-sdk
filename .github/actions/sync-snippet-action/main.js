@@ -7,14 +7,21 @@ const axios = require('axios').default;
 
 const SNIPPET_PATH = 'src/snippet.js';
 const PR_TITLE = 'The FullStory snippet has been updated';
-const LATEST_COMMIT_SHA = process.env.GITHUB_SHA;
+
+const {
+  SNIPPET_ENDPOINT,
+  GITHUB_REPOSITORY,
+  GITHUB_TOKEN,
+  GITHUB_SHA,
+  GITHUB_REF
+} = process.env;
 
 const md5Hash = text => crypto.createHash('md5').update(text).digest('hex');
 
 const run = async () => {
   let remoteSnippetText;
   try {
-    remoteSnippetText = (await axios.get(process.env.SNIPPET_ENDPOINT)).data;
+    remoteSnippetText = (await axios.get(SNIPPET_ENDPOINT)).data;
   } catch (e) {
     core.setFailed(e.message);
     throw e;
@@ -28,10 +35,10 @@ const run = async () => {
     return;
   }
 
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+  const [owner, repo] = GITHUB_REPOSITORY.split('/');
   const repoInfo = { owner, repo };
 
-  const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+  const octokit = new github.GitHub(GITHUB_TOKEN);
 
   const openPRs = await octokit.pulls.list({
     ...repoInfo,
@@ -50,7 +57,7 @@ const run = async () => {
   console.log('getting source tree from master');
   const getCommitResponse = await octokit.git.getCommit({
     ...repoInfo,
-    commit_sha: LATEST_COMMIT_SHA,
+    commit_sha: GITHUB_SHA,
   });
 
   const getTreeResponse = await octokit.git.getTree({
@@ -81,7 +88,7 @@ const run = async () => {
     ...repoInfo,
     message: `updated ${SNIPPET_PATH}`,
     tree: createTreeResponse.data.sha,
-    parents: [LATEST_COMMIT_SHA],
+    parents: [GITHUB_SHA],
   });
 
   const branchName = `refs/heads/snippetbot/updated-snippet-${Date.now()}`;
@@ -99,7 +106,7 @@ const run = async () => {
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: process.env.GITHUB_REF, // 'refs/heads/master' if action is running on master branch
+    base: GITHUB_REF, // 'refs/heads/master' if action is running on master branch
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
