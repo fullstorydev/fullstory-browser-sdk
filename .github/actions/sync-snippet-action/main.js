@@ -16,7 +16,7 @@ const {
   GITHUB_REF
 } = process.env;
 
-const md5Hash = text => crypto.createHash('md5').update(text).digest('hex');
+const md5Hash = text => crypto.createHash('sha256').update(text).digest('hex');
 
 const run = async () => {
   let remoteSnippetText;
