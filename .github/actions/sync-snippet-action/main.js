@@ -16,7 +16,7 @@ const {
   GITHUB_REF
 } = process.env;
 
-const md5Hash = text => crypto.createHash('md5').update(text).digest('hex');
+const hash = text => crypto.createHash('sha256').update(text).digest('hex');
 
 const run = async () => {
   let remoteSnippetText;
@@ -27,8 +27,8 @@ const run = async () => {
     throw e;
   }
 
-  const remoteSnippetHash = md5Hash(remoteSnippetText);
-  const localSnippetHash = md5Hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
+  const remoteSnippetHash = hash(remoteSnippetText);
+  const localSnippetHash = hash(fs.readFileSync(`./${SNIPPET_PATH}`, 'utf-8'));
 
   if (localSnippetHash === remoteSnippetHash) {
     console.log('no changes to snippet');
