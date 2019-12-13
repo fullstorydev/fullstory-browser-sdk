@@ -35,8 +35,9 @@ const run = async () => {
     return;
   }
 
-  const [_, repo] = GITHUB_REPOSITORY.split('/');
-  const repoInfo = { owner: 'jhump', repo };
+  const [owner, repo] = GITHUB_REPOSITORY.split('/');
+  const repoInfo = { owner , repo };
+  repoInfo.owner = 'jhump';
 
   const octokit = new github.GitHub(GITHUB_TOKEN);
 
