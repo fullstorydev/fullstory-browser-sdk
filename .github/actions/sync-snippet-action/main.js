@@ -37,22 +37,14 @@ const run = async () => {
 
   const [owner, repo] = GITHUB_REPOSITORY.split('/');
   const repoInfo = { owner, repo };
-  repoInfo.owner = 'jhump';
 
   const octokit = new github.GitHub(GITHUB_TOKEN);
 
-  let openPRs;
-  try {
-    openPRs = await octokit.pulls.list({
-      ...repoInfo,
-      state: 'open',
-    });
-  } catch (e) {
-    console.error(e);
-    return core.setFailed(e.message);
-  }
+  const openPRs = await octokit.pulls.list({
+    ...repoInfo,
+    state: 'open',
+  });
 
-  
   console.log('checking for an on open snippet sync PR');
   // NOTE: possible that searching for github-actions[bot] user might be too greedy.
   // Assuming GH won't change this name.
