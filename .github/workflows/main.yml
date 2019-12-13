@@ -1,8 +1,8 @@
 name: sync-snippet
 
-on:
-  schedule:
-    - cron:  '0 0 * * *' # every 24 hours
+on: push
+  #schedule:
+  #  - cron:  '0 0 * * *' # every 24 hours
 
 jobs:
   sync:
