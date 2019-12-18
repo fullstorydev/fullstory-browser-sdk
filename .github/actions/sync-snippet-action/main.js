@@ -13,7 +13,6 @@ const {
   GITHUB_REPOSITORY,
   GITHUB_TOKEN,
   GITHUB_SHA,
-  GITHUB_REF
 } = process.env;
 
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
@@ -106,7 +105,7 @@ const run = async () => {
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: GITHUB_REF, // 'refs/heads/master' if action is running on master branch
+    base: 'master', // hard-coding this value, rather than use GITHUB_REF env var as a work-around to a bug in GitHub
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
