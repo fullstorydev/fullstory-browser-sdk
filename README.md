@@ -2,8 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk.svg?style=svg)](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk)
 
-## This is a WIP and is not currently published to NPM
-
 FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory API can be found at https://developer.fullstory.com.
 
 ## Initialize the SDK
@@ -16,7 +14,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import FullStory from 'TBD/package-to-be-deployed';
+import FullStory from '@fullstorydev/browser';
 
 
 FullStory.init({ orgId: '<your org id here>' });
