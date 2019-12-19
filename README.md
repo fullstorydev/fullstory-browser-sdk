@@ -4,6 +4,13 @@
 
 FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory API can be found at https://developer.fullstory.com.
 
+
+## Install the SDK
+
+```
+npm i @fullstorydev/browser --save
+```
+
 ## Initialize the SDK
 
 Call the `init()` function as soon as you can in your website startup process. 
