@@ -1,5 +1,5 @@
 import { assert, expect } from 'chai';
-import FullStory from '../src';
+import * as FullStory from '../src';
 
 const testOrg = '123';
 
