@@ -44,3 +44,13 @@ describe('init', () => {
     expect(window._fs_org).to.equal(testOrg);
   });
 });
+
+describe('getCurrentSessionURL', () => {
+  it('should return null before fs.js is fully bootstrapped', () => {
+    FullStory.init({ orgId: 'test' });
+    // in theory, this is a race condition - assuming that fs.js
+    // can't load by the time the following statement is executed
+    const url = FullStory.getCurrentSessionURL();
+    assert.equal(url, null, 'FullStory.getCurrentSessionURL() should return null if executed before fs.js is fully bootstrapped');
+  });
+});
