@@ -21,7 +21,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import FullStory from '@fullstorydev/browser';
+import * as FullStory from '@fullstorydev/browser';
 
 
 FullStory.init({ orgId: '<your org id here>' });

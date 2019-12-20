@@ -27,7 +27,7 @@ const wrappedFS = ['event', 'log', 'getCurrentSessionURL', 'identify', 'setUserV
   return acc;
 }, {});
 
-const init = (options) => {
+const _init = (options) => {
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
@@ -47,7 +47,31 @@ const initOnce = (fn, message) => (...args) => {
   window._fs_initialized = true;
 };
 
-wrappedFS.init = initOnce(init, 'FullStory init has already been called once, additional invocations are ignored');
+wrappedFS.init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
 wrappedFS.anonymize = () => wrappedFS.identify(false);
 
-export default wrappedFS;
+const {
+  anonymize,
+  consent,
+  event,
+  getCurrentSessionURL,
+  identify,
+  init,
+  log,
+  restart,
+  setUserVars,
+  shutdown,
+} = wrappedFS;
+
+export {
+  anonymize,
+  consent,
+  event,
+  getCurrentSessionURL,
+  identify,
+  init,
+  log,
+  restart,
+  setUserVars,
+  shutdown,
+};
