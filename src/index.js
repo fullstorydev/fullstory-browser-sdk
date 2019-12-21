@@ -14,7 +14,7 @@ const hasFullStoryWithFunction = (...testNames) => {
   return testNames.every(current => fs()[current]);
 };
 
-const wrapFunction = name => (...args) => {
+const guard = name => (...args) => {
   if (hasFullStoryWithFunction(name)) {
     return fs()[name](...args);
   }
@@ -42,13 +42,13 @@ const initOnce = (fn, message) => (...args) => {
   window._fs_initialized = true;
 };
 
-export const event = wrapFunction('event');
-export const log = wrapFunction('log');
-export const getCurrentSessionURL = wrapFunction('getCurrentSessionURL');
-export const identify = wrapFunction('identify');
-export const setUserVars = wrapFunction('setUserVars');
-export const consent = wrapFunction('consent');
-export const shutdown = wrapFunction('shutdown');
-export const restart = wrapFunction('restart');
+export const event = guard('event');
+export const log = guard('log');
+export const getCurrentSessionURL = guard('getCurrentSessionURL');
+export const identify = guard('identify');
+export const setUserVars = guard('setUserVars');
+export const consent = guard('consent');
+export const shutdown = guard('shutdown');
+export const restart = guard('restart');
 export const anonymize = () => identify(false);
 export const init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
