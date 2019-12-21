@@ -47,7 +47,7 @@ describe('init', () => {
 
 describe('getCurrentSessionURL', () => {
   it('should return null before fs.js is fully bootstrapped', () => {
-    FullStory.init({ orgId: 'test' });
+    FullStory.init({ orgId: testOrg });
     // in theory, this is a race condition - assuming that fs.js
     // can't load by the time the following statement is executed
     const url = FullStory.getCurrentSessionURL();
