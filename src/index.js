@@ -14,18 +14,13 @@ const hasFullStoryWithFunction = (...testNames) => {
   return testNames.every(current => fs()[current]);
 };
 
-const wrapFunction = name => (...args) => {
+const guard = name => (...args) => {
   if (hasFullStoryWithFunction(name)) {
     return fs()[name](...args);
   }
   console.warn(`FS.${name} not ready`); // eslint-disable-line no-console
   return null;
 };
-
-const wrappedFS = ['event', 'log', 'getCurrentSessionURL', 'identify', 'setUserVars', 'consent', 'shutdown', 'restart'].reduce((acc, current) => {
-  acc[current] = wrapFunction(current);
-  return acc;
-}, {});
 
 const _init = (options) => {
   if (fs()) {
@@ -47,31 +42,13 @@ const initOnce = (fn, message) => (...args) => {
   window._fs_initialized = true;
 };
 
-wrappedFS.init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
-wrappedFS.anonymize = () => wrappedFS.identify(false);
-
-const {
-  anonymize,
-  consent,
-  event,
-  getCurrentSessionURL,
-  identify,
-  init,
-  log,
-  restart,
-  setUserVars,
-  shutdown,
-} = wrappedFS;
-
-export {
-  anonymize,
-  consent,
-  event,
-  getCurrentSessionURL,
-  identify,
-  init,
-  log,
-  restart,
-  setUserVars,
-  shutdown,
-};
+export const event = guard('event');
+export const log = guard('log');
+export const getCurrentSessionURL = guard('getCurrentSessionURL');
+export const identify = guard('identify');
+export const setUserVars = guard('setUserVars');
+export const consent = guard('consent');
+export const shutdown = guard('shutdown');
+export const restart = guard('restart');
+export const anonymize = () => identify(false);
+export const init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
