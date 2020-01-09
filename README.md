@@ -7,13 +7,13 @@ FullStory's browser SDK lets you manage FullStory recording on your site as well
 
 ## Install the SDK
 
-### with npm
+#### with npm
 
 ```
 npm i @fullstorydev/browser --save
 ```
 
-### with yarn
+#### with yarn
 ```
 yarn add @fullstorydev/browser
 ```
