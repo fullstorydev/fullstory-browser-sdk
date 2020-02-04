@@ -1,7 +1,7 @@
 {
-  "name": "@fullstorydev/browser",
-  "version": "2.0.3",
-  "description": "Please use @fullstory/browser",
+  "name": "@fullstory/browser",
+  "version": "1.0.1",
+  "description": "The official FullStory browser SDK",
   "repository": "git://github.com/fullstorydev/fullstory-browser-sdk.git",
   "homepage": "https://github.com/fullstorydev/fullstory-browser-sdk",
   "author": "FullStory",
@@ -19,6 +19,11 @@
   "files": [
     "dist",
     "src"
+  ],
+  "keywords": [
+    "fullstory",
+    "browser",
+    "sdk"
   ],
   "devDependencies": {
     "@babel/core": "^7.0.0",
