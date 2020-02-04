@@ -10,12 +10,12 @@ FullStory's browser SDK lets you manage FullStory recording on your site as well
 #### with npm
 
 ```
-npm i @fullstorydev/browser --save
+npm i @fullstory/browser --save
 ```
 
 #### with yarn
 ```
-yarn add @fullstorydev/browser
+yarn add @fullstory/browser
 ```
 
 ## Initialize the SDK
@@ -28,7 +28,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as FullStory from '@fullstorydev/browser';
+import * as FullStory from '@fullstory/browser';
 
 
 FullStory.init({ orgId: '<your org id here>' });
