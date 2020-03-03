@@ -7,7 +7,7 @@
   "author": "FullStory",
   "license": "MIT",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
