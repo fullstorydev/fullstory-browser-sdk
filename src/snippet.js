@@ -31,6 +31,7 @@ window['_fs_namespace'] = namespace;
     g.clearUserCookie=function(){};
     g._w={};y='XMLHttpRequest';g._w[y]=m[y];y='fetch';g._w[y]=m[y];
     if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
+    g._v="1.1.1";
 })(window,document,window['_fs_namespace'],'script','user');
   /* end FullStory snippet */
 };
