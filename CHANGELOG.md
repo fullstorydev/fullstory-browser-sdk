@@ -2,7 +2,7 @@
 
 ## 1.2.1
 
-Autmoatic snippet update from FullStory
+Automatic snippet update from FullStory
 
 ## 1.2.0
 
