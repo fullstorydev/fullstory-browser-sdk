@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+Automatic snippet update from FullStory
+
 ## 1.2.0
 
 Supporting CommonJS builds
