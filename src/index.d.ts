@@ -18,7 +18,7 @@ type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 export function anonymize(): void;
 export function consent(userConsents?: boolean): void;
 export function event(eventName: string, eventProperties: { [key: string]: any }): void;
-export function identify(uid: string, customVars?: UserVars): void;
+export function identify(uid: string | boolean, customVars?: UserVars): void;
 export function init(options: SnippetOptions): void;
 export function log(level: LogLevel, msg: string): void;
 export function log(msg: string): void;
