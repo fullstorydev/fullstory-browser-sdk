@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+Update npm package dependancies on the acorn package to get a clean npm audit
+
 ## 1.2.1
 
 Automatic snippet update from FullStory
