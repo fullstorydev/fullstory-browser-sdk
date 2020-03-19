@@ -50,5 +50,5 @@ export const setUserVars = guard('setUserVars');
 export const consent = guard('consent');
 export const shutdown = guard('shutdown');
 export const restart = guard('restart');
-export const anonymize = () => identify(false);
+export const anonymize = guard('anonymize');
 export const init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
