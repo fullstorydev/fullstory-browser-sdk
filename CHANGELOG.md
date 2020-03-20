@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3
+
+* Incorporate FS.anonymize method now included in the core snippet
+* Update minimist version for package dev package dependancies to fix npm audit alert
+
 ## 1.2.2
 
 Update npm package dependancies on the acorn package to get a clean npm audit
