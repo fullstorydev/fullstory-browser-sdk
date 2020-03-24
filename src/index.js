@@ -52,3 +52,7 @@ export const shutdown = guard('shutdown');
 export const restart = guard('restart');
 export const anonymize = guard('anonymize');
 export const init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
+export const IFrameOption = {
+  RecordCrossDomainIFrame: '_fs_run_in_iframe',
+  RecordOnlyIFrame: '_fs_is_outer_script',
+};
