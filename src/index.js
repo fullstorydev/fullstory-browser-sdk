@@ -29,6 +29,10 @@ const _init = (options) => {
     return;
   }
 
+  if (options.iFrameOption) {
+    window[options.iFrameOption] = true;
+  }
+
   snippet(options);
 };
 
