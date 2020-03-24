@@ -26,7 +26,7 @@ Call the `init()` function with options as soon as you can in your website start
 | ------ | -------- | ----------- |
 | orgId  | yes | Your FullStory Org ID |
 | debug | no | Enables FullStory recording debug messages; defaults to `false` |
-| iFrameOption | no | Controls recording of iFrames; read the security implications if using `RecordCrossDomainIFrame` in [help](https://help.fullstory.com/hc/en-us/articles/360020622514) |
+| iFrameOption | no | Controls recording of iFrames: use either `RecordCrossDomainIFrame` or `RecordOnlyIFrame`. Before using `RecordCrossDomainIFrame`, review the security note for `_fs_run_in_iframe` in [help](https://help.fullstory.com/hc/en-us/articles/360020622514). |
 | namespace | no | Global identifier of FullStory used when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-) |
 
 Here's an example of what this would look like in a React app:
