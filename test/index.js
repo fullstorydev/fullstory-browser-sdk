@@ -49,7 +49,6 @@ describe('init', () => {
       orgId: testOrg,
       iFrameOption: FullStory.IFrameOption.RecordCrossDomainIFrame,
     });
-    console.log(`iframeoption ${window.iframeoption}`);
     expect(window._fs_run_in_iframe).to.equal(true);
   });
 
