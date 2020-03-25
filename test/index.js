@@ -43,6 +43,22 @@ describe('init', () => {
     FullStory.init({ orgId: testOrg });
     expect(window._fs_org).to.equal(testOrg);
   });
+
+  it('should add _fs_run_in_iframe value to window object', () => {
+    FullStory.init({
+      orgId: testOrg,
+      recordCrossDomainIFrames: true,
+    });
+    expect(window._fs_run_in_iframe).to.equal(true);
+  });
+
+  it('should add _fs_is_outer_script value to window object', () => {
+    FullStory.init({
+      orgId: testOrg,
+      recordOnlyThisIFrame: true,
+    });
+    expect(window._fs_is_outer_script).to.equal(true);
+  });
 });
 
 describe('getCurrentSessionURL', () => {
