@@ -47,7 +47,7 @@ describe('init', () => {
   it('should add _fs_run_in_iframe value to window object', () => {
     FullStory.init({
       orgId: testOrg,
-      iFrameOption: FullStory.IFrameOption.RecordCrossDomainIFrame,
+      iFrameOption: FullStory.IFrameOptions.RecordCrossDomainIFrame,
     });
     expect(window._fs_run_in_iframe).to.equal(true);
   });
@@ -55,7 +55,7 @@ describe('init', () => {
   it('should add _fs_is_outer_script value to window object', () => {
     FullStory.init({
       orgId: testOrg,
-      iFrameOption: FullStory.IFrameOption.RecordOnlyIFrame,
+      iFrameOption: FullStory.IFrameOptions.RecordOnlyIFrame,
     });
     expect(window._fs_is_outer_script).to.equal(true);
   });

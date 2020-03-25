@@ -4,13 +4,13 @@ interface SnippetOptions {
   debug?: boolean;
   host?: string;
   script?: string;
-  iFrameOption?: IFrameOption;
+  iFrameOption?: IFrameOptions;
 }
 
 // recording options for iframes
 // `RecordCrossDomainIFrame` has security implications
 // see https://help.fullstory.com/hc/en-us/articles/360020622514
-export enum IFrameOption {
+export enum IFrameOptions {
   RecordCrossDomainIFrame = '_fs_run_in_iframe',
   RecordOnlyIFrame = '_fs_is_outer_script',
 }
