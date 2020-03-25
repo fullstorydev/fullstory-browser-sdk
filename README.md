@@ -45,7 +45,7 @@ FullStory.init({ orgId: '<your org id here>' });
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Here's an example of initializing the SDK in an Angular app.
+Here's an example of initializing the SDK in an Angular app with debug enabled for troubleshooting purposes.
 
 ```javascript
 import { Component } from '@angular/core';
@@ -59,10 +59,9 @@ import * as FullStory from '@fullstory/browser';
 export class AppComponent {
 
   constructor() {
-    FullStory.init({ orgId: '<your org id here>', recordCrossDomainIFrames: true });
+    FullStory.init({ orgId: '<your org id here>', debug: true });
   }
 }
-
 ```
 
 ## Using the SDK
