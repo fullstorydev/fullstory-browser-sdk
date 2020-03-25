@@ -39,6 +39,8 @@ When set to `true`, FullStory is added to cross-domain IFrames and records conte
 #### `recordOnlyThisIFrame` (optional)
 When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running Fullstory, but you want your content sent to a different FullStory org.
 
+### Initialization Examples
+
 Here's an example of initializing the SDK in a React app.
 
 ```JSX
