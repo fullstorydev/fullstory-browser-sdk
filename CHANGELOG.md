@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.4
+## 1.3.0
 
 * Added init() options that control IFrame recording
 * Updated README to include option descriptions and usage
