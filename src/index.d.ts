@@ -4,6 +4,8 @@ interface SnippetOptions {
   debug?: boolean;
   host?: string;
   script?: string;
+  recordCrossDomainIFrames?: boolean;
+  recordOnlyThisIFrame?: boolean;      // see README for details
 }
 
 interface UserVars {

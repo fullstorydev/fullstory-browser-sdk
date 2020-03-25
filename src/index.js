@@ -29,6 +29,16 @@ const _init = (options) => {
     return;
   }
 
+  // inject FullStory into cross domain iFrames and record them
+  if (options.recordCrossDomainIFrames) {
+    window._fs_run_in_iframe = true;
+  }
+
+  // record the contents of this iFrame when embedded in a parent site
+  if (options.recordOnlyThisIFrame) {
+    window._fs_is_outer_script = true;
+  }
+
   snippet(options);
 };
 

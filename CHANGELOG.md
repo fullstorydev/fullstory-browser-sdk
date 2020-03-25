@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+* Added init() options that control IFrame recording
+* Updated README to include option descriptions and usage
+* Updated README with Angular example
+
 ## 1.2.3
 
 * Incorporate FS.anonymize method now included in the core snippet
