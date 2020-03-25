@@ -24,19 +24,19 @@ Call the `init()` function with options as soon as you can in your website start
 
 ### Configuration Options
 
-##### orgId (required)
+#### `orgId` (required)
 Sets your FullStory Org ID.
 
-##### debug (optional)
+#### `debug` (optional)
 When set to `true`, enables FullStory debug messages; defaults to `false`.
 
-##### namespace (optional)
+#### `namespace` (optional)
 Sets the global identifier for FullStory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
 
-##### recordCrossDomainIFrames (optional)
+#### `recordCrossDomainIFrames` (optional)
 When set to `true`, FullStory is added to cross-domain IFrames and records content; defaults to `false`. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers.
 
-##### recordOnlyThisIFrame (optional)
+#### `recordOnlyThisIFrame` (optional)
 When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running Fullstory, but you want your content sent to a different FullStory org.
 
 Here's an example of initializing the SDK in a React app.
