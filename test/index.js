@@ -3,9 +3,20 @@ import * as FullStory from '../src';
 
 const testOrg = '123';
 
+const snippetFunctions = ['anonymize',
+  'event',
+  'log',
+  'getCurrentSessionURL',
+  'identify',
+  'setUserVars',
+  'consent',
+  'shutdown',
+  'restart'];
+
 beforeEach(() => {
   if (window[window._fs_namespace]) {
     delete window._fs_initialized;
+    delete window._fs_dev_mode;
     delete window[window._fs_namespace];
     delete window._fs_namespace;
   }
@@ -13,16 +24,9 @@ beforeEach(() => {
 
 describe('core', () => {
   it('should define browser API functions', () => {
-    const functions = ['anonymize',
-      'event',
-      'log',
-      'getCurrentSessionURL',
-      'identify',
-      'init',
-      'setUserVars',
-      'consent',
-      'shutdown',
-      'restart'];
+    const functions = ['init',
+      ...snippetFunctions
+    ];
 
     functions.forEach(i => assert(typeof FullStory[i] === 'function', `${i} has not been exported from the FullStory module`));
   });
@@ -58,6 +62,28 @@ describe('init', () => {
       recordOnlyThisIFrame: true,
     });
     expect(window._fs_is_outer_script).to.equal(true);
+  });
+
+  it('should add _fs_dev_mode value to window when initialzed with devMode', () => {
+    FullStory.init({
+      orgId: testOrg,
+      devMode: true,
+    });
+
+    expect(window._fs_dev_mode).to.equal(true);
+  });
+});
+
+describe('devMode', () => {
+  it('should return the same message for all functions invoked when in devMode', () => {
+    FullStory.init({
+      orgId: testOrg,
+      devMode: true,
+    });
+
+    const returnValues = snippetFunctions.map(f => FullStory[f]());
+
+    expect(returnValues.every(v => v === returnValues[0])).to.equal(true);
   });
 });
 

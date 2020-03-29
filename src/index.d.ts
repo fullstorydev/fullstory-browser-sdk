@@ -6,6 +6,7 @@ interface SnippetOptions {
   script?: string;
   recordCrossDomainIFrames?: boolean;
   recordOnlyThisIFrame?: boolean;      // see README for details
+  devMode?: boolean;
 }
 
 interface UserVars {
