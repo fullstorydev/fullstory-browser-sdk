@@ -59,7 +59,7 @@ const _init = (options) => {
 
   if (options.devMode) {
     event('FullStory Dev Mode', {
-      message: 'FullStory was initialized in devMode and will stop recording',
+      message_str: 'FullStory was initialized in devMode and will stop recording',
     });
     shutdown();
     window._fs_dev_mode = true;
