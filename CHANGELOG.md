@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- Adding `devMode` configuration option
+
 ## 1.3.1
 
 - Reformatting init() options doc in the README
