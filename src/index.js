@@ -64,7 +64,7 @@ const _init = (options) => {
     });
     shutdown();
     window._fs_dev_mode = true;
-    console.warn(message); // eslint-disable-line no-console 
+    console.warn(message); // eslint-disable-line no-console
   }
 };
 
