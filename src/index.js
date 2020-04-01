@@ -16,7 +16,7 @@ const hasFullStoryWithFunction = (...testNames) => {
 
 const guard = name => (...args) => {
   if (window._fs_dev_mode) {
-    const message = 'FullStory is in dev mode and is not recording';
+    const message = `FullStory is in dev mode and is not recording: ${name} method not executed`;
     console.warn(message); // eslint-disable-line no-console
     return message;
   }

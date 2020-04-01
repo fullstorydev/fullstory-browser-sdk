@@ -75,7 +75,7 @@ describe('init', () => {
 });
 
 describe('devMode', () => {
-  it('should return the same message for all functions invoked when in devMode', () => {
+  it('should return a message for all functions invoked when in devMode', () => {
     FullStory.init({
       orgId: testOrg,
       devMode: true,
@@ -83,7 +83,7 @@ describe('devMode', () => {
 
     const returnValues = snippetFunctions.map(f => FullStory[f]());
 
-    expect(returnValues.every(v => v === returnValues[0])).to.equal(true);
+    expect(returnValues.every(v => typeof v === 'string')).to.equal(true);
   });
 });
 
