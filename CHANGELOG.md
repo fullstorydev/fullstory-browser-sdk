@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- Updated Angular sample to demo `devMode` configuration option
+
 ## 1.4.0
 
 - Adding `devMode` configuration option
