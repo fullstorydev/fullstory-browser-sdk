@@ -57,7 +57,7 @@ const _init = (options) => {
 
   snippet(options);
 
-  if (options.devMode) {
+  if (options.devMode === true) {
     event('FullStory Dev Mode', {
       message_str: 'FullStory was initialized in devMode and will stop recording',
     });
