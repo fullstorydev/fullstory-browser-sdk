@@ -58,11 +58,13 @@ const _init = (options) => {
   snippet(options);
 
   if (options.devMode === true) {
+    const message = 'FullStory was initialized in devMode and will stop recording';
     event('FullStory Dev Mode', {
-      message_str: 'FullStory was initialized in devMode and will stop recording',
+      message_str: message,
     });
     shutdown();
     window._fs_dev_mode = true;
+    console.warn(message); // eslint-disable-line no-console 
   }
 };
 
