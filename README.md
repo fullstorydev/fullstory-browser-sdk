@@ -30,8 +30,8 @@ The only required option is `orgId`, all others are optional.
 *  `debug` - When set to `true`, enables FullStory debug messages; defaults to `false`.
 * `namespace` - Sets the global identifier for FullStory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
 * `recordCrossDomainIFrames` - When set to `true`, FullStory is added to cross-domain IFrames and records content; defaults to `false`. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers.
-* `recordOnlyThisIFrame` - When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running Fullstory, but you want your content sent to a different FullStory org.
-* `devMode` - Set to `true` if you want to deactivate FullStory in your development environment. When set to `true`, FullStory will shutdown recordng and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to FullStory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionaly, any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
+* `recordOnlyThisIFrame` - When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running FullStory, but you want your content sent to a different FullStory org.
+* `devMode` - Set to `true` if you want to deactivate FullStory in your development environment. When set to `true`, FullStory will shutdown recording and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to FullStory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionally, any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
 
 ### Initialization Examples
 
@@ -50,11 +50,12 @@ FullStory.init({ orgId: '<your org id here>' });
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Here's an example of initializing the SDK in an Angular app with debug enabled for troubleshooting purposes.
+Here's an example of initializing the SDK in an Angular app with `devMode` enabled to stop recording work in progress.
 
 ```javascript
 import { Component } from '@angular/core';
 import * as FullStory from '@fullstory/browser';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -64,7 +65,8 @@ import * as FullStory from '@fullstory/browser';
 export class AppComponent {
 
   constructor() {
-    FullStory.init({ orgId: '<your org id here>', devMode: process.env.NODE_ENV === 'dev' });
+    FullStory.init({ orgId: '<your org id here>',
+      devMode: !environment.production });
   }
 }
 ```
