@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.2
+
+- Nothing to see here - bumping the version to fix a faulty CircleCI build
+
 ## 1.4.1
 
 - Updated Angular sample to demo `devMode` configuration option
