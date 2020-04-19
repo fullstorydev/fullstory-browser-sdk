@@ -2,7 +2,7 @@
 
 ## 1.4.3
 
-- Updating README to include link to instructions on how to find the FullStory Org Id
+- Updating README to include a link to instructions on how to find the FullStory Org Id
 
 ## 1.4.2
 
