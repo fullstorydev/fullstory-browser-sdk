@@ -26,7 +26,7 @@ Call the `init()` function with options as soon as you can in your website start
 
 The only required option is `orgId`, all others are optional.
 
-*  `orgId` -  Sets your FullStory Org ID.
+*  `orgId` -  Sets your FullStory Org Id. Find out how to get your Org Id [here](https://help.fullstory.com/hc/en-us/articles/360047075853).
 *  `debug` - When set to `true`, enables FullStory debug messages; defaults to `false`.
 * `namespace` - Sets the global identifier for FullStory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
 * `recordCrossDomainIFrames` - When set to `true`, FullStory is added to cross-domain IFrames and records content; defaults to `false`. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers.
