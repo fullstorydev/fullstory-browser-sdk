@@ -74,16 +74,16 @@ export class AppComponent {
 Here's an example of initializing the SDK in a Vue app.
 
 ```javascript
-import Vue from "vue";
-import App from "./App.vue";
-import * as FullStory from "@fullstory/browser";
+import Vue from 'vue';
+import App from './App.vue';
+import * as FullStory from '@fullstory/browser';
 
-FullStory.init({ orgId: "<your org id here>" });
+FullStory.init({ orgId: '<your org id here>' });
 Vue.prototype.$FullStory = FullStory;
 
 new Vue({
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app');
 ```
 
 ## Using the SDK
