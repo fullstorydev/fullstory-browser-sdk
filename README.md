@@ -71,6 +71,21 @@ export class AppComponent {
 }
 ```
 
+Here's an example of initializing the SDK in a Vue app.
+
+```javascript
+import Vue from 'vue';
+import App from './App.vue';
+import * as FullStory from '@fullstory/browser';
+
+FullStory.init({ orgId: '<your org id here>' });
+Vue.prototype.$FullStory = FullStory;
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app');
+```
+
 ## Using the SDK
 
 Once FullStory is initialized, you can make calls to the FullStory SDK.
