@@ -50,7 +50,7 @@ FullStory.init({ orgId: '<your org id here>' });
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-#### Angular with `devMode` enabled to stop recording work in progress.
+#### Angular with `devMode` enabled
 
 ```javascript
 import { Component } from '@angular/core';
