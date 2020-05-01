@@ -35,7 +35,7 @@ The only required option is `orgId`, all others are optional.
 
 ### Initialization Examples
 
-Here's an example of initializing the SDK in a React app.
+#### React
 
 ```JSX
 import React from 'react';
@@ -50,7 +50,7 @@ FullStory.init({ orgId: '<your org id here>' });
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-Here's an example of initializing the SDK in an Angular app with `devMode` enabled to stop recording work in progress.
+#### Angular with `devMode` enabled
 
 ```javascript
 import { Component } from '@angular/core';
@@ -71,7 +71,7 @@ export class AppComponent {
 }
 ```
 
-Here's an example of initializing the SDK in a Vue app.
+#### Vue
 
 ```javascript
 import Vue from 'vue';
