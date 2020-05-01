@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+- Adding a Vue.js initialization example to the readme
+
 ## 1.4.3
 
 - Updating README to include a link to instructions on how to find the FullStory Org Id
