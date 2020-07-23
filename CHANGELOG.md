@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.5
+
+- `npm audit fix` to clean up npm audit warnings
+
 ## 1.4.4
 
 - Adding a Vue.js initialization example to the readme
