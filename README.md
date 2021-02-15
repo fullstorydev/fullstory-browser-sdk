@@ -86,6 +86,26 @@ new Vue({
 }).$mount('#app');
 ```
 
+#### Vue 3
+
+```javascript
+// src/main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import * as FullStory from '@fullstory/browser';
+
+FullStory.init({ orgId: '<your org id here>' });
+
+createApp(App)
+.provide("FullStory", FullStory)
+.mount('#app')
+
+// src/components/yourComponent.vue
+export default {
+  inject: ['FullStory']
+}
+```
+
 ## Using the SDK
 
 Once FullStory is initialized, you can make calls to the FullStory SDK.
