@@ -89,21 +89,15 @@ new Vue({
 #### Vue 3
 
 ```javascript
-// src/main.js
 import { createApp } from 'vue'
 import App from './App.vue'
 import * as FullStory from '@fullstory/browser';
 
 FullStory.init({ orgId: '<your org id here>' });
 
-createApp(App)
-.provide("FullStory", FullStory)
-.mount('#app')
-
-// src/components/yourComponent.vue
-export default {
-  inject: ['FullStory']
-}
+const app = createApp(App);
+app.config.globalProperties.$FullStory = FullStory;
+app.mount('#app');
 ```
 
 ## Using the SDK
