@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.5
+-  Updating README to include vue 3
+- `npm audit fix` to clean up npm audit warnings
+
 ## 1.4.6
 
 - Updating snippet.js to include the latest snippet version
