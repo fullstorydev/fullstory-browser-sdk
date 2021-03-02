@@ -2,7 +2,7 @@
 
 ## 1.4.8
 
-- Updating REAADME to better describe the behavior of the `recordCrossDomainIFrames` option
+- Updating README to better describe the behavior of the `recordCrossDomainIFrames` option
 
 ## 1.4.7
 -  Updating README to include vue 3
