@@ -45,7 +45,7 @@ const _init = (options) => {
     return;
   }
 
-  // inject FullStory into cross domain iFrames and record them
+  // see README for details on the recordCrossDomainIFrames option
   if (options.recordCrossDomainIFrames) {
     window._fs_run_in_iframe = true;
   }
