@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.4.5
+## 1.4.8
+
+- Updating README to better describe the behavior of the `recordCrossDomainIFrames` option
+
+## 1.4.7
 -  Updating README to include vue 3
 - `npm audit fix` to clean up npm audit warnings
 
