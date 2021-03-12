@@ -1,6 +1,6 @@
 {
   "name": "@fullstory/browser",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "description": "The official FullStory browser SDK",
   "repository": "git://github.com/fullstorydev/fullstory-browser-sdk.git",
   "homepage": "https://github.com/fullstorydev/fullstory-browser-sdk",
