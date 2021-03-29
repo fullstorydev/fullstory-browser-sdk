@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const core = require('@actions/core'); // https://github.com/actions/toolkit
-const github = require('@actions/github'); // https://github.com/actions/toolkit/tree/master/packages/github
+const github = require('@actions/github'); // https://github.com/actions/toolkit/tree/main/packages/github
 const fs = require('fs');
 const crypto = require('crypto');
 const axios = require('axios').default;
@@ -13,6 +13,7 @@ const {
   GITHUB_REPOSITORY,
   GITHUB_TOKEN,
   GITHUB_SHA,
+  GITHUB_REF,
 } = process.env;
 
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
@@ -53,7 +54,7 @@ const run = async () => {
     return;
   }
 
-  console.log('getting source tree from master');
+  console.log('getting source tree from current commit');
   const getCommitResponse = await octokit.git.getCommit({
     ...repoInfo,
     commit_sha: GITHUB_SHA,
@@ -101,11 +102,12 @@ const run = async () => {
 
   // https://octokit.github.io/rest.js/#octokit-routes-pulls-create
   console.log(`creating PR for branch ${branchName}`);
+  const base = GITHUB_REF.split('/').pop();
   const prResponse = await octokit.pulls.create({
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: 'master', // hard-coding this value, rather than use GITHUB_REF env var as a work-around to a bug in GitHub
+    base: base,
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
