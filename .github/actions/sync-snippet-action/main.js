@@ -107,7 +107,7 @@ const run = async () => {
     ...repoInfo,
     title: PR_TITLE,
     head: branchName,
-    base: base,
+    base,
   });
 
   const maintainers = JSON.parse(fs.readFileSync('./MAINTAINERS.json'));
