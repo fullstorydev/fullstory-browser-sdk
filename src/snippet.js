@@ -7,7 +7,7 @@ const snippet = (
     debug = false,
     host = 'fullstory.com',
     script = 'edge.fullstory.com/s/fs.js',
-    ready,
+    ready = function() {},
   }
 ) => {
   if (!orgId) {
