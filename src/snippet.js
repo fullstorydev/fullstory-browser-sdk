@@ -6,7 +6,8 @@ const snippet = (
     namespace = 'FS',
     debug = false,
     host = 'fullstory.com',
-    script = 'edge.fullstory.com/s/fs.js'
+    script = 'edge.fullstory.com/s/fs.js',
+    ready,
   }
 ) => {
   if (!orgId) {
@@ -18,6 +19,7 @@ window['_fs_host'] = host;
 window['_fs_script'] = script;
 window['_fs_org'] = orgId;
 window['_fs_namespace'] = namespace;
+window['_fs_ready'] = ready;
 (function(m,n,e,t,l,o,g,y){
     if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
     g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
