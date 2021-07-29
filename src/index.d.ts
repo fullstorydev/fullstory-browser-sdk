@@ -1,9 +1,11 @@
+import {TrustedScriptURL} from 'trusted-types/lib';
+
 interface SnippetOptions {
   orgId: string;
   namespace?: string;
   debug?: boolean;
   host?: string;
-  script?: string;
+  script?: string | TrustedScriptURL;
   recordCrossDomainIFrames?: boolean;
   recordOnlyThisIFrame?: boolean;      // see README for details
   devMode?: boolean;

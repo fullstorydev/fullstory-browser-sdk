@@ -49,5 +49,8 @@
     "rollup-plugin-copy": "^3.3.0",
     "typescript": "^3.8.3",
     "webpack": "^5.38.1"
+  },
+  "dependencies": {
+    "@types/trusted-types": "^2.0.2"
   }
 }
