@@ -6,11 +6,16 @@ const snippet = (
     namespace = 'FS',
     debug = false,
     host = 'fullstory.com',
-    script = 'edge.fullstory.com/s/fs.js'
+    script,
   }
 ) => {
   if (!orgId) {
     throw new Error('FullStory orgId is a required parameter');
+  }
+  if (!script) {
+    script = 'https://edge.fullstory.com/s/fs.js';
+  } else if (!script.toString().startsWith("https://")) {
+    script = 'https://' + script;
   }
   /* begin FullStory snippet */
   window['_fs_debug'] = debug;
@@ -21,7 +26,7 @@ window['_fs_namespace'] = namespace;
 (function(m,n,e,t,l,o,g,y){
     if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
     g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
-    o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
+    o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src=_fs_script;
     y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
     g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
     g.anonymize=function(){g.identify(!!0)};
