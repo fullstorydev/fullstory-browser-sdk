@@ -1,14 +1,15 @@
-/*
-  FullStory Client SDK snippet options.
-  - orgId: Reference for the organisation ID listed in Fullstory
-  - namespace: ?
-  - debug: Debug mode with exta logging
-  - host: ?
-  - script: FullStory script, you can host it by yourself (for example if you need proxy)
-  - recordCrossDomainIFrames: ?
-  - recordOnlyThisIFrame: Check README for details
-  - devMode: In dev mode it won't record sessions.
-*/
+/**
+ * FullStory Client SDK snippet options.
+ *
+ * - orgId: Reference for your [Org Id](https://help.fullstory.com/hc/en-us/articles/360047075853) listed in FullStory.
+ * - namespace: Global object name that contains the FullStory browser API methods and properties. Defaults to `FS`.
+ * - debug: Debug mode with extra browser console logging.
+ * - host: The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to 'fullstory.com'.
+ * - script: FullStory script host domain. FullStory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com`.
+ * - recordCrossDomainIFrames: FullStory can record cross-domain iFrames. Certain limitations apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G333PYKPGZ4B42WDBV3YKV). Defaults to `false`.
+ * - recordOnlyThisIFrame: FullStory can record the iFrame as its own unique session. Defaults to `false`. Additional conditions apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G33B40Q2TPQA8MA7SF8Y5P).
+ * - devMode: In dev mode FullStory won't record sessions. Any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to 'false'.
+ */
 interface SnippetOptions {
   orgId: string;
   namespace?: string;
