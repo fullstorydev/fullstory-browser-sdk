@@ -12,7 +12,7 @@
 interface SnippetOptions {
   orgId: string;
   namespace?: string;
-  debug?: boolean; // Debug mode showing extra logs
+  debug?: boolean;
   host?: string;
   script?: string;
   recordCrossDomainIFrames?: boolean;
