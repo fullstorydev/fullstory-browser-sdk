@@ -1,11 +1,22 @@
+/*
+  FullStory Client SDK snippet options.
+  - orgId: Reference for the organisation ID listed in Fullstory
+  - namespace: ?
+  - debug: Debug mode with exta logging
+  - host: ?
+  - script: FullStory script, you can host it by yourself (for example if you need proxy)
+  - recordCrossDomainIFrames: ?
+  - recordOnlyThisIFrame: Check README for details
+  - devMode: In dev mode it won't record sessions.
+*/
 interface SnippetOptions {
   orgId: string;
   namespace?: string;
-  debug?: boolean;
+  debug?: boolean; // Debug mode showing extra logs
   host?: string;
   script?: string;
   recordCrossDomainIFrames?: boolean;
-  recordOnlyThisIFrame?: boolean;      // see README for details
+  recordOnlyThisIFrame?: boolean;
   devMode?: boolean;
 }
 
