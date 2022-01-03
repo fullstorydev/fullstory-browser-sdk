@@ -11,10 +11,10 @@ const ensureSnippetLoaded = () => {
 
 const hasFullStoryWithFunction = (...testNames) => {
   ensureSnippetLoaded();
-  return testNames.every(current => fs()[current]);
+  return testNames.every((current) => fs()[current]);
 };
 
-const guard = name => (...args) => {
+const guard = (name) => (...args) => {
   if (window._fs_dev_mode) {
     const message = `FullStory is in dev mode and is not recording: ${name} method not executed`;
     console.warn(message); // eslint-disable-line no-console

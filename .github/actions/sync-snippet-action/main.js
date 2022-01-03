@@ -16,7 +16,7 @@ const {
   GITHUB_REF,
 } = process.env;
 
-const hash = text => crypto.createHash('sha256').update(text).digest('hex');
+const hash = (text) => crypto.createHash('sha256').update(text).digest('hex');
 
 const run = async () => {
   let remoteSnippetText;
@@ -48,7 +48,7 @@ const run = async () => {
   console.log('checking for an on open snippet sync PR');
   // NOTE: possible that searching for github-actions[bot] user might be too greedy.
   // Assuming GH won't change this name.
-  const existingPR = openPRs.data.filter(pr => pr.title === PR_TITLE && pr.user.login === 'github-actions[bot]');
+  const existingPR = openPRs.data.filter((pr) => pr.title === PR_TITLE && pr.user.login === 'github-actions[bot]');
   if (existingPR.length > 0) {
     core.setFailed(`There is already an open PR for snippet syncronization. Please close or merge this PR: ${existingPR[0].html_url}`);
     return;
@@ -66,7 +66,7 @@ const run = async () => {
     recursive: 1,
   });
 
-  const srcTree = getTreeResponse.data.tree.find(el => el.path === SNIPPET_PATH);
+  const srcTree = getTreeResponse.data.tree.find((el) => el.path === SNIPPET_PATH);
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-tree
   console.log('creating updated source tree with new snippet file');
@@ -79,7 +79,7 @@ const run = async () => {
       type: 'blob',
       base_tree: srcTree.sha,
     },
-    ...getTreeResponse.data.tree.filter(el => el.type !== 'tree' && el.path !== SNIPPET_PATH)]
+    ...getTreeResponse.data.tree.filter((el) => el.type !== 'tree' && el.path !== SNIPPET_PATH)]
   });
 
   // https://octokit.github.io/rest.js/#octokit-routes-git-create-commit
