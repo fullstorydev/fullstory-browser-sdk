@@ -1,12 +1,18 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "babelOptions": {
+      "configFile": "./.babelrc"
+    }
+  },
   "extends": "airbnb",
   "env": {
     "mocha": true,
-    "browser": true
+    "browser": true,
   },
   "rules": {
     "comma-dangle": ["error", "only-multiline"],
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "react/function-component-definition": "off"
   }
 }

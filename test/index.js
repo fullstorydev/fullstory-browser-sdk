@@ -28,7 +28,7 @@ describe('core', () => {
       ...snippetFunctions
     ];
 
-    functions.forEach(i => assert(typeof FullStory[i] === 'function', `${i} has not been exported from the FullStory module`));
+    functions.forEach((i) => assert(typeof FullStory[i] === 'function', `${i} has not been exported from the FullStory module`));
   });
 });
 
@@ -81,9 +81,9 @@ describe('devMode', () => {
       devMode: true,
     });
 
-    const returnValues = snippetFunctions.map(f => FullStory[f]());
+    const returnValues = snippetFunctions.map((f) => FullStory[f]());
 
-    expect(returnValues.every(v => typeof v === 'string')).to.equal(true);
+    expect(returnValues.every((v) => typeof v === 'string')).to.equal(true);
   });
 });
 
