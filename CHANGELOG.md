@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.10
+
+- Adding docs to the types file (index.d.ts)
+
 ## 1.4.8
 
 - Updating README to better describe the behavior of the `recordCrossDomainIFrames` option
