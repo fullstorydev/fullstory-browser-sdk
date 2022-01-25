@@ -123,3 +123,16 @@ FullStory.event('Subscribed', {
 const startOfPlayback = FullStory.getCurrentSessionURL();
 const playbackAtThisMomentInTime = FullStory.getCurrentSessionURL(true);
 ```
+
+### Sending custom page data
+```JavaScript
+FullStory.setVars("page", {
+ "pageName" : "Checkout", // what is the name of the page?
+ "cart_size_int" : 10, // how many items were in the cart?
+ "used_coupon_bool" : true, // was a coupon used?
+});
+```
+For more information on setting page vars, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
+
+#### Note
+`FullStory.setVars(<scope>, <payload>)` currently only supports a string value of "page" for the scope. Using arbitrary strings for the scope parameter will result in an Error that will be logged to the browser console or discarded, depending on whether devMode or debug is enabled.

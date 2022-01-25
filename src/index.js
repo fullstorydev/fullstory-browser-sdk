@@ -37,6 +37,7 @@ export const consent = guard('consent');
 export const shutdown = guard('shutdown');
 export const restart = guard('restart');
 export const anonymize = guard('anonymize');
+export const setVars = guard('setVars');
 
 const _init = (options) => {
   if (fs()) {
