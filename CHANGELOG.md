@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+
+- Adding the `setVars` API function
+
 ## 1.4.10
 
 - Adding docs to the types file (index.d.ts)
