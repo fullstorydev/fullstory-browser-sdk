@@ -9,6 +9,7 @@ const snippetFunctions = ['anonymize',
   'getCurrentSessionURL',
   'identify',
   'setUserVars',
+  'setVars',
   'consent',
   'shutdown',
   'restart'];
