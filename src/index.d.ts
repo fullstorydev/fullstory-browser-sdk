@@ -37,6 +37,7 @@ export function consent(userConsents?: boolean): void;
 export function event(eventName: string, eventProperties: { [key: string]: any }): void;
 export function identify(uid: string, customVars?: UserVars): void;
 export function init(options: SnippetOptions): void;
+export function isInitialized(): boolean;
 export function log(level: LogLevel, msg: string): void;
 export function log(msg: string): void;
 export function restart(): void;

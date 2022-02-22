@@ -20,7 +20,7 @@ yarn add @fullstory/browser
 
 ## Initialize the SDK
 
-Call the `init()` function with options as soon as you can in your website startup process.
+Call the `init()` function with options as soon as you can in your website startup process. Calling init after successful initialization will trigger console warnings - if you need to programmatically check if FullStory has been initialized at some point in your code, you can call `isInitialized()`.
 
 ### Configuration Options
 
