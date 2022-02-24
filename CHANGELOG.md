@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1
+
+- Updating README to include `host` and `script` configuration options
+
 ## 1.5.0
 
 - Adding the `setVars` API function
