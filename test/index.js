@@ -73,6 +73,18 @@ describe('init', () => {
 
     expect(window._fs_dev_mode).to.equal(true);
   });
+
+  it('should return whether initialized', () => {
+    let isInit = FullStory.isInitialized();
+    expect(isInit).to.equal(false);
+
+    FullStory.init({
+      orgId: testOrg,
+    });
+
+    isInit = FullStory.isInitialized();
+    expect(isInit).to.equal(true);
+  });
 });
 
 describe('devMode', () => {
