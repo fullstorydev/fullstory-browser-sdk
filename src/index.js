@@ -39,7 +39,7 @@ export const restart = guard('restart');
 export const anonymize = guard('anonymize');
 export const setVars = guard('setVars');
 
-const _init = (options) => {
+const _init = (options, ready) => {
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
@@ -57,6 +57,10 @@ const _init = (options) => {
   }
 
   snippet(options);
+
+  if (ready) {
+    fs()('observe', { type: 'start', callback: ready });
+  }
 
   if (options.devMode === true) {
     const message = 'FullStory was initialized in devMode and will stop recording';
