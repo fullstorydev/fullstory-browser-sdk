@@ -35,6 +35,14 @@ The only required option is `orgId`, all others are optional.
 * `recordOnlyThisIFrame` - When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running FullStory, but you want your content sent to a different FullStory org.
 * `devMode` - Set to `true` if you want to deactivate FullStory in your development environment. When set to `true`, FullStory will shutdown recording and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to FullStory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionally, any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
 
+### Ready Callback
+
+The `init` function also accepts an optional `readyCallback` argument. If you provide a function, it will be invoked when the FullStory session has started. Your callback will be called with one parameter: an object containing information about the session. Currently the only property is `sessionUrl`, which is a string containing the URL to the session.
+
+```javascript
+FullStory.init({ orgId, ({ sessionUrl }) => console.log(`Started session: ${sessionUrl}`));
+```
+
 ### Initialization Examples
 
 #### React

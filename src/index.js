@@ -39,7 +39,7 @@ export const restart = guard('restart');
 export const anonymize = guard('anonymize');
 export const setVars = guard('setVars');
 
-const _init = (options, ready) => {
+const _init = (options, readyCallback) => {
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
@@ -58,8 +58,8 @@ const _init = (options, ready) => {
 
   snippet(options);
 
-  if (ready) {
-    fs()('observe', { type: 'start', callback: ready });
+  if (readyCallback) {
+    fs()('observe', { type: 'start', callback: readyCallback });
   }
 
   if (options.devMode === true) {

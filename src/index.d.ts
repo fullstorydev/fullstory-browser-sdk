@@ -47,9 +47,9 @@ export function identify(uid: string, customVars?: UserVars): void;
  * Initialize FullStory.
  *
  * @param options Options to pass to the snippet.
- * @param ready If provided, a callback that will be invoked when the FullStory session has begun.
+ * @param readyCallback If provided, a callback that will be invoked when the FullStory session has begun.
  */
-export function init(options: SnippetOptions, ready?: ReadyCallback): void;
+export function init(options: SnippetOptions, readyCallback?: ReadyCallback): void;
 export function isInitialized(): boolean;
 export function log(level: LogLevel, msg: string): void;
 export function log(msg: string): void;
