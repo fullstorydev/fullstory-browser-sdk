@@ -1,8 +1,11 @@
 name: sync-snippet
 
 on:
+  # Allow manually triggering this workflow.
+  workflow_dispatch:
+  # Also run it daily at midnight UTC.
   schedule:
-    - cron:  '0 0 * * *' # every 24 hours
+    - cron:  '0 0 * * *'
 
 jobs:
   sync:
