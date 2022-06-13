@@ -36,7 +36,7 @@ type VarScope = 'page';
  *
  * `sessionUrl` contains the URL to the current session.
  */
-type ReadyCallback = ({ sessionUrl: string }) => void;
+type ReadyCallback = (data: { sessionUrl: string }) => void;
 
 // API functions that are available as soon as the snippet has executed.
 export function anonymize(): void;
