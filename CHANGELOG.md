@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+- Fix a TypeScript type issue with the `readyCallback` API (#144)
+- Add a RELEASING doc (#143)
 ## 1.6.0
 
 - Add a `readyCallback` parameter to the `init` function (#140)
