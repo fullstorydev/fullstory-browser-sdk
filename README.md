@@ -40,7 +40,7 @@ The only required option is `orgId`, all others are optional.
 The `init` function also accepts an optional `readyCallback` argument. If you provide a function, it will be invoked when the FullStory session has started. Your callback will be called with one parameter: an object containing information about the session. Currently the only property is `sessionUrl`, which is a string containing the URL to the session.
 
 ```javascript
-FullStory.init({ orgId, ({ sessionUrl }) => console.log(`Started session: ${sessionUrl}`));
+FullStory.init({ orgId }, ({ sessionUrl }) => console.log(`Started session: ${sessionUrl}`));
 ```
 
 ### Initialization Examples
