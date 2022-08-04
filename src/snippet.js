@@ -13,8 +13,7 @@ const snippet = (
     throw new Error('FullStory orgId is a required parameter');
   }
   /* begin FullStory snippet */
-  window['_fs_debug'] = debug;
-window['_fs_host'] = host;
+  window['_fs_host'] = host;
 window['_fs_script'] = script;
 window['_fs_org'] = orgId;
 window['_fs_namespace'] = namespace;
