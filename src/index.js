@@ -56,6 +56,10 @@ const _init = (options, readyCallback) => {
     window._fs_is_outer_script = true;
   }
 
+  if (options.debug && !options.script) {
+    options.script = 'edge.fullstory.com/s/fs-debug.js';
+  }
+
   snippet(options);
 
   if (readyCallback) {
