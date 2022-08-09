@@ -39,7 +39,9 @@ export const restart = guard('restart');
 export const anonymize = guard('anonymize');
 export const setVars = guard('setVars');
 
-const _init = (options, readyCallback) => {
+const _init = (inputOptions, readyCallback) => {
+  // Make a copy so we can modify `options` if desired.
+  const options = { ...inputOptions };
   if (fs()) {
     // eslint-disable-next-line no-console
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
