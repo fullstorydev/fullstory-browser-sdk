@@ -1,4 +1,4 @@
-import snippet from './snippet';
+import initFS from './snippet';
 
 const fs = () => window[window._fs_namespace];
 
@@ -70,7 +70,7 @@ const _init = (inputOptions, readyCallback) => {
     }
   }
 
-  snippet(options);
+  initFS(options);
 
   if (readyCallback) {
     fs()('observe', { type: 'start', callback: readyCallback });
