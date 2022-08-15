@@ -13,6 +13,7 @@
   "rules": {
     "comma-dangle": ["error", "only-multiline"],
     "no-underscore-dangle": "off",
-    "react/function-component-definition": "off"
+    "react/function-component-definition": "off",
+    "no-console": "off"
   }
 }
