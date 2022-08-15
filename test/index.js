@@ -85,6 +85,15 @@ describe('init', () => {
     isInit = FullStory.isInitialized();
     expect(isInit).to.equal(true);
   });
+
+  it('should load fs-debug.js when debug is set', () => {
+    FullStory.init({
+      orgId: testOrg,
+      debug: true,
+    });
+
+    expect(window._fs_script).to.match(/fs-debug.js$/);
+  });
 });
 
 describe('devMode', () => {
