@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.2
+
+- Load `fs-debug.js` capture script when `debug = true` option is used to match [updated debug logging practices](https://help.fullstory.com/hc/en-us/articles/360020829233-What-is-fs-debug-).
+
 ## 1.6.1
 
 - Fix a TypeScript type issue with the `readyCallback` API (#144)
