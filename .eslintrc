@@ -14,10 +14,6 @@
     "comma-dangle": ["error", "only-multiline"],
     "no-underscore-dangle": "off",
     "react/function-component-definition": "off",
-    "no-console": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      { "devDependencies": ["/src/snippet.js", "/rollup.config.js"] }
-    ]
+    "no-console": "off"
   }
 }
