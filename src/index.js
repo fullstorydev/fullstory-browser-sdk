@@ -1,4 +1,4 @@
-import initFS from './snippet';
+import { initFS } from '@fullstory/snippet';
 
 const fs = () => window[window._fs_namespace];
 
