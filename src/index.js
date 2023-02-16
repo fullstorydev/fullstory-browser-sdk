@@ -57,6 +57,11 @@ const _init = (inputOptions, readyCallback) => {
     window._fs_is_outer_script = true;
   }
 
+  // Set cookie domain if it was specified.
+  if (options.cookieDomain) {
+    window._fs_cookie_domain = options.cookieDomain;
+  }
+
   if (options.debug === true) {
     if (!options.script) {
       options.script = 'edge.fullstory.com/s/fs-debug.js';
