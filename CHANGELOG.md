@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0
+
+- Add a `cookieDomain` option to the `init` function to support setting `_fs_cookie_domain`. 
+
 ## 1.6.2
 
 - Load `fs-debug.js` capture script when `debug = true` option is used to match [updated debug logging practices](https://help.fullstory.com/hc/en-us/articles/360020829233-What-is-fs-debug-).
