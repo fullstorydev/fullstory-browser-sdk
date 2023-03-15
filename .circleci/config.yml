@@ -11,15 +11,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".github/actions/sync-snippet-action/package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Install
-          command: npm ci && (cd .github/actions/sync-snippet-action && npm ci)
+          command: npm ci
       - save_cache:
           paths:
             - node_modules
-            - .github/actions/sync-snippet-action/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".github/actions/sync-snippet-action/package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Audit
           command: npm audit --audit-level=low
