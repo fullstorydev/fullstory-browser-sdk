@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.1
+
+- Changed FullStory Snippet to import from @fullstory/snippet
+- Npm audit updates
+
 ## 1.7.0
 
 - Add a `cookieDomain` option to the `init` function to support setting `_fs_cookie_domain`. 
