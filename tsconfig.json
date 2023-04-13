@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "./build",
+    "target": "ES2018",
+    "downlevelIteration": false,
+    "importHelpers": true,
+    "lib": ["ES2018", "DOM"],
+    "emitDeclarationOnly": false,
+    "declaration": true
+  },
+  "include": ["src", "src/test"]
+}

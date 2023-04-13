@@ -36,6 +36,9 @@ jspm_packages
 # Dist
 dist
 
+# Build
+build
+
 # others
 .DS_Store
 .vscode

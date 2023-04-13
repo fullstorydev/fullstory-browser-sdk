@@ -4,7 +4,7 @@ import pkg from './package.json';
 
 export default [
   {
-    input: 'src/index.js',
+    input: 'build/index.js',
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'esm' },
@@ -16,7 +16,7 @@ export default [
         babelHelpers: 'bundled',
       }),
       copy({
-        targets: [{ src: 'src/index.d.ts', dest: 'dist' }],
+        targets: [{ src: 'build/index.d.ts', dest: 'dist' }],
       }),
     ],
   },

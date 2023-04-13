@@ -1,13 +1,14 @@
+import { beforeEach, describe, it } from 'mocha';
 import { assert, expect } from 'chai';
-import FS, { init, isInitialized } from '../src';
+import FS, { init, isInitialized } from '.';
 
 const testOrg = '123';
 
 beforeEach(() => {
-  if (window[window._fs_namespace]) {
+  if (window[window._fs_namespace ?? '']) {
     delete window._fs_initialized;
     delete window._fs_dev_mode;
-    delete window[window._fs_namespace];
+    delete window[window._fs_namespace ?? ''];
     delete window._fs_namespace;
   }
 });
@@ -22,7 +23,7 @@ describe('init', () => {
       FS('log', { msg: 'my log' });
       expect(false).to.be('this should have thrown');
     } catch (error) {
-      expect(error.message).to.match(/already been defined/);
+      expect((error as Error).message).to.match(/already been defined/);
     }
     init({ orgId: testOrg });
     expect(() => { FS('log', { msg: 'my log' }); }).to.not.throw();
