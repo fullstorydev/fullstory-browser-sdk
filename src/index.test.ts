@@ -1,6 +1,5 @@
-import { beforeEach, describe, it } from 'mocha';
 import { assert, expect } from 'chai';
-import FS, { init, isInitialized } from '.';
+import FS, { init, isInitialized, SnippetOptions } from '.';
 
 const testOrg = '123';
 
@@ -15,7 +14,7 @@ beforeEach(() => {
 
 describe('init', () => {
   it('should throw error if not initialized with an orgId', () => {
-    expect(() => { init(); }).to.throw();
+    expect(() => { init({} as SnippetOptions); }).to.throw();
   });
 
   it('should throw error if API called before init', () => {
@@ -23,7 +22,7 @@ describe('init', () => {
       FS('log', { msg: 'my log' });
       expect(false).to.be('this should have thrown');
     } catch (error) {
-      expect((error as Error).message).to.match(/already been defined/);
+      expect((error as Error).message).to.match(/FullStory is not loaded/);
     }
     init({ orgId: testOrg });
     expect(() => { FS('log', { msg: 'my log' }); }).to.not.throw();
@@ -82,13 +81,29 @@ describe('init', () => {
 });
 
 describe('devMode', () => {
+  let consoleWarnedMessage;
+  const oldConsoleWarn = console.warn;
+  beforeEach(() => {
+    console.warn = (msg) => { consoleWarnedMessage = msg; };
+  });
+
+  afterEach(() => {
+    console.warn = oldConsoleWarn;
+    consoleWarnedMessage = undefined;
+  });
+
   it('should return a message for functions invoked when in devMode', () => {
+    expect(consoleWarnedMessage).to.equal(undefined);
     init({
       orgId: testOrg,
       devMode: true,
     });
 
-    expect(FS('log', { msg: 'hello world' })).to.match(/FullStory is in dev mode/);
+    expect(consoleWarnedMessage).to.match(/FullStory was initialized in devMode/);
+
+    FS('log', { msg: 'hello world' });
+
+    expect(consoleWarnedMessage).to.match(/FullStory is in dev mode/);
   });
 });
 
@@ -98,6 +113,10 @@ describe('getCurrentSessionURL', () => {
     // in theory, this is a race condition - assuming that fs.js
     // can't load by the time the following statement is executed
     const url = FS('getSession');
-    assert.equal(url, null, 'FullStory.getCurrentSessionURL() should return null if executed before fs.js is fully bootstrapped');
+    assert.equal(
+      url,
+      null,
+      'FullStory.getCurrentSessionURL() should return null if executed before fs.js is fully bootstrapped'
+    );
   });
 });

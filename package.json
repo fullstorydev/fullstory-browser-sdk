@@ -11,10 +11,12 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
+    "pretest": "npm run build",
     "test": "npm run lint && npm run test:karma",
     "test:karma": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
-    "lint": "eslint src test",
-    "build": "tsc && rollup -c"
+    "lint": "eslint src",
+    "prebuild": "tsc",
+    "build": "rollup -c"
   },
   "files": [
     "dist",
@@ -37,6 +39,8 @@
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "chai": "^4.1.2",
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",

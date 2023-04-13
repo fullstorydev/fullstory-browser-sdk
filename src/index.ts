@@ -13,7 +13,7 @@ import { initFS, FSApi } from '@fullstory/snippet';
  * - recordOnlyThisIFrame: FullStory can record the iFrame as its own unique session. Defaults to `false`. Additional conditions apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G33B40Q2TPQA8MA7SF8Y5P).
  * - devMode: In dev mode FullStory won't record sessions. Any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
  */
-interface SnippetOptions {
+export interface SnippetOptions {
   orgId: string;
   namespace?: string;
   debug?: boolean;
@@ -52,17 +52,19 @@ const getFullStory = (): FSApi | undefined => {
   if (window._fs_namespace) {
     return window[window._fs_namespace];
   }
+  return undefined;
 };
 
 const ensureSnippetLoaded = (): FSApi => {
   const fs = getFullStory();
   if (!fs) {
-    throw Error('FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions');
+    throw Error(
+      'FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions'
+    );
   }
 
   return fs;
 };
-
 
 const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   // Make a copy so we can modify `options` if desired.
@@ -122,16 +124,16 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   }
 };
 
-const initOnce = (fn, message) => (...args) => {
+const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   if (window._fs_initialized) {
     if (message) console.warn(message);
     return;
   }
-  fn(...args);
+  _init(inputOptions, readyCallback);
   window._fs_initialized = true;
 };
 
-export const init = initOnce(_init, 'FullStory init has already been called once, additional invocations are ignored');
+export const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
 
 // normalize undefined into boolean
 export const isInitialized = () => !!window._fs_initialized;
@@ -148,8 +150,9 @@ const guard = (name) => (...args) => {
     return message;
   }
 
-  if (hasFullStoryWithFunction(name)) {
-    return getFullStory()![name](...args);
+  const fs = getFullStory();
+  if (hasFullStoryWithFunction(name) && fs) {
+    return fs[name](...args);
   }
   console.warn(`FS.${name} not ready`);
   return null;
@@ -162,7 +165,7 @@ const FullStory: FSApi = Object.assign(
     if (window._fs_dev_mode) {
       const message = 'FullStory is in dev mode and is not recording: method not executed';
       console.warn(message);
-      return;
+      return undefined;
     }
 
     return fs(operation, options, source);
