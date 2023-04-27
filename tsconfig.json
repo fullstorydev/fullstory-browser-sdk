@@ -3,10 +3,10 @@
     "moduleResolution": "node",
     "rootDir": "src",
     "outDir": "./dist",
-    "target": "ES2018",
+    "target": "ES5",
     "downlevelIteration": false,
     "importHelpers": true,
-    "lib": ["ES2018", "DOM"],
+    "lib": ["ES5", "DOM"],
     "emitDeclarationOnly": false,
     "declaration": true
   },

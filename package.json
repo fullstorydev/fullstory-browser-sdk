@@ -55,6 +55,7 @@
     "mocha": "^9.2.0",
     "rimraf": "^2.7.1",
     "rollup": "^3.21.0",
+    "tslib": "^2.5.0",
     "typescript": "^4.2.4",
     "webpack": "^5.76.1"
   }
