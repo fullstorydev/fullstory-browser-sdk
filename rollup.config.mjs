@@ -1,10 +1,10 @@
 import babel from '@rollup/plugin-babel';
-import copy from 'rollup-plugin-copy';
-import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
+import pkg from './package.json' assert { type: 'json' };
 
 export default [
   {
-    input: 'build/index.js',
+    input: 'src/index.ts',
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'esm' },
@@ -15,9 +15,7 @@ export default [
         exclude: ['node_modules/**'],
         babelHelpers: 'bundled',
       }),
-      copy({
-        targets: [{ src: 'build/index.d.ts', dest: 'dist' }],
-      }),
+      typescript({ tsconfig: './tsconfig.json' }),
     ],
   },
 ];

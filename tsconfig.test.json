@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "rootDir": "src",
-    "outDir": "./dist",
+    "outDir": "./build",
     "target": "ES2018",
     "downlevelIteration": false,
     "importHelpers": true,
@@ -10,6 +10,5 @@
     "emitDeclarationOnly": false,
     "declaration": true
   },
-  "include": ["src"],
-  "exclude": ["**/*.test.ts"]
+  "include": ["src"]
 }
