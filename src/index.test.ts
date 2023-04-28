@@ -120,3 +120,44 @@ describe('getCurrentSessionURL', () => {
     );
   });
 });
+
+describe('typescript safety', () => {
+  it('provides type assistance matching the api', () => {
+    // Just a quick non-exhaustive check that types are working as expected.
+    // The "@ts-expect-error" declaration will fail if the types do NOT throw
+    // an error.
+    init({ orgId: testOrg });
+
+    // Passes TypeScript check
+    FS('getSession', { format: 'url.now' });
+
+    // Does not pass (improper format)
+    // @ts-expect-error (for testing purposes)
+    FS('getSession', { format: '😏' });
+
+    // Passes TypeScript check
+    FS('observe', { type: 'start', callback: () => console.log('STARTED') });
+
+    // Does not pass (improper type)
+    // @ts-expect-error (for testing purposes)
+    FS('observe', { type: '🦂', callback: () => console.log('STARTED') });
+
+    // LEGACY:
+    // Passes TypeScript check
+    FS.setVars('user', { email: 'e@mail.com' });
+
+    // Does not pass (improper VarScope)
+    // @ts-expect-error (for testing purposes)
+    FS.setVars('🤯', { email: 'e@mail.com' });
+
+    // Passes TypeScript check
+    FS.event('Order Complete', { product_id: 'asdf' });
+
+    // Does not pass (eventName must be string)
+    // @ts-expect-error (for testing purposes)
+    FS.event(42, { product_id: 'asdf' });
+
+    // Assertion for posterity's sake...
+    expect(true).to.equal(true);
+  });
+});
