@@ -1,5 +1,10 @@
 import { assert, expect } from 'chai';
-import FS, { init, isInitialized, SnippetOptions } from '.';
+import {
+  FullStory as FS,
+  init,
+  isInitialized,
+  SnippetOptions,
+} from '.';
 
 const testOrg = '123';
 
@@ -134,6 +139,10 @@ describe('typescript safety', () => {
     // Does not pass (improper format)
     // @ts-expect-error (for testing purposes)
     FS('getSession', { format: '😏' });
+
+    // Does not pass (invalid action)
+    // @ts-expect-error (for testing purposes)
+    FS('🦄');
 
     // Passes TypeScript check
     FS('observe', { type: 'start', callback: () => console.log('STARTED') });

@@ -158,8 +158,8 @@ const guard = (name) => (...args) => {
   return null;
 };
 
-const FullStory: FSApi = Object.assign(
-  (operation, options, source) => {
+const buildFullStoryShim = (): FSApi => {
+  const FS = (operation, options, source) => {
     const fs = ensureSnippetLoaded();
 
     if (window._fs_dev_mode) {
@@ -169,21 +169,21 @@ const FullStory: FSApi = Object.assign(
     }
 
     return fs(operation, options, source);
-  },
-  {
-    anonymize: guard('anonymize'),
-    consent: guard('consent'),
-    disableConsole: guard('disableConsole'),
-    enableConsole: guard('enableConsole'),
-    event: guard('event'),
-    getCurrentSessionURL: guard('getCurrentSessionURL'),
-    identify: guard('identify'),
-    log: guard('log'),
-    restart: guard('restart'),
-    setUserVars: guard('setUserVars'),
-    setVars: guard('setVars'),
-    shutdown: guard('shutdown'),
-  },
-) as FSApi;
+  };
+  FS.anonymize = guard('anonymize');
+  FS.consent = guard('consent');
+  FS.disableConsole = guard('disableConsole');
+  FS.enableConsole = guard('enableConsole');
+  FS.event = guard('event');
+  FS.getCurrentSessionURL = guard('getCurrentSessionURL');
+  FS.identify = guard('identify');
+  FS.log = guard('log');
+  FS.restart = guard('restart');
+  FS.setUserVars = guard('setUserVars');
+  FS.setVars = guard('setVars');
+  FS.shutdown = guard('shutdown');
 
-export default FullStory;
+  return FS;
+};
+
+export const FullStory: FSApi = buildFullStoryShim();
