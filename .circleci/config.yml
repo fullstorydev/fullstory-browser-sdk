@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.1
 executors:
   browser-executor:
     docker:
@@ -8,6 +10,8 @@ jobs:
   build-browser-sdk:
     executor: browser-executor
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - checkout
       - restore_cache:
           keys:
@@ -22,9 +26,9 @@ jobs:
       - run:
           name: Audit
           command: npm audit --audit-level=low
-      # - run:
-      #     name: Test
-      #     command: npm test
+      - run:
+          name: Test
+          command: npm test
       - run:
           name: Build
           command: npm run build
