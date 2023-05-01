@@ -2,7 +2,7 @@ version: 2.1
 executors:
   browser-executor:
     docker:
-      - image: cimg/node:16.20
+      - image: cimg/node:16.20-browsers
     working_directory: ~/repo
 jobs:
   build-browser-sdk:
