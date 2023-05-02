@@ -35,6 +35,31 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  pretend-to-publish:
+    executor: browser-executor
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Log the version we _would_ publish 😂
+          command: |
+            PACKAGE_VERSION=$(cat dist/@fullstory/snippet/package.json \
+              | grep version \
+              | head -1 \
+              | awk -F: '{ print $2 }' \
+              | sed 's/[",]//g')
+            if [[ $PACKAGE_VERSION == *"beta"* ]];
+            then
+              IS_BETA="true"
+            else
+              IS_BETA="false"
+            fi
+            if [ $IS_BETA == "true" ];
+            then
+              echo "here is where I publish --tag beta $PACKAGE_VERSION (YES BETA)"
+            else
+              echo "here is where I publish $PACKAGE_VERSION (NON BETA)"
+            fi
   deploy-browser-sdk:
     executor: browser-executor
     steps:
@@ -51,6 +76,10 @@ workflows:
   test-deploy:
     jobs:
       - build-browser-sdk:
+          filters:
+            tags:
+              only: /.*/
+      - pretend-to-publish:
           filters:
             tags:
               only: /.*/
