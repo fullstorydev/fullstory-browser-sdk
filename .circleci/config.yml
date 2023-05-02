@@ -82,6 +82,8 @@ workflows:
             tags:
               only: /.*/
       - pretend-to-publish:
+          requires:
+            - build-browser-sdk
           filters:
             tags:
               only: /.*/
