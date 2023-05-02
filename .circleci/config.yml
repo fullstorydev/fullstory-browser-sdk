@@ -43,7 +43,9 @@ jobs:
       - run:
           name: Log the version we _would_ publish 😂
           command: |
-            PACKAGE_VERSION=$(cat package.json \
+            ls
+            pwd
+            PACKAGE_VERSION=$(cat ./package.json \
               | grep version \
               | head -1 \
               | awk -F: '{ print $2 }' \
