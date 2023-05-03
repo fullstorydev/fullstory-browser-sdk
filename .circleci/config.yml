@@ -35,16 +35,17 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-  pretend-to-publish:
+  deploy-browser-sdk:
     executor: browser-executor
     steps:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Log the version we _would_ publish 😂
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run:
+          name: Publish package
           command: |
-            ls
-            pwd
             PACKAGE_VERSION=$(cat ./package.json \
               | grep version \
               | head -1 \
@@ -58,32 +59,15 @@ jobs:
             fi
             if [ $IS_BETA == "true" ];
             then
-              echo "here is where I publish --tag beta $PACKAGE_VERSION (YES BETA)"
+              npm publish --access public --tag beta
             else
-              echo "here is where I publish $PACKAGE_VERSION (NON BETA)"
+              npm publish --access public
             fi
-  deploy-browser-sdk:
-    executor: browser-executor
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
-      - run:
-          name: Publish package
-          command: npm publish --access public
 workflows:
   version: 2
   test-deploy:
     jobs:
       - build-browser-sdk:
-          filters:
-            tags:
-              only: /.*/
-      - pretend-to-publish:
-          requires:
-            - build-browser-sdk
           filters:
             tags:
               only: /.*/
