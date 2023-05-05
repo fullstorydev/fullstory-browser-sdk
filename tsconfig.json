@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "./dist",
+    "target": "ES5",
+    "downlevelIteration": false,
+    "importHelpers": true,
+    "lib": ["ES5", "DOM"],
+    "emitDeclarationOnly": false,
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
+}

@@ -1,19 +1,19 @@
 {
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "babelOptions": {
-      "configFile": "./.babelrc"
-    }
-  },
-  "extends": "airbnb",
+  "parser": "@typescript-eslint/parser",
+  "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
+  "root": true,
   "env": {
     "mocha": true,
     "browser": true
   },
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "comma-dangle": ["error", "only-multiline"],
     "no-underscore-dangle": "off",
     "react/function-component-definition": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "max-len": ["error", { "code": 125, "ignoreComments": true }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.config.mjs"]}],
+    "import/no-unresolved": "off"
   }
 }

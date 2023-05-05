@@ -1,13 +1,17 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.1
 executors:
   browser-executor:
     docker:
-      - image: circleci/node:12-browsers
+      - image: cimg/node:16.20-browsers
     working_directory: ~/repo
 jobs:
   build-browser-sdk:
     executor: browser-executor
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - checkout
       - restore_cache:
           keys:
@@ -41,7 +45,24 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run:
           name: Publish package
-          command: npm publish --access public
+          command: |
+            PACKAGE_VERSION=$(cat ./package.json \
+              | grep version \
+              | head -1 \
+              | awk -F: '{ print $2 }' \
+              | sed 's/[",]//g')
+            if [[ $PACKAGE_VERSION == *"beta"* ]];
+            then
+              IS_BETA="true"
+            else
+              IS_BETA="false"
+            fi
+            if [ $IS_BETA == "true" ];
+            then
+              npm publish --access public --tag beta
+            else
+              npm publish --access public
+            fi
 workflows:
   version: 2
   test-deploy:
