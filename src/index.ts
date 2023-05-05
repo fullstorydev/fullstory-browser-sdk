@@ -102,7 +102,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   const fs = getFullStory();
 
   if (!fs) {
-    console.warn('Trouble with fs');
+    console.warn('Failed to initialize FS snippet');
     return;
   }
 
