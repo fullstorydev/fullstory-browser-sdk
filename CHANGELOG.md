@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0-beta.0
+
+- Convert to TypeScript
+- Change default export to named export `FullStory` 
+- Update `@fullstory/snippet` dependency to use version `2.0.0-beta.2`
+
 ## 1.7.1
 
 - Changed FullStory Snippet to import from @fullstory/snippet
