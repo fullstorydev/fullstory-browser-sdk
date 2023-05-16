@@ -67,4 +67,7 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - deploy-browser-sdk
+      - build-browser-sdk
+      - deploy-browser-sdk:
+          requires:
+            - build-browser-sdk
