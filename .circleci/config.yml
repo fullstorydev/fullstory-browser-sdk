@@ -67,24 +67,4 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - build-browser-sdk:
-          filters:
-            tags:
-              only: /.*/
-      - hold:
-          type: approval
-          requires:
-            - build-browser-sdk
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - deploy-browser-sdk:
-          requires:
-            - hold
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+      - deploy-browser-sdk
