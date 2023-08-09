@@ -15,14 +15,16 @@ import { initFS, FSApi } from '@fullstory/snippet';
  */
 export interface SnippetOptions {
   orgId: string;
-  namespace?: string;
-  debug?: boolean;
-  host?: string;
-  script?: string;
+  assetMapId?: string;
   cookieDomain?: string;
+  debug?: boolean;
+  devMode?: boolean;
+  host?: string;
+  namespace?: string;
   recordCrossDomainIFrames?: boolean;
   recordOnlyThisIFrame?: boolean;
-  devMode?: boolean;
+  script?: string;
+  startCaptureManually?: boolean;
 }
 
 /**
@@ -35,6 +37,8 @@ type ReadyCallback = (data: { sessionUrl: string, settings: Readonly<object> }) 
 
 declare global {
   interface Window {
+    _fs_asset_map_id?: string;
+    _fs_capture_on_startup?: boolean;
     _fs_cookie_domain?: string;
     _fs_debug?: boolean;
     _fs_dev_mode?: boolean;
@@ -77,6 +81,14 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   // see README for details on the recordCrossDomainIFrames option
   if (options.recordCrossDomainIFrames) {
     window._fs_run_in_iframe = true;
+  }
+
+  if (options.assetMapId) {
+    window._fs_asset_map_id = options.assetMapId;
+  }
+
+  if (options.startCaptureManually) {
+    window._fs_capture_on_startup = false;
   }
 
   // record the contents of this iFrame when embedded in a parent site
