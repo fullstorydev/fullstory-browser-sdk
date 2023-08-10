@@ -21,31 +21,32 @@ yarn add @fullstory/browser
 ## Migrating to Version 2.0.0
 In version 2.0.0, `init` is a separate named export from `FullStory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
 
-**Version 1.x.x**
+_Version 1.x.x_
 ```js
 import * as FullStory from '@fullstory/browser';
 ```
 
-**Version 2.x.x**
+_Version 2.x.x_
 ```js
 import { FullStory, init } from '@fullstory/browser';
 ```
 
-You can use `init` by itself in the same way you used it in version 1.
+### `init`
+You can use the named import `init` by itself:
 
-**Version 2.x.x**
 ```js
 import { init } from '@fullstory/browser';
 
 init({ orgId: 'my-org-id' })
 ```
-You can also rename the function for readability.
+You can also rename the function for readability:
 ```js
 import { init as initFullStory } from '@fullstory/browser';
 
 initFullStory({ orgId: 'my-org-id' })
 ```
 
+### `FullStory`
 The `FullStory` named export is equivalent to the global `FS` object described in the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/). You can use it to make all version 2 API calls:
 ```js
 import { FullStory } from '@fullstory/browser';
@@ -121,8 +122,10 @@ import { environment } from '../environments/environment';
 export class AppComponent {
 
   constructor() {
-    initFullStory({ orgId: '<your org id here>',
-      devMode: !environment.production });
+    initFullStory({
+      orgId: '<your org id here>',
+      devMode: !environment.production,
+    });
   }
 }
 ```
@@ -132,7 +135,7 @@ export class AppComponent {
 ```javascript
 import Vue from 'vue';
 import App from './App.vue';
-import { init as initFullStory } from '@fullstory/browser';
+import { init as initFullStory, FullStory } from '@fullstory/browser';
 
 initFullStory({ orgId: '<your org id here>' });
 Vue.prototype.$FullStory = FullStory;
@@ -147,7 +150,7 @@ new Vue({
 ```javascript
 import { createApp } from 'vue';
 import App from './App.vue';
-import { init as initFullStory } from '@fullstory/browser';
+import { init as initFullStory, FullStory } from '@fullstory/browser';
 
 initFullStory({ orgId: '<your org id here>' });
 
@@ -206,6 +209,3 @@ FullStory('setProperties', {
 });
 ```
 For more information on setting page vars, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
-
-#### Note
-`FullStory.setVars(<scope>, <payload>)` currently only supports a string value of "page" for the scope. Using arbitrary strings for the scope parameter will result in an Error that will be logged to the browser console or discarded, depending on whether devMode or debug is enabled.
