@@ -203,7 +203,7 @@ FullStory('setProperties', {
   },
   schema: {
     properties: {
-      cart_size: 'int', // override default "real" inference with "int"
+      cart_size: 'int', // override default inferred "real" type with "int"
     }
   }
 });
