@@ -4,6 +4,7 @@
 
 FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory API can be found at https://developer.fullstory.com.
 
+> **NOTE:** this is the documentation for version 2. For version 1 documentation, please see [@fullstory/browser@1.7.1](https://www.npmjs.com/package/@fullstory/browser/v/1.7.1).
 
 ## Install the SDK
 
@@ -18,8 +19,8 @@ npm i @fullstory/browser --save
 yarn add @fullstory/browser
 ```
 
-## Migrating to Version 2.0.0
-In version 2.0.0, `init` is a separate named export from `FullStory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
+## Migrating to Version 2.x.x
+In version 2.x.x, `init` is a separate named export from `FullStory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
 
 _Version 1.x.x_
 ```js
@@ -178,12 +179,14 @@ FullStory('trackEvent', {
   },
   schema: {
     properties: {
-      plan_users: 'int',
-      days_in_trial: 'int',
+      plan_users: 'int', // override default inferred "real" type with "int"
+      days_in_trial: 'int', // override default inferred "real" type with "int"
     }
   }
 });
 ```
+
+> **NOTE:** The inclusion of type suffixes - appending `_str` or `_int` to the end of properties - is no longer required. All custom properties are inferred on the server. To override any default inference, you can add a `schema`. See [Custom Properties](https://developer.fullstory.com/browser/v2/custom-properties/) for more information.
 
 ### Generating session replay links
 
@@ -192,7 +195,22 @@ const startOfPlayback = FullStory('getSession');
 const playbackAtThisMomentInTime = FullStory('getSession', { format: 'url.now' });
 ```
 
-### Sending custom page data
+### Sending custom user properties
+```JavaScript
+FullStory('setProperties', {
+  type: 'user',
+  properties: {
+    displayName: 'Daniel Falko',
+    email: 'daniel.falko@example.com',
+    pricing_plan: 'free',
+    popup_help: true,
+    total_spent: 14.50,
+  },
+});
+```
+For more information on sending custom user properties, view the FullStory help article on [Capturing custom user properties](https://help.fullstory.com/hc/en-us/articles/360020623294).
+
+### Sending custom page properties
 ```JavaScript
 FullStory('setProperties', {
   type: 'page',
@@ -208,4 +226,4 @@ FullStory('setProperties', {
   }
 });
 ```
-For more information on setting page vars, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
+For more information on setting page properties, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
