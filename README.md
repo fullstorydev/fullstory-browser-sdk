@@ -4,6 +4,7 @@
 
 FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory API can be found at https://developer.fullstory.com.
 
+> **NOTE:** this is the documentation for version 2. For version 1 documentation, please see [@fullstory/browser@1.7.1](https://www.npmjs.com/package/@fullstory/browser/v/1.7.1).
 
 ## Install the SDK
 
@@ -16,6 +17,48 @@ npm i @fullstory/browser --save
 #### with yarn
 ```
 yarn add @fullstory/browser
+```
+
+## Migrating to Version 2.x.x
+In version 2.x.x, `init` is a separate named export from `FullStory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
+
+_Version 1.x.x_
+```js
+import * as FullStory from '@fullstory/browser';
+```
+
+_Version 2.x.x_
+```js
+import { FullStory, init } from '@fullstory/browser';
+```
+
+### `init`
+You can use the named import `init` by itself:
+
+```js
+import { init } from '@fullstory/browser';
+
+init({ orgId: 'my-org-id' })
+```
+You can also rename the function for readability:
+```js
+import { init as initFullStory } from '@fullstory/browser';
+
+initFullStory({ orgId: 'my-org-id' })
+```
+
+### `FullStory`
+The `FullStory` named export is equivalent to the global `FS` object described in the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/). You can use it to make all version 2 API calls:
+```js
+import { FullStory } from '@fullstory/browser';
+
+FullStory('trackEvent', {
+  name: 'My Event',
+  properties: {
+    product: 'Sprockets',
+    quantity: 1,
+  },
+})
 ```
 
 ## Initialize the SDK
@@ -43,7 +86,9 @@ The only required option is `orgId`, all others are optional.
 The `init` function also accepts an optional `readyCallback` argument. If you provide a function, it will be invoked when the FullStory session has started. Your callback will be called with one parameter: an object containing information about the session. Currently the only property is `sessionUrl`, which is a string containing the URL to the session.
 
 ```javascript
-FullStory.init({ orgId }, ({ sessionUrl }) => console.log(`Started session: ${sessionUrl}`));
+import { init } from '@fullstory/browser';
+
+init({ orgId }, ({ sessionUrl }) => console.log(`Started session: ${sessionUrl}`));
 ```
 
 ### Initialization Examples
@@ -55,10 +100,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as FullStory from '@fullstory/browser';
+import { init as initFullStory } from '@fullstory/browser';
 
 
-FullStory.init({ orgId: '<your org id here>' });
+initFullStory({ orgId: '<your org id here>' });
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
@@ -67,7 +112,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ```javascript
 import { Component } from '@angular/core';
-import * as FullStory from '@fullstory/browser';
+import { init as initFullStory } from '@fullstory/browser';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -78,8 +123,10 @@ import { environment } from '../environments/environment';
 export class AppComponent {
 
   constructor() {
-    FullStory.init({ orgId: '<your org id here>',
-      devMode: !environment.production });
+    initFullStory({
+      orgId: '<your org id here>',
+      devMode: !environment.production,
+    });
   }
 }
 ```
@@ -89,9 +136,9 @@ export class AppComponent {
 ```javascript
 import Vue from 'vue';
 import App from './App.vue';
-import * as FullStory from '@fullstory/browser';
+import { init as initFullStory, FullStory } from '@fullstory/browser';
 
-FullStory.init({ orgId: '<your org id here>' });
+initFullStory({ orgId: '<your org id here>' });
 Vue.prototype.$FullStory = FullStory;
 
 new Vue({
@@ -102,11 +149,11 @@ new Vue({
 #### Vue 3
 
 ```javascript
-import { createApp } from 'vue'
-import App from './App.vue'
-import * as FullStory from '@fullstory/browser';
+import { createApp } from 'vue';
+import App from './App.vue';
+import { init as initFullStory, FullStory } from '@fullstory/browser';
 
-FullStory.init({ orgId: '<your org id here>' });
+initFullStory({ orgId: '<your org id here>' });
 
 const app = createApp(App);
 app.config.globalProperties.$FullStory = FullStory;
@@ -115,37 +162,68 @@ app.mount('#app');
 
 ## Using the SDK
 
-Once FullStory is initialized, you can make calls to the FullStory SDK.
+Once FullStory is initialized, you can make calls to the FullStory SDK. See the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/) for more information.
 
 ### Sending custom events
 
 ```JavaScript
-FullStory.event('Subscribed', {
-  uid_str: '750948353',
-  plan_name_str: 'Professional',
-  plan_price_real: 299,
-  plan_users_int: 10,
-  days_in_trial_int: 42,
-  feature_packs: ['MAPS', 'DEV', 'DATA'],
+FullStory('trackEvent', {
+  name: 'Subscribed',
+  properties: {
+    uid: '750948353',
+    plan_name: 'Professional',
+    plan_price: 299,
+    plan_users: 10,
+    days_in_trial: 42,
+    feature_packs: ['MAPS', 'DEV', 'DATA'],
+  },
+  schema: {
+    properties: {
+      plan_users: 'int', // override default inferred "real" type with "int"
+      days_in_trial: 'int', // override default inferred "real" type with "int"
+    }
+  }
 });
 ```
+
+> **NOTE:** The inclusion of type suffixes - appending `_str` or `_int` to the end of properties - is no longer required. All custom properties are inferred on the server. To override any default inference, you can add a `schema`. See [Custom Properties](https://developer.fullstory.com/browser/v2/custom-properties/) for more information.
 
 ### Generating session replay links
 
 ```JavaScript
-const startOfPlayback = FullStory.getCurrentSessionURL();
-const playbackAtThisMomentInTime = FullStory.getCurrentSessionURL(true);
+const startOfPlayback = FullStory('getSession');
+const playbackAtThisMomentInTime = FullStory('getSession', { format: 'url.now' });
 ```
 
-### Sending custom page data
+### Sending custom user properties
 ```JavaScript
-FullStory.setVars('page', {
- pageName : 'Checkout', // what is the name of the page?
- cart_size_int : 10, // how many items were in the cart?
- used_coupon_bool : true, // was a coupon used?
+FullStory('setProperties', {
+  type: 'user',
+  properties: {
+    displayName: 'Daniel Falko',
+    email: 'daniel.falko@example.com',
+    pricing_plan: 'free',
+    popup_help: true,
+    total_spent: 14.50,
+  },
 });
 ```
-For more information on setting page vars, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
+For more information on sending custom user properties, view the FullStory help article on [Capturing custom user properties](https://help.fullstory.com/hc/en-us/articles/360020623294).
 
-#### Note
-`FullStory.setVars(<scope>, <payload>)` currently only supports a string value of "page" for the scope. Using arbitrary strings for the scope parameter will result in an Error that will be logged to the browser console or discarded, depending on whether devMode or debug is enabled.
+### Sending custom page properties
+```JavaScript
+FullStory('setProperties', {
+  type: 'page',
+  properties: {
+    pageName: 'Checkout', // what is the name of the page?
+    cart_size: 10, // how many items were in the cart?
+    used_coupon: true, // was a coupon used?
+  },
+  schema: {
+    properties: {
+      cart_size: 'int', // override default inferred "real" type with "int"
+    }
+  }
+});
+```
+For more information on setting page properties, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
