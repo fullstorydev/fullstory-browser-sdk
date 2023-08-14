@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0-beta.4
+- Updates README to 2.x.x
+
 ## 2.0.0-beta.3
 - Official Browser API v2 beta release: https://developer.fullstory.com/browser/v2/getting-started/
 - Add a `startCaptureManually` option to the `init` function to support setting ` _fs_capture_on_startup`: https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture
