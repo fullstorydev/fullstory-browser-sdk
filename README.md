@@ -80,7 +80,7 @@ The only required option is `orgId`, all others are optional.
 * `devMode` - Set to `true` if you want to deactivate FullStory in your development environment. When set to `true`, FullStory will shutdown recording and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to FullStory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionally, any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
 * `startCaptureManually` - Set to `true` if you want to start capture manually using `FS('start')`. FullStory will load but wait for a call to `FS('start')` to begin capturing. See [Manually Delay Data Capture](https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture) for more information.  Defaults to `false`.
 * `assetMapId` - Use this to set the current asset map id. See [Asset Uploading for Web](https://help.fullstory.com/hc/en-us/articles/4404129191575-Asset-Uploading-for-Web) for more information.
-* `appHost` - Use this to set the app host for displaying session urls. If using a version of FS relay, you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
+* `appHost` - Use this to set the app host for displaying session urls. If using a version of [FS relay](https://help.fullstory.com/hc/en-us/articles/360046112593-How-to-send-captured-traffic-to-your-First-Party-Domain-using-FullStory-Relay), you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
 
 ### Ready Callback
 
