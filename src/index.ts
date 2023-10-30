@@ -15,6 +15,7 @@ import { initFS, FSApi } from '@fullstory/snippet';
  */
 export interface SnippetOptions {
   orgId: string;
+  appHost?: string;
   assetMapId?: string;
   cookieDomain?: string;
   debug?: boolean;
@@ -37,6 +38,7 @@ type ReadyCallback = (data: { sessionUrl: string, settings: Readonly<object> }) 
 
 declare global {
   interface Window {
+    _fs_app_host?: string;
     _fs_asset_map_id?: string;
     _fs_capture_on_startup?: boolean;
     _fs_cookie_domain?: string;
@@ -83,6 +85,10 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
     window._fs_run_in_iframe = true;
   }
 
+  if (options.appHost) {
+    window._fs_app_host = options.appHost;
+  }
+
   if (options.assetMapId) {
     window._fs_asset_map_id = options.assetMapId;
   }
@@ -127,7 +133,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
     fs('trackEvent', {
       name: 'FullStory Dev Mode',
       properties: {
-        message_str: message,
+        message,
       }
     });
     fs('shutdown');
