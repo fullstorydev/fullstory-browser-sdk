@@ -1,11 +1,15 @@
 # Changelog
 
+## 2.0.0
+- Official release of the FullStory browser API v2
+- Add an `appHost` option to the `init` function to support setting `_fs_app_host`
+
 ## 2.0.0-beta.4
 - Updates README to 2.x.x
 
 ## 2.0.0-beta.3
-- Official Browser API v2 beta release: https://developer.fullstory.com/browser/v2/getting-started/
-- Add a `startCaptureManually` option to the `init` function to support setting ` _fs_capture_on_startup`: https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture
+- Official Browser API v2 beta release: https://developer.fullstory.com/browser/getting-started/
+- Add a `startCaptureManually` option to the `init` function to support setting ` _fs_capture_on_startup`: https://developer.fullstory.com/browser/auto-capture/capture-data/#manually-delay-data-capture
 - Add an `assetMapId` option to the `init` function to support setting `_fs_asset_map_id`.
 
 ## 2.0.0-beta.0
@@ -13,7 +17,7 @@
 - Convert to TypeScript
 - Change default export to named export `FullStory`
 - Update `@fullstory/snippet` dependency to use version `2.0.0-beta.2`
-- Implement the v2 beta Browser API: https://developer.fullstory.com/browser/v2/getting-started/
+- Implement the v2 beta Browser API: https://developer.fullstory.com/browser/getting-started/
 
 ## 1.7.1
 
