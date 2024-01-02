@@ -151,6 +151,32 @@ describe('typescript safety', () => {
     // @ts-expect-error (for testing purposes)
     FS('observe', { type: '🦂', callback: () => console.log('STARTED') });
 
+    // Disconnector can be `void` type
+    const disconnector = FS('observe', { type: 'start', callback: () => console.log('STARTED') });
+
+    // Does not pass (disconnector might be `null or undefined` type)
+    try {
+      // @ts-expect-error (for testing purposes)
+      disconnector.disconnect();
+    } catch (_) {
+      // pokemon
+    }
+
+    // Does not pass, disconnector might still be `null` 🤷‍♂️
+    if (typeof disconnector !== 'undefined') {
+      try {
+        // @ts-expect-error (for testing purposes)
+        disconnector.disconnect();
+      } catch (_) {
+        // pokemon
+      }
+    }
+
+    if (disconnector) {
+      // passes
+      disconnector.disconnect();
+    }
+
     // LEGACY:
     // Passes TypeScript check
     FS.setVars('user', { email: 'e@mail.com' });
@@ -168,5 +194,18 @@ describe('typescript safety', () => {
 
     // Assertion for posterity's sake...
     expect(true).to.equal(true);
+  });
+
+  // NOTE: don't run this test, it will hang since fs.js isn't really running. It's only for typescript safety checks.
+  xit('provides type assistance for the async api', async () => {
+    init({ orgId: testOrg });
+
+    const disconnector = await FS('observeAsync', { type: 'start', callback: () => console.log('STARTED') });
+
+    disconnector.disconnect();
+
+    const url = await FS('getSessionAsync');
+
+    console.log(url.trim());
   });
 });
