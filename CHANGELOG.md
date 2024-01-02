@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.1
+- Fixes some typescript discrepancies discovered in issue #187
+
 ## 2.0.0
 - Official release of the FullStory browser API v2
 - Add an `appHost` option to the `init` function to support setting `_fs_app_host`
