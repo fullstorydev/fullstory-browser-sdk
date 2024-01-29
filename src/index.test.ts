@@ -180,6 +180,37 @@ describe('typescript safety', () => {
     expect(true).to.equal(true);
   });
 
+  it('allows the optional "source" param', () => {
+    init({ orgId: testOrg });
+
+    FS('setProperties', {
+      type: 'user',
+      properties: {
+        a: 'a',
+        b: 'b',
+        c: 'c'
+      }
+    }, 'segment-browser-actions');
+
+    FS.setUserVars({
+      a: 'a',
+      b: 'b',
+      c: 'c'
+    }, 'segment-browser-actions');
+
+    FS.setVars('page', {
+      a: 'a',
+      b: 'b',
+      c: 'c'
+    }, 'segment-browser-actions');
+
+    FS.event('Segment Event', {
+      a: 'a',
+      b: 'b',
+      c: 'c'
+    }, 'segment-browser-actions');
+  });
+
   // NOTE: don't run this test, it will hang since fs.js isn't really running. It's only for typescript safety checks.
   xit('provides type assistance for the async api', async () => {
     init({ orgId: testOrg });
