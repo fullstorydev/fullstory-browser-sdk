@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.2
+- Fixes some typescript issues with the optional source parameter for v1 API
+
 ## 2.0.1
 - Fixes some typescript discrepancies discovered in issue #187
 
