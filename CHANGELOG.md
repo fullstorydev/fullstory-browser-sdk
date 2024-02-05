@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.3
+- Eliminates some dead code from the build.
+
 ## 2.0.2
 - Fixes some typescript issues with the optional source parameter for v1 API
 
