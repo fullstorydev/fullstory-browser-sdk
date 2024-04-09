@@ -1,8 +1,8 @@
-# FullStory Browser SDK
+# Fullstory Browser SDK
 
 [![CircleCI](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk.svg?style=svg)](https://circleci.com/gh/fullstorydev/fullstory-browser-sdk) [![npm (scoped)](https://img.shields.io/npm/v/@fullstory/browser)](https://www.npmjs.com/package/@fullstory/browser)
 
-FullStory's browser SDK lets you manage FullStory recording on your site as well as retrieve deep links to session replays and send your own custom events. More information about the FullStory API can be found at https://developer.fullstory.com.
+Fullstory's browser SDK lets you manage Fullstory data capture on your site as well as retrieve deep links to session replays and send your own custom events. More information about the Fullstory API can be found at https://developer.fullstory.com.
 
 > **NOTE:** this is the documentation for version 2. For version 1 documentation, please see [@fullstory/browser@1.7.1](https://www.npmjs.com/package/@fullstory/browser/v/1.7.1).
 
@@ -69,22 +69,22 @@ Call the `init()` function with options as soon as you can in your website start
 
 The only required option is `orgId`, all others are optional.
 
-*  `orgId` -  Sets your FullStory Org Id. Find out how to get your Org Id [here](https://help.fullstory.com/hc/en-us/articles/360047075853).
-*  `debug` - When set to `true`, enables FullStory debug messages; defaults to `false`.
+*  `orgId` -  Sets your Fullstory Org Id. Find out how to get your Org Id [here](https://help.fullstory.com/hc/en-us/articles/360047075853).
+*  `debug` - When set to `true`, enables Fullstory debug messages; defaults to `false`.
 *  `host` - The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`.
-*  `script` - FullStory script host domain. FullStory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com`.
-* `namespace` - Sets the global identifier for FullStory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
-* `cookieDomain` - Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-FullStory-cookie-be-associated-with-a-specific-subdomain-).
-* `recordCrossDomainIFrames` - Defaults to `false`. FullStory can record cross-domain iFrames if: 1. The FullStory Browser SDK is running in the cross-domain iFrame and 2. `recordCrossDomainIFrames` is set to `true` in the cross-domain iFrame and 3. The FullStory Browser SDK is running in the parent page of the cross-domain iFrame. Click [here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) for a detailed explanation of what "cross-domain" means. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers. More information about cross-domain iFrame recording can be found on our [Knowledge Base](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#2-the-outer-page-is-running-fullstory-and-you-have-iframes-runni). Note: the `recordCrossDomainIFrames` parameter is the same as the `window['_fs_run_in_iframe']` referenced in the KB article.
-* `recordOnlyThisIFrame` - When set to `true`, this tells FullStory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running FullStory or when the site *is* running FullStory, but you want your content sent to a different FullStory org.
-* `devMode` - Set to `true` if you want to deactivate FullStory in your development environment. When set to `true`, FullStory will shutdown recording and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to FullStory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionally, any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
-* `startCaptureManually` - Set to `true` if you want to start capture manually using `FS('start')`. FullStory will load but wait for a call to `FS('start')` to begin capturing. See [Manually Delay Data Capture](https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture) for more information.  Defaults to `false`.
+*  `script` - Fullstory script host domain. Fullstory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com`.
+* `namespace` - Sets the global identifier for Fullstory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
+* `cookieDomain` - Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-Fullstory-cookie-be-associated-with-a-specific-subdomain-).
+* `recordCrossDomainIFrames` - Defaults to `false`. Fullstory can record cross-domain iFrames if: 1. The Fullstory Browser SDK is running in the cross-domain iFrame and 2. `recordCrossDomainIFrames` is set to `true` in the cross-domain iFrame and 3. The Fullstory Browser SDK is running in the parent page of the cross-domain iFrame. Click [here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) for a detailed explanation of what "cross-domain" means. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers. More information about cross-domain iFrame recording can be found on our [Knowledge Base](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-Fullstory-capture-content-that-is-presented-in-iframes-#2-the-outer-page-is-running-fullstory-and-you-have-iframes-runni). Note: the `recordCrossDomainIFrames` parameter is the same as the `window['_fs_run_in_iframe']` referenced in the KB article.
+* `recordOnlyThisIFrame` - When set to `true`, this tells Fullstory that the IFrame is the "root" of the recording and should be its own session; defaults to `false`. Use this when your app is embedded in an IFrame on a site not running Fullstory or when the site *is* running Fullstory, but you want your content sent to a different Fullstory org.
+* `devMode` - Set to `true` if you want to deactivate Fullstory in your development environment. When set to `true`, Fullstory will shutdown recording and all subsequent SDK method calls will be no-ops. At the time `init` is called with `devMode: true`, a single `event` call will be sent to Fullstory to indicate that the SDK is in `devMode`; this is to help trouble-shoot the case that the SDK was accidentally set to `devMode: true` in a production environment. Additionally, any calls to SDK methods will `console.warn` that Fullstory is in `devMode`. Defaults to `false`.
+* `startCaptureManually` - Set to `true` if you want to start capture manually using `FS('start')`. Fullstory will load but wait for a call to `FS('start')` to begin capturing. See [Manually Delay Data Capture](https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture) for more information.  Defaults to `false`.
 * `assetMapId` - Use this to set the current asset map id. See [Asset Uploading for Web](https://help.fullstory.com/hc/en-us/articles/4404129191575-Asset-Uploading-for-Web) for more information.
-* `appHost` - Use this to set the app host for displaying session urls. If using a version of [FullStory Relay](https://help.fullstory.com/hc/en-us/articles/360046112593-How-to-send-captured-traffic-to-your-First-Party-Domain-using-FullStory-Relay), you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
+* `appHost` - Use this to set the app host for displaying session urls. If using a version of [Fullstory Relay](https://help.fullstory.com/hc/en-us/articles/360046112593-How-to-send-captured-traffic-to-your-First-Party-Domain-using-Fullstory-Relay), you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
 
 ### Ready Callback
 
-The `init` function also accepts an optional `readyCallback` argument. If you provide a function, it will be invoked when the FullStory session has started. Your callback will be called with one parameter: an object containing information about the session. Currently the only property is `sessionUrl`, which is a string containing the URL to the session.
+The `init` function also accepts an optional `readyCallback` argument. If you provide a function, it will be invoked when the Fullstory session has started. Your callback will be called with one parameter: an object containing information about the session. Currently the only property is `sessionUrl`, which is a string containing the URL to the session.
 
 ```javascript
 import { init } from '@fullstory/browser';
@@ -209,7 +209,7 @@ FullStory('setProperties', {
   },
 });
 ```
-For more information on sending custom user properties, view the FullStory help article on [Capturing custom user properties](https://help.fullstory.com/hc/en-us/articles/360020623294).
+For more information on sending custom user properties, view the Fullstory help article on [Capturing custom user properties](https://help.fullstory.com/hc/en-us/articles/360020623294).
 
 ### Sending custom page properties
 ```JavaScript
@@ -227,4 +227,4 @@ FullStory('setProperties', {
   }
 });
 ```
-For more information on setting page properties, view the FullStory help article on [Sending custom page data to FullStory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-FullStory).
+For more information on setting page properties, view the Fullstory help article on [Sending custom page data to Fullstory](https://help.fullstory.com/hc/en-us/articles/1500004101581-FS-setVars-API-Sending-custom-page-data-to-Fullstory).
