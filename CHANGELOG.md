@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4
+- Copy updates following the Fullstory rebrand
+
 ## 2.0.3
 - Eliminates some dead code from the build.
 

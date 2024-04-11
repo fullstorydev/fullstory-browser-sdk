@@ -1,10 +1,10 @@
 {
   "name": "@fullstory/browser",
-  "version": "2.0.3",
-  "description": "The official FullStory browser SDK",
+  "version": "2.0.4",
+  "description": "The official Fullstory browser SDK",
   "repository": "git://github.com/fullstorydev/fullstory-browser-sdk.git",
   "homepage": "https://github.com/fullstorydev/fullstory-browser-sdk",
-  "author": "FullStory",
+  "author": "Fullstory",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
