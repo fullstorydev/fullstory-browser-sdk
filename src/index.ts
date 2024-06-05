@@ -163,7 +163,7 @@ const hasFullStoryWithFunction = (...testNames) => {
 
 const guard = (name) => (...args) => {
   if (window._fs_dev_mode) {
-    const message = `FullStory is in dev mode and is not recording: ${name} method not executed`;
+    const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
     console.warn(message);
     return message;
   }
@@ -181,7 +181,7 @@ const buildFullStoryShim = (): FSApi => {
     const fs = ensureSnippetLoaded();
 
     if (window._fs_dev_mode) {
-      const message = 'FullStory is in dev mode and is not recording: method not executed';
+      const message = `FullStory is in dev mode and is not capturing: ${operation} not executed`;
       console.warn(message);
       return undefined;
     }

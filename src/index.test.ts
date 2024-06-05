@@ -54,7 +54,7 @@ describe('init', () => {
     expect(window._fs_is_outer_script).to.equal(true);
   });
 
-  it('should add _fs_dev_mode value to window when initialzed with devMode', () => {
+  it('should add _fs_dev_mode value to window when initialized with devMode', () => {
     init({
       orgId: testOrg,
       devMode: true,
@@ -108,7 +108,7 @@ describe('devMode', () => {
 
     FS('log', { msg: 'hello world' });
 
-    expect(consoleWarnedMessage).to.match(/FullStory is in dev mode/);
+    expect(consoleWarnedMessage).to.equal('FullStory is in dev mode and is not capturing: log not executed');
   });
 });
 
