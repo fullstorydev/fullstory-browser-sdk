@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.5
+- V2 dev mode should preserve method name in logs
+
 ## 2.0.4
 - Copy updates following the Fullstory rebrand
 
