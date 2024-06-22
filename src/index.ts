@@ -46,7 +46,6 @@ declare global {
     _fs_cookie_domain?: string;
     _fs_debug?: boolean;
     _fs_dev_mode?: boolean;
-    _fs_disable_logs?: boolean;
     _fs_host?: string;
     _fs_initialized?: boolean;
     _fs_is_outer_script?: boolean;
@@ -57,8 +56,11 @@ declare global {
   }
 }
 
-const log = (message: string, disableLogs?: boolean) => {
-  if (!disableLogs) {
+// local var to browser SDK only, can be mutated by init options
+let _fsDisableSdkLogs = false;
+
+const log = (message: string) => {
+  if (!_fsDisableSdkLogs) {
     console.warn(message);
   }
 };
@@ -85,7 +87,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   // Make a copy so we can modify `options` if desired.
   const options = { ...inputOptions };
   if (getFullStory()) {
-    log('The FullStory snippet has already been defined elsewhere (likely in the <head> element)', options.disableLogs);
+    log('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
     return;
   }
 
@@ -120,12 +122,12 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
     if (!options.script) {
       options.script = 'edge.fullstory.com/s/fs-debug.js';
     } else {
-      log('Ignoring `debug = true` because `script` is set', options.disableLogs);
+      log('Ignoring `debug = true` because `script` is set');
     }
   }
 
   if (options.disableLogs) {
-    window._fs_disable_logs = true;
+    _fsDisableSdkLogs = true;
   }
 
   initFS(options);
@@ -133,7 +135,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   const fs = getFullStory();
 
   if (!fs) {
-    log('Failed to initialize FS snippet', options.disableLogs);
+    log('Failed to initialize FS snippet');
     return;
   }
 
@@ -151,13 +153,13 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
     });
     fs('shutdown');
     window._fs_dev_mode = true;
-    log(message, options.disableLogs);
+    log(message);
   }
 };
 
 const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   if (window._fs_initialized) {
-    if (message) log(message, inputOptions.disableLogs);
+    if (message) log(message);
     return;
   }
   _init(inputOptions, readyCallback);
@@ -177,7 +179,7 @@ const hasFullStoryWithFunction = (...testNames) => {
 const guard = (name) => (...args) => {
   if (window._fs_dev_mode) {
     const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
-    log(message, window._fs_disable_logs);
+    log(message);
     return message;
   }
 
@@ -185,7 +187,7 @@ const guard = (name) => (...args) => {
   if (hasFullStoryWithFunction(name) && fs) {
     return fs[name](...args);
   }
-  log(`FS.${name} not ready`, window._fs_disable_logs);
+  log(`FS.${name} not ready`);
   return null;
 };
 
@@ -195,7 +197,7 @@ const buildFullStoryShim = (): FSApi => {
 
     if (window._fs_dev_mode) {
       const message = `FullStory is in dev mode and is not capturing: ${operation} not executed`;
-      log(message, window._fs_disable_logs);
+      log(message);
       return undefined;
     }
 
