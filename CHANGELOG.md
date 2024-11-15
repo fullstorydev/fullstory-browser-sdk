@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.6
+- Adds additional types for "observe" callbacks
+
 ## 2.0.5
 - V2 dev mode should preserve method name in logs
 
