@@ -81,6 +81,7 @@ The only required option is `orgId`, all others are optional.
 * `startCaptureManually` - Set to `true` if you want to start capture manually using `FS('start')`. Fullstory will load but wait for a call to `FS('start')` to begin capturing. See [Manually Delay Data Capture](https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture) for more information.  Defaults to `false`.
 * `assetMapId` - Use this to set the current asset map id. See [Asset Uploading for Web](https://help.fullstory.com/hc/en-us/articles/4404129191575-Asset-Uploading-for-Web) for more information.
 * `appHost` - Use this to set the app host for displaying session urls. If using a version of [Fullstory Relay](https://help.fullstory.com/hc/en-us/articles/360046112593-How-to-send-captured-traffic-to-your-First-Party-Domain-using-Fullstory-Relay), you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
+* `sessionUid` - Sets the session UID to be passed to `FS('init', ...)` during initialization.
 
 ### Ready Callback
 

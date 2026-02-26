@@ -83,6 +83,21 @@ describe('init', () => {
 
     expect(window._fs_script).to.match(/fs-debug.js$/);
   });
+
+  it('should pass sessionUid to FS init', () => {
+    const sessionUid = 'session-123';
+
+    init({
+      orgId: testOrg,
+      sessionUid,
+    });
+
+    const queue = (window[window._fs_namespace ?? 'FS'] as unknown as { q?: unknown[][] }).q;
+    const initCall = queue?.find((call) => call[0] === 'init');
+    const initOptions = initCall?.[1] as { sessionUid?: string } | undefined;
+
+    expect(initOptions?.sessionUid).to.equal(sessionUid);
+  });
 });
 
 describe('devMode', () => {
