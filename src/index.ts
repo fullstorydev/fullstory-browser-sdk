@@ -127,7 +127,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   }
 
   if (options.sessionUid) {
-    fs('init', { sessionUid: options.sessionUid } as any);
+    fs('init', { env: { sessionUid: options.sessionUid } });
   }
 
   if (readyCallback) {

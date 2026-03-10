@@ -94,9 +94,9 @@ describe('init', () => {
 
     const queue = (window[window._fs_namespace ?? 'FS'] as unknown as { q?: unknown[][] }).q;
     const initCall = queue?.find((call) => call[0] === 'init');
-    const initOptions = initCall?.[1] as { sessionUid?: string } | undefined;
+    const initOptions = initCall?.[1] as { env?: { sessionUid?: string } } | undefined;
 
-    expect(initOptions?.sessionUid).to.equal(sessionUid);
+    expect(initOptions?.env?.sessionUid).to.equal(sessionUid);
   });
 });
 
