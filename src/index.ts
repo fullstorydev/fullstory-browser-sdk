@@ -207,7 +207,7 @@ const buildFullStoryShim = (): FSApi => {
   FS.setVars = guard('setVars');
   FS.shutdown = guard('shutdown');
 
-  return FS;
+  return FS as FSApi;
 };
 
 export const FullStory: FSApi = buildFullStoryShim();

@@ -3,7 +3,7 @@
   "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
   "root": true,
   "env": {
-    "mocha": true,
+    "jest": true,
     "browser": true
   },
   "plugins": ["@typescript-eslint"],
