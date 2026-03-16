@@ -1,4 +1,3 @@
-import { assert, expect } from 'chai';
 import {
   FullStory as FS,
   init,
@@ -19,23 +18,23 @@ beforeEach(() => {
 
 describe('init', () => {
   it('should throw error if not initialized with an orgId', () => {
-    expect(() => { init({} as SnippetOptions); }).to.throw();
+    expect(() => { init({} as SnippetOptions); }).toThrow();
   });
 
   it('should throw error if API called before init', () => {
     try {
       FS('log', { msg: 'my log' });
-      expect(false).to.be('this should have thrown');
+      throw new Error('this should have thrown');
     } catch (error) {
-      expect((error as Error).message).to.match(/FullStory is not loaded/);
+      expect((error as Error).message).toMatch(/FullStory is not loaded/);
     }
     init({ orgId: testOrg });
-    expect(() => { FS('log', { msg: 'my log' }); }).to.not.throw();
+    expect(() => { FS('log', { msg: 'my log' }); }).not.toThrow();
   });
 
   it('should add _fs_org value to window object', () => {
     init({ orgId: testOrg });
-    expect(window._fs_org).to.equal(testOrg);
+    expect(window._fs_org).toBe(testOrg);
   });
 
   it('should add _fs_run_in_iframe value to window object', () => {
@@ -43,7 +42,7 @@ describe('init', () => {
       orgId: testOrg,
       recordCrossDomainIFrames: true,
     });
-    expect(window._fs_run_in_iframe).to.equal(true);
+    expect(window._fs_run_in_iframe).toBe(true);
   });
 
   it('should add _fs_is_outer_script value to window object', () => {
@@ -51,7 +50,7 @@ describe('init', () => {
       orgId: testOrg,
       recordOnlyThisIFrame: true,
     });
-    expect(window._fs_is_outer_script).to.equal(true);
+    expect(window._fs_is_outer_script).toBe(true);
   });
 
   it('should add _fs_dev_mode value to window when initialized with devMode', () => {
@@ -60,19 +59,19 @@ describe('init', () => {
       devMode: true,
     });
 
-    expect(window._fs_dev_mode).to.equal(true);
+    expect(window._fs_dev_mode).toBe(true);
   });
 
   it('should return whether initialized', () => {
     let isInit = isInitialized();
-    expect(isInit).to.equal(false);
+    expect(isInit).toBe(false);
 
     init({
       orgId: testOrg,
     });
 
     isInit = isInitialized();
-    expect(isInit).to.equal(true);
+    expect(isInit).toBe(true);
   });
 
   it('should load fs-debug.js when debug is set', () => {
@@ -81,7 +80,22 @@ describe('init', () => {
       debug: true,
     });
 
-    expect(window._fs_script).to.match(/fs-debug.js$/);
+    expect(window._fs_script).toMatch(/fs-debug.js$/);
+  });
+
+  it('should pass sessionUid to FS init', () => {
+    const sessionUid = 'session-123';
+
+    init({
+      orgId: testOrg,
+      sessionUid,
+    });
+
+    const queue = (window[window._fs_namespace ?? 'FS'] as unknown as { q?: unknown[][] }).q;
+    const initCall = queue?.find((call) => call[0] === 'init');
+    const initOptions = initCall?.[1] as { env?: { sessionUid?: string } } | undefined;
+
+    expect(initOptions?.env?.sessionUid).toBe(sessionUid);
   });
 });
 
@@ -98,17 +112,17 @@ describe('devMode', () => {
   });
 
   it('should return a message for functions invoked when in devMode', () => {
-    expect(consoleWarnedMessage).to.equal(undefined);
+    expect(consoleWarnedMessage).toBeUndefined();
     init({
       orgId: testOrg,
       devMode: true,
     });
 
-    expect(consoleWarnedMessage).to.match(/FullStory was initialized in devMode/);
+    expect(consoleWarnedMessage).toMatch(/FullStory was initialized in devMode/);
 
     FS('log', { msg: 'hello world' });
 
-    expect(consoleWarnedMessage).to.equal('FullStory is in dev mode and is not capturing: log not executed');
+    expect(consoleWarnedMessage).toBe('FullStory is in dev mode and is not capturing: log not executed');
   });
 });
 
@@ -118,11 +132,7 @@ describe('getCurrentSessionURL', () => {
     // in theory, this is a race condition - assuming that fs.js
     // can't load by the time the following statement is executed
     const url = FS('getSession');
-    assert.equal(
-      url,
-      null,
-      'FullStory.getCurrentSessionURL() should return null if executed before fs.js is fully bootstrapped'
-    );
+    expect(url).toBeNull();
   });
 });
 
@@ -177,7 +187,7 @@ describe('typescript safety', () => {
     FS.event(42, { product_id: 'asdf' });
 
     // Assertion for posterity's sake...
-    expect(true).to.equal(true);
+    expect(true).toBe(true);
   });
 
   it('allows the optional "source" param', () => {
@@ -212,7 +222,7 @@ describe('typescript safety', () => {
   });
 
   // NOTE: don't run this test, it will hang since fs.js isn't really running. It's only for typescript safety checks.
-  xit('provides type assistance for the async api', async () => {
+  it.skip('provides type assistance for the async api', async () => {
     init({ orgId: testOrg });
 
     const disconnector = await FS('observeAsync', { type: 'start', callback: () => console.log('STARTED') });
@@ -220,7 +230,6 @@ describe('typescript safety', () => {
     disconnector.disconnect();
 
     const url = await FS('getSessionAsync');
-
-    console.log(url.trim());
+    expect(url === null || typeof url === 'string' || typeof url === 'object').toBe(true); // type-check only
   });
 });
