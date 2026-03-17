@@ -1,7 +1,11 @@
 # Changelog
 
-## 2.0.7
+## 2.0.8
 - Add sessionUid option to init for session UID passthrough
+
+## 2.0.7
+- ~~Add sessionUid option to init for session UID passthrough~~
+- Accidental breaking change 🙈
 
 ## 2.0.6
 - Adds additional types for "observe" callbacks
