@@ -157,10 +157,10 @@ const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: Rea
   window._fs_initialized = true;
 };
 
-export const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
+const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
 
 // normalize undefined into boolean
-export const isInitialized = () => !!window._fs_initialized;
+const isInitialized = () => !!window._fs_initialized;
 
 const hasFullStoryWithFunction = (...testNames) => {
   const fs = ensureSnippetLoaded();
@@ -210,4 +210,6 @@ const buildFullStoryShim = (): FSApi => {
   return FS as FSApi;
 };
 
-export const FullStory: FSApi = buildFullStoryShim();
+const FullStory: FSApi = buildFullStoryShim();
+
+export { FullStory, init, isInitialized };
