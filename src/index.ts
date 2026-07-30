@@ -50,17 +50,17 @@ type FsInitEnv = {
 };
 
 // Module-level state set during `_init` (replaces former window `_fs_*` globals).
-let namespace: string | undefined;
-let initialized = false;
-let isDevMode = false;
+let _namespace: string | undefined;
+let _initialized = false;
+let _isDevMode = false;
 
 const getFullStory = (ns: string): FSApi | undefined => (
   (window as unknown as Record<string, FSApi | undefined>)[ns]
 );
 
 const ensureSnippetLoaded = (): FSApi => {
-  const fs = namespace ? getFullStory(namespace) : undefined;
-  if (!namespace || !fs) {
+  const fs = _namespace ? getFullStory(_namespace) : undefined;
+  if (!_namespace || !fs) {
     throw Error(
       'FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions'
     );
@@ -73,6 +73,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   // Make a copy so we can modify `options` if desired.
   const options = { ...inputOptions };
   const ns = options.namespace || 'FS';
+  _namespace = ns;
 
   if (getFullStory(ns)) {
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
@@ -120,11 +121,9 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
     }
   }
 
-  namespace = ns;
-
   initFS(options);
 
-  const fs = getFullStory(namespace);
+  const fs = getFullStory(_namespace);
 
   if (!fs) {
     console.warn('Failed to initialize FS snippet');
@@ -146,37 +145,37 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
       }
     });
     fs('shutdown');
-    isDevMode = true;
+    _isDevMode = true;
     console.warn(message);
   }
 };
 
 const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
-  if (initialized) {
+  if (_initialized) {
     if (message) console.warn(message);
     return;
   }
   _init(inputOptions, readyCallback);
-  initialized = true;
+  _initialized = true;
 };
 
 const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
 
-const isInitialized = () => initialized;
+const isInitialized = () => _initialized;
 
-const hasFullStoryWithFunction = (...testNames) => {
+const hasFullStoryWithFunction = (...testNames:string[]) => {
   const fs = ensureSnippetLoaded();
   return testNames.every((current) => fs[current]);
 };
 
-const guard = (name) => (...args) => {
-  if (isDevMode) {
+const guard = (name) => (...args: any) => {
+  if (_isDevMode) {
     const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
     console.warn(message);
     return message;
   }
 
-  const fs = namespace ? getFullStory(namespace) : undefined;
+  const fs = _namespace ? getFullStory(_namespace) : undefined;
   if (hasFullStoryWithFunction(name) && fs) {
     return fs[name](...args);
   }
@@ -188,7 +187,7 @@ const buildFullStoryShim = (): FSApi => {
   const FS = (operation, options, source) => {
     const fs = ensureSnippetLoaded();
 
-    if (isDevMode) {
+    if (_isDevMode) {
       const message = `FullStory is in dev mode and is not capturing: ${operation} not executed`;
       console.warn(message);
       return undefined;
