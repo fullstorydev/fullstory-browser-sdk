@@ -168,7 +168,7 @@ const hasFullStoryWithFunction = (...testNames:string[]) => {
   return testNames.every((current) => fs[current]);
 };
 
-const guard = (name) => (...args: any) => {
+const guard = (name) => (...args) => {
   if (_isDevMode) {
     const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
     console.warn(message);
