@@ -38,34 +38,29 @@ export interface SnippetOptions {
  */
 type ReadyCallback = (data: { sessionUrl: string, settings: Readonly<object> }) => void;
 
-declare global {
-  interface Window {
-    _fs_app_host?: string;
-    _fs_asset_map_id?: string;
-    _fs_capture_on_startup?: boolean;
-    _fs_cookie_domain?: string;
-    _fs_debug?: boolean;
-    _fs_dev_mode?: boolean;
-    _fs_host?: string;
-    _fs_initialized?: boolean;
-    _fs_is_outer_script?: boolean;
-    _fs_namespace?: string;
-    _fs_org?: string;
-    _fs_run_in_iframe?: boolean;
-    _fs_script?: string;
-  }
-}
-
-const getFullStory = (): FSApi | undefined => {
-  if (window._fs_namespace) {
-    return window[window._fs_namespace];
-  }
-  return undefined;
+/** Env overrides passed to `FS('init', { env })` after the snippet loads. */
+type FsInitEnv = {
+  appHost?: string;
+  assetMapId?: string;
+  captureOnStartup?: boolean;
+  cookieDomain?: string;
+  isOuterScript?: boolean;
+  runInIframe?: boolean;
+  sessionUid?: string;
 };
 
+// Module-level state set during `_init` (replaces former window `_fs_*` globals).
+let _namespace: string | undefined;
+let _initialized = false;
+let _isDevMode = false;
+
+const getFullStory = (ns: string): FSApi | undefined => (
+  (window as unknown as Record<string, FSApi | undefined>)[ns]
+);
+
 const ensureSnippetLoaded = (): FSApi => {
-  const fs = getFullStory();
-  if (!fs) {
+  const fs = _namespace ? getFullStory(_namespace) : undefined;
+  if (!_namespace || !fs) {
     throw Error(
       'FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions'
     );
@@ -77,36 +72,45 @@ const ensureSnippetLoaded = (): FSApi => {
 const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   // Make a copy so we can modify `options` if desired.
   const options = { ...inputOptions };
-  if (getFullStory()) {
+  const ns = options.namespace || 'FS';
+  _namespace = ns;
+
+  if (getFullStory(ns)) {
     console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
     return;
   }
 
+  const fsInitEnv: FsInitEnv = {};
+
   // see README for details on the recordCrossDomainIFrames option
   if (options.recordCrossDomainIFrames) {
-    window._fs_run_in_iframe = true;
+    fsInitEnv.runInIframe = true;
   }
 
   if (options.appHost) {
-    window._fs_app_host = options.appHost;
+    fsInitEnv.appHost = options.appHost;
   }
 
   if (options.assetMapId) {
-    window._fs_asset_map_id = options.assetMapId;
+    fsInitEnv.assetMapId = options.assetMapId;
   }
 
   if (options.startCaptureManually) {
-    window._fs_capture_on_startup = false;
+    fsInitEnv.captureOnStartup = false;
   }
 
   // record the contents of this iFrame when embedded in a parent site
   if (options.recordOnlyThisIFrame) {
-    window._fs_is_outer_script = true;
+    fsInitEnv.isOuterScript = true;
   }
 
   // Set cookie domain if it was specified.
   if (options.cookieDomain) {
-    window._fs_cookie_domain = options.cookieDomain;
+    fsInitEnv.cookieDomain = options.cookieDomain;
+  }
+
+  if (options.sessionUid) {
+    fsInitEnv.sessionUid = options.sessionUid;
   }
 
   if (options.debug === true) {
@@ -119,16 +123,14 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
 
   initFS(options);
 
-  const fs = getFullStory();
+  const fs = getFullStory(_namespace);
 
   if (!fs) {
     console.warn('Failed to initialize FS snippet');
     return;
   }
 
-  if (options.sessionUid) {
-    fs('init', { env: { sessionUid: options.sessionUid } });
-  }
+  fs('init', { env: fsInitEnv });
 
   if (readyCallback) {
     fs('observe', { type: 'start', callback: readyCallback });
@@ -143,38 +145,37 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
       }
     });
     fs('shutdown');
-    window._fs_dev_mode = true;
+    _isDevMode = true;
     console.warn(message);
   }
 };
 
 const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
-  if (window._fs_initialized) {
+  if (_initialized) {
     if (message) console.warn(message);
     return;
   }
   _init(inputOptions, readyCallback);
-  window._fs_initialized = true;
+  _initialized = true;
 };
 
 const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
 
-// normalize undefined into boolean
-const isInitialized = () => !!window._fs_initialized;
+const isInitialized = () => _initialized;
 
-const hasFullStoryWithFunction = (...testNames) => {
+const hasFullStoryWithFunction = (...testNames:string[]) => {
   const fs = ensureSnippetLoaded();
   return testNames.every((current) => fs[current]);
 };
 
 const guard = (name) => (...args) => {
-  if (window._fs_dev_mode) {
+  if (_isDevMode) {
     const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
     console.warn(message);
     return message;
   }
 
-  const fs = getFullStory();
+  const fs = _namespace ? getFullStory(_namespace) : undefined;
   if (hasFullStoryWithFunction(name) && fs) {
     return fs[name](...args);
   }
@@ -186,7 +187,7 @@ const buildFullStoryShim = (): FSApi => {
   const FS = (operation, options, source) => {
     const fs = ensureSnippetLoaded();
 
-    if (window._fs_dev_mode) {
+    if (_isDevMode) {
       const message = `FullStory is in dev mode and is not capturing: ${operation} not executed`;
       console.warn(message);
       return undefined;

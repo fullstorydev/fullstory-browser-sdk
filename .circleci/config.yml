@@ -4,7 +4,7 @@ orbs:
 executors:
   browser-executor:
     docker:
-      - image: cimg/node:16.20-browsers
+      - image: cimg/node:22.23.2-browsers
     working_directory: ~/repo
 jobs:
   build-browser-sdk:
