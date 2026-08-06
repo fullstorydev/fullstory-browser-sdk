@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0-beta.0
+-  Beta release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the fullstory snippet.
+
 ## 2.0.8
 - Add sessionUid option to init for session UID passthrough
 
