@@ -4,6 +4,8 @@
 
 Fullstory's browser SDK lets you manage Fullstory data capture on your site as well as retrieve deep links to session replays and send your own custom events. More information about the Fullstory API can be found at https://developer.fullstory.com.
 
+Version 2.1.0 updates the sdk to use v2.1 of the Fullstory snippet. No external updates are required. Please reference our developer docs for a list of [what's new in Snippet 2.1](https://developer.fullstory.com/browser/getting-started/#whats-new-in-version-21).
+
 > **NOTE:** this is the documentation for version 2. For version 1 documentation, please see [@fullstory/browser@1.7.1](https://www.npmjs.com/package/@fullstory/browser/v/1.7.1).
 
 ## Install the SDK
