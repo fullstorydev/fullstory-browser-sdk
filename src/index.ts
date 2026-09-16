@@ -1,4 +1,5 @@
 import { initFS, FSApi } from '@fullstory/snippet';
+import { DEFAULT_HOST, DEFAULT_SCRIPT, orgLocale, regionalize } from './hosts';
 
 /**
  * FullStory Client SDK snippet options.
@@ -6,13 +7,17 @@ import { initFS, FSApi } from '@fullstory/snippet';
  * - orgId: Reference for your [Org Id](https://help.fullstory.com/hc/en-us/articles/360047075853) listed in FullStory.
  * - namespace: Global object name that contains the FullStory browser API methods and properties. Defaults to `FS`.
  * - debug: Debug mode with extra browser console logging.
- * - host: The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`.
- * - script: FullStory script host domain. FullStory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com`.
+ * - host: The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`, or the region-specific equivalent (e.g. `eu1.fullstory.com`) when `orgId` carries a region suffix.
+ * - script: FullStory script host domain. FullStory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com/s/fs.js`, or the region-specific equivalent (e.g. `edge.eu1.fullstory.com/s/fs.js`) when `orgId` carries a region suffix.
  * - cookieDomain: Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-FullStory-cookie-be-associated-with-a-specific-subdomain-).
  * - recordCrossDomainIFrames: FullStory can record cross-domain iFrames. Defaults to `false`. Certain limitations apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G333PYKPGZ4B42WDBV3YKV).
  * - recordOnlyThisIFrame: FullStory can record the iFrame as its own unique session. Defaults to `false`. Additional conditions apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G33B40Q2TPQA8MA7SF8Y5P).
  * - devMode: In dev mode FullStory won't record sessions. Any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
  * - sessionUid (beta): Sets the session UID passed to the `FS('init', ...)` v2 operation.
+ *
+ * The region encoded in `orgId` (e.g. the `eu1` in `o-ABC123-eu1`) is applied to `host`, `script` and `appHost`
+ * whenever those resolve to a FullStory-owned domain, including values you set explicitly. Hosts FullStory does
+ * not own — a proxy or Relay domain of your own — are always used exactly as given.
  */
 export interface SnippetOptions {
   orgId: string;
@@ -118,6 +123,18 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
       options.script = 'edge.fullstory.com/s/fs-debug.js';
     } else {
       console.warn('Ignoring `debug = true` because `script` is set');
+    }
+  }
+
+  // `fs.js` resolves the org's region itself, but not until after it has loaded — the URL
+  // that fetches it has to be regionalized here instead (VAL-10545). Fullstory-owned hosts
+  // pick up the region label; customer proxies and Relay hosts are left alone.
+  const locale = orgLocale(options.orgId);
+  if (locale) {
+    options.host = regionalize(options.host || DEFAULT_HOST, locale);
+    options.script = regionalize(options.script || DEFAULT_SCRIPT, locale);
+    if (fsInitEnv.appHost) {
+      fsInitEnv.appHost = regionalize(fsInitEnv.appHost, locale);
     }
   }
 

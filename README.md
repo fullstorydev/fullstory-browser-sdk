@@ -73,8 +73,8 @@ The only required option is `orgId`, all others are optional.
 
 *  `orgId` -  Sets your Fullstory Org Id. Find out how to get your Org Id [here](https://help.fullstory.com/hc/en-us/articles/360047075853).
 *  `debug` - When set to `true`, enables Fullstory debug messages; defaults to `false`.
-*  `host` - The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`.
-*  `script` - Fullstory script host domain. Fullstory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com`.
+*  `host` - The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`, or to the region-specific equivalent (e.g. `eu1.fullstory.com`) when your `orgId` carries a region suffix.
+*  `script` - Fullstory script host domain. Fullstory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com/s/fs.js`, or to the region-specific equivalent (e.g. `edge.eu1.fullstory.com/s/fs.js`) when your `orgId` carries a region suffix.
 * `namespace` - Sets the global identifier for Fullstory when conflicts with `FS` arise; see [help](https://help.fullstory.com/hc/en-us/articles/360020624694-What-if-the-identifier-FS-is-used-by-another-script-on-my-site-).
 * `cookieDomain` - Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-Fullstory-cookie-be-associated-with-a-specific-subdomain-).
 * `recordCrossDomainIFrames` - Defaults to `false`. Fullstory can record cross-domain iFrames if: 1. The Fullstory Browser SDK is running in the cross-domain iFrame and 2. `recordCrossDomainIFrames` is set to `true` in the cross-domain iFrame and 3. The Fullstory Browser SDK is running in the parent page of the cross-domain iFrame. Click [here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) for a detailed explanation of what "cross-domain" means. Before using, you should understand the security implications, and configure your [Content Security Policy](https://www.html5rocks.com/en/tutorials/security/content-security-policy/) (CSP) HTTP headers accordingly - specifically the frame-ancestors directive. Failure to configure your CSP headers while using this setting can bypass IFrames security protections that are included in modern browsers. More information about cross-domain iFrame recording can be found on our [Knowledge Base](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-Fullstory-capture-content-that-is-presented-in-iframes-#2-the-outer-page-is-running-fullstory-and-you-have-iframes-runni). Note: the `recordCrossDomainIFrames` parameter is the same as the `window['_fs_run_in_iframe']` referenced in the KB article.
@@ -83,6 +83,17 @@ The only required option is `orgId`, all others are optional.
 * `startCaptureManually` - Set to `true` if you want to start capture manually using `FS('start')`. Fullstory will load but wait for a call to `FS('start')` to begin capturing. See [Manually Delay Data Capture](https://developer.fullstory.com/browser/v2/auto-capture/capture-data/#manually-delay-data-capture) for more information.  Defaults to `false`.
 * `assetMapId` - Use this to set the current asset map id. See [Asset Uploading for Web](https://help.fullstory.com/hc/en-us/articles/4404129191575-Asset-Uploading-for-Web) for more information.
 * `appHost` - Use this to set the app host for displaying session urls. If using a version of [Fullstory Relay](https://help.fullstory.com/hc/en-us/articles/360046112593-How-to-send-captured-traffic-to-your-First-Party-Domain-using-Fullstory-Relay), you may need to set `appHost` "app.fullstory.com" or "app.eu1.fullstory.com" depending on your region.
+
+### Data center regions
+
+Your `orgId` encodes the data center your org lives in — for example the `eu1` in `o-ABC123-eu1`. The SDK reads that suffix and points `host`, `script` and `appHost` at the matching region, so an org outside the default (`na1`) data center does not need to configure anything beyond `orgId`:
+
+```javascript
+FullStory.init({ orgId: 'o-ABC123-eu1' });
+// loads https://edge.eu1.fullstory.com/s/fs.js and records to eu1.fullstory.com
+```
+
+The region is applied to any of those three options that resolve to a Fullstory-owned domain, **including values you pass explicitly** — so `host: "fullstory.com"` on an `eu1` org becomes `eu1.fullstory.com` rather than silently recording to the wrong data center. Hosts Fullstory does not own, such as a proxy or Fullstory Relay domain of your own, are always used exactly as you provide them.
 
 ### Ready Callback
 
