@@ -18,6 +18,20 @@ const findBrowserInitEnv = (ns = 'FS'): Record<string, unknown> | undefined => {
   return initOptions?.env;
 };
 
+/** Snippet's own init call (the first one), which carries the resolved orgId/host/script. */
+const findSnippetInitEnv = (ns = 'FS'): Record<string, unknown> | undefined => {
+  const initCalls = getFsQueue(ns)?.filter((call) => call[0] === 'init') ?? [];
+  const initOptions = initCalls[0]?.[1] as { env?: Record<string, unknown> } | undefined;
+  return initOptions?.env;
+};
+
+/** The `src` of the <script> tag the snippet injects to load fs.js. */
+const injectedScriptSrc = (): string | undefined => {
+  const scripts = document.querySelectorAll('script[data-fs-namespace]');
+  expect(scripts).toHaveLength(1);
+  return (scripts[0] as HTMLScriptElement).src;
+};
+
 beforeEach(() => {
   // Module-level init state lives in the SDK; re-import for a clean slate per test.
   jest.resetModules();
@@ -28,6 +42,9 @@ beforeEach(() => {
     }
   });
   delete (window as { FS?: unknown }).FS;
+  // The snippet appends to the shared jsdom document; drop prior tests' script tags so
+  // `injectedScriptSrc()` can only ever see the one injected by the test at hand.
+  document.querySelectorAll('script[data-fs-namespace]').forEach((el) => { el.remove(); });
 });
 
 const loadSdk = async () => {
@@ -152,6 +169,63 @@ describe('init', () => {
 
     expect((window as unknown as { MyFS?: unknown }).MyFS).toBeDefined();
     expect(() => { FS('log', { msg: 'ok' }); }).not.toThrow();
+  });
+});
+
+describe('region resolution', () => {
+  // fs.js only learns the org's region after it loads, so the SDK has to resolve it up
+  // front or a regional org fetches fs.js and its settings from the na1 edge (VAL-10545).
+  const euOrg = 'o-7Y9H-eu1';
+
+  it('should fetch fs.js from the org region edge', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: euOrg });
+
+    expect(injectedScriptSrc()).toContain('edge.eu1.fullstory.com/s/fs.js');
+  });
+
+  it('should pass the regional host and script to the snippet init', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: euOrg });
+
+    const env = findSnippetInitEnv();
+    expect(env?.host).toBe('eu1.fullstory.com');
+    expect(env?.script).toBe('edge.eu1.fullstory.com/s/fs.js');
+  });
+
+  it('should regionalize the debug script', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: euOrg, debug: true });
+
+    expect(injectedScriptSrc()).toContain('edge.eu1.fullstory.com/s/fs-debug.js');
+  });
+
+  it('should regionalize an explicitly set Fullstory host', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: euOrg, host: 'fullstory.com', appHost: 'app.fullstory.com' });
+
+    expect(findSnippetInitEnv()?.host).toBe('eu1.fullstory.com');
+    expect(findBrowserInitEnv()?.appHost).toBe('app.eu1.fullstory.com');
+  });
+
+  it('should leave a self-hosted proxy untouched', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: euOrg, host: 'fs.example.com', script: 'fs.example.com/fs.js' });
+
+    const env = findSnippetInitEnv();
+    expect(env?.host).toBe('fs.example.com');
+    expect(env?.script).toBe('fs.example.com/fs.js');
+    expect(injectedScriptSrc()).toContain('fs.example.com/fs.js');
+  });
+
+  it('should not change the defaults for an org with no region', async () => {
+    const { init } = await loadSdk();
+    init({ orgId: testOrg });
+
+    const env = findSnippetInitEnv();
+    expect(env?.host).toBe('fullstory.com');
+    expect(env?.script).toBe('edge.fullstory.com/s/fs.js');
+    expect(injectedScriptSrc()).toContain('edge.fullstory.com/s/fs.js');
   });
 });
 
