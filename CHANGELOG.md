@@ -1,7 +1,10 @@
 # Changelog
 
-## Unreleased
+## 2.1.1
 - Resolve the data center region from `orgId` when defaulting `host`, `script` and `appHost`, so an org outside `na1` (e.g. `o-ABC123-eu1`) loads `fs.js` and its settings from its own region's edge instead of the `na1` edge. Region-specific values are also applied to explicitly-set Fullstory-owned hosts; self-hosted proxy and Relay hosts are left untouched.
+
+## 2.1.0
+- Official release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the fullstory snippet.
 
 ## 2.1.0-beta.0
 -  Beta release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the fullstory snippet.
