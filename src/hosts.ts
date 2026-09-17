@@ -19,13 +19,11 @@ export const DEFAULT_HOST = 'fullstory.com';
 export const DEFAULT_SCRIPT = 'edge.fullstory.com/s/fs.js';
 
 /**
- * Matches any domain with TLD+1 "fullstory.*" or "onfire.*", e.g. "www.fullstory.com",
- * "fullstory.test:8043", "onfire.fyi". Copied verbatim from `fsDomain` in the monorepo's
- * `packages/shared/src/hosts.ts` so this stays a literal mirror of the check `fs.js` uses.
+ * Matches any subdomain of "fullstory.com", e.g. "www.fullstory.com", "edge.fullstory.com".
  * Anchored at the start, so a customer proxy such as "cdn.acme.com/fullstory.com/x" does
  * not match.
  */
-const FS_DOMAIN = /^([^.]+\.)*(fullstory|onfire).[^.]+(\/|$)/;
+const FS_DOMAIN = /^([^.]+\.)*fullstory\.com(\/|$)/;
 
 /** Region labels look like "eu1", "ap1", "na1". */
 const REGION_LABEL = /^[a-z]{2,3}[0-9]+$/;
@@ -76,7 +74,7 @@ export const regionalize = (value: string, locale?: string): string => {
   const path = pathIndex === -1 ? '' : value.slice(pathIndex);
 
   const labels = host.split('.');
-  // FS_DOMAIN guarantees at least "<fullstory|onfire>.<tld>", so this is never negative.
+  // FS_DOMAIN guarantees at least "fullstory.com", so this is never negative.
   const insertAt = labels.length - 2;
   const existing = insertAt > 0 ? labels[insertAt - 1] : undefined;
 

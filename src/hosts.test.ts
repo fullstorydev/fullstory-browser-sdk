@@ -50,11 +50,6 @@ describe('regionalize', () => {
       .toBe('edge.eu1.fullstory.com/s/fs.js');
   });
 
-  it('should regionalize non-com Fullstory domains', () => {
-    expect(regionalize('fullstory.test:8043', 'eu1')).toBe('eu1.fullstory.test:8043');
-    expect(regionalize('onfire.fyi', 'eu1')).toBe('eu1.onfire.fyi');
-  });
-
   it('should leave hosts Fullstory does not own untouched', () => {
     expect(regionalize('fs.acme.com', 'eu1')).toBe('fs.acme.com');
     expect(regionalize('localhost:8080', 'eu1')).toBe('localhost:8080');
