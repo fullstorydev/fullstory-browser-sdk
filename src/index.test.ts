@@ -48,7 +48,7 @@ beforeEach(() => {
 });
 
 describe('exports', () => {
-  it('should export FullStory as an alias of Fullstory (for legacy purposes 🐬🐬🐬)', async () => {
+  it('should export FullStory (capital S) as an alias of Fullstory (for legacy purposes 🐬🐬🐬)', async () => {
     const { FullStory, Fullstory } = await import('.');
     expect(FullStory).toBe(Fullstory);
   });
