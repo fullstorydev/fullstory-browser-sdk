@@ -228,6 +228,6 @@ const buildFullStoryShim = (): FSApi => {
   return FS as FSApi;
 };
 
-const FullStory: FSApi = buildFullStoryShim();
+const Fullstory: FSApi = buildFullStoryShim();
 
-export { FullStory, init, isInitialized };
+export { Fullstory, Fullstory as FullStory, init, isInitialized };
