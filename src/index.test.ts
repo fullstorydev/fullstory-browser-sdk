@@ -66,7 +66,7 @@ describe('init', () => {
       Fullstory('log', { msg: 'my log' });
       throw new Error('this should have thrown');
     } catch (error) {
-      expect((error as Error).message).toMatch(/FullStory is not loaded/);
+      expect((error as Error).message).toMatch(/Fullstory is not loaded/);
     }
     init({ orgId: testOrg });
     expect(() => { Fullstory('log', { msg: 'my log' }); }).not.toThrow();
@@ -247,11 +247,11 @@ describe('devMode', () => {
       devMode: true,
     });
 
-    expect(consoleWarnedMessage).toMatch(/FullStory was initialized in devMode/);
+    expect(consoleWarnedMessage).toMatch(/Fullstory was initialized in devMode/);
 
     Fullstory('log', { msg: 'hello world' });
 
-    expect(consoleWarnedMessage).toBe('FullStory is in dev mode and is not capturing: log not executed');
+    expect(consoleWarnedMessage).toBe('Fullstory is in dev mode and is not capturing: log not executed');
   });
 });
 

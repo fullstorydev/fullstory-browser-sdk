@@ -4,10 +4,10 @@
 - Resolve the data center region from `orgId` when defaulting `host`, `script` and `appHost`, so an org outside `na1` (e.g. `o-ABC123-eu1`) loads `fs.js` and its settings from its own region's edge instead of the `na1` edge. Region-specific values are also applied to explicitly-set Fullstory-owned hosts; self-hosted proxy and Relay hosts are left untouched.
 
 ## 2.1.0
-- Official release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the fullstory snippet.
+- Official release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the Fullstory snippet.
 
 ## 2.1.0-beta.0
--  Beta release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the fullstory snippet.
+-  Beta release using snippet 2.1. Changes are largely under the hood. Uses the 2.1 version of the Fullstory snippet.
 
 ## 2.0.8
 - Add sessionUid option to init for session UID passthrough
@@ -35,7 +35,7 @@
 - Fixes some typescript discrepancies discovered in issue #187
 
 ## 2.0.0
-- Official release of the FullStory browser API v2
+- Official release of the Fullstory browser API v2
 - Add an `appHost` option to the `init` function to support setting `_fs_app_host`
 
 ## 2.0.0-beta.4
@@ -55,7 +55,7 @@
 
 ## 1.7.1
 
-- Changed FullStory Snippet to import from @fullstory/snippet
+- Changed Fullstory Snippet to import from @fullstory/snippet
 - Npm audit updates
 
 ## 1.7.0
@@ -110,7 +110,7 @@
 
 ## 1.4.3
 
-- Updating README to include a link to instructions on how to find the FullStory Org Id
+- Updating README to include a link to instructions on how to find the Fullstory Org Id
 
 ## 1.4.2
 
@@ -145,7 +145,7 @@ Update npm package dependancies on the acorn package to get a clean npm audit
 
 ## 1.2.1
 
-Automatic snippet update from FullStory
+Automatic snippet update from Fullstory
 
 ## 1.2.0
 
