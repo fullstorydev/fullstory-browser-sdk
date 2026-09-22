@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.2
+- Prefer the `Fullstory` named export to match the product spelling. The previous `FullStory` export remains as a legacy alias of the same object.
+
 ## 2.1.1
 - Resolve the data center region from `orgId` when defaulting `host`, `script` and `appHost`, so an org outside `na1` (e.g. `o-ABC123-eu1`) loads `fs.js` and its settings from its own region's edge instead of the `na1` edge. Region-specific values are also applied to explicitly-set Fullstory-owned hosts; self-hosted proxy and Relay hosts are left untouched.
 
