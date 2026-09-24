@@ -2,21 +2,21 @@ import { initFS, FSApi } from '@fullstory/snippet';
 import { DEFAULT_HOST, DEFAULT_SCRIPT, orgLocale, regionalize } from './hosts';
 
 /**
- * FullStory Client SDK snippet options.
+ * Fullstory Client SDK snippet options.
  *
- * - orgId: Reference for your [Org Id](https://help.fullstory.com/hc/en-us/articles/360047075853) listed in FullStory.
- * - namespace: Global object name that contains the FullStory browser API methods and properties. Defaults to `FS`.
+ * - orgId: Reference for your [Org Id](https://help.fullstory.com/hc/en-us/articles/360047075853) listed in Fullstory.
+ * - namespace: Global object name that contains the Fullstory browser API methods and properties. Defaults to `FS`.
  * - debug: Debug mode with extra browser console logging.
  * - host: The recording server host domain. Can be set to direct recorded events to a proxy that you host. Defaults to `fullstory.com`, or the region-specific equivalent (e.g. `eu1.fullstory.com`) when `orgId` carries a region suffix.
- * - script: FullStory script host domain. FullStory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com/s/fs.js`, or the region-specific equivalent (e.g. `edge.eu1.fullstory.com/s/fs.js`) when `orgId` carries a region suffix.
- * - cookieDomain: Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-FullStory-cookie-be-associated-with-a-specific-subdomain-).
- * - recordCrossDomainIFrames: FullStory can record cross-domain iFrames. Defaults to `false`. Certain limitations apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G333PYKPGZ4B42WDBV3YKV).
- * - recordOnlyThisIFrame: FullStory can record the iFrame as its own unique session. Defaults to `false`. Additional conditions apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-FullStory-capture-content-that-is-presented-in-iframes-#h_01F1G33B40Q2TPQA8MA7SF8Y5P).
- * - devMode: In dev mode FullStory won't record sessions. Any calls to SDK methods will `console.warn` that FullStory is in `devMode`. Defaults to `false`.
+ * - script: Fullstory script host domain. Fullstory hosts the `fs.js` recording script on a CDN, but you can choose to host a copy yourself. Defaults to `edge.fullstory.com/s/fs.js`, or the region-specific equivalent (e.g. `edge.eu1.fullstory.com/s/fs.js`) when `orgId` carries a region suffix.
+ * - cookieDomain: Overrides the cookie domain. By default, cookies will be valid for all subdomains of your site; if you want to limit the cookies to a specific subdomain, you can set the domain value explicitly. More information can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622874-Can-the-Fullstory-cookie-be-associated-with-a-specific-subdomain).
+ * - recordCrossDomainIFrames: Fullstory can record cross-domain iFrames. Defaults to `false`. Certain limitations apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-Fullstory-capture-content-that-is-presented-in-iframes#h_01F1G333PYKPGZ4B42WDBV3YKV).
+ * - recordOnlyThisIFrame: Fullstory can record the iFrame as its own unique session. Defaults to `false`. Additional conditions apply and can be found [here](https://help.fullstory.com/hc/en-us/articles/360020622514-Can-Fullstory-capture-content-that-is-presented-in-iframes#h_01F1G33B40Q2TPQA8MA7SF8Y5P).
+ * - devMode: In dev mode Fullstory won't record sessions. Any calls to SDK methods will `console.warn` that Fullstory is in `devMode`. Defaults to `false`.
  * - sessionUid (beta): Sets the session UID passed to the `FS('init', ...)` v2 operation.
  *
  * The region encoded in `orgId` (e.g. the `eu1` in `o-ABC123-eu1`) is applied to `host`, `script` and `appHost`
- * whenever those resolve to a FullStory-owned domain, including values you set explicitly. Hosts FullStory does
+ * whenever those resolve to a Fullstory-owned domain, including values you set explicitly. Hosts Fullstory does
  * not own — a proxy or Relay domain of your own — are always used exactly as given.
  */
 export interface SnippetOptions {
@@ -36,7 +36,7 @@ export interface SnippetOptions {
 }
 
 /**
- * A callback that will be invoked when FullStory has begun a session.
+ * A callback that will be invoked when Fullstory has begun a session.
  *
  * `sessionUrl` contains the URL to the current session.
  * `settings`   contains the org settings for the current session.
@@ -59,15 +59,15 @@ let _namespace: string | undefined;
 let _initialized = false;
 let _isDevMode = false;
 
-const getFullStory = (ns: string): FSApi | undefined => (
+const getFullstory = (ns: string): FSApi | undefined => (
   (window as unknown as Record<string, FSApi | undefined>)[ns]
 );
 
 const ensureSnippetLoaded = (): FSApi => {
-  const fs = _namespace ? getFullStory(_namespace) : undefined;
+  const fs = _namespace ? getFullstory(_namespace) : undefined;
   if (!_namespace || !fs) {
     throw Error(
-      'FullStory is not loaded, please ensure the init function is invoked before calling FullStory API functions'
+      'Fullstory is not loaded, please ensure the init function is invoked before calling Fullstory API functions'
     );
   }
 
@@ -80,8 +80,8 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   const ns = options.namespace || 'FS';
   _namespace = ns;
 
-  if (getFullStory(ns)) {
-    console.warn('The FullStory snippet has already been defined elsewhere (likely in the <head> element)');
+  if (getFullstory(ns)) {
+    console.warn('The Fullstory snippet has already been defined elsewhere (likely in the <head> element)');
     return;
   }
 
@@ -140,7 +140,7 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
 
   initFS(options);
 
-  const fs = getFullStory(_namespace);
+  const fs = getFullstory(_namespace);
 
   if (!fs) {
     console.warn('Failed to initialize FS snippet');
@@ -154,9 +154,9 @@ const _init = (inputOptions: SnippetOptions, readyCallback?: ReadyCallback) => {
   }
 
   if (options.devMode === true) {
-    const message = 'FullStory was initialized in devMode and will stop recording';
+    const message = 'Fullstory was initialized in devMode and will stop recording';
     fs('trackEvent', {
-      name: 'FullStory Dev Mode',
+      name: 'Fullstory Dev Mode',
       properties: {
         message,
       }
@@ -176,36 +176,36 @@ const initOnce = (message) => (inputOptions: SnippetOptions, readyCallback?: Rea
   _initialized = true;
 };
 
-const init = initOnce('FullStory init has already been called once, additional invocations are ignored');
+const init = initOnce('Fullstory init has already been called once, additional invocations are ignored');
 
 const isInitialized = () => _initialized;
 
-const hasFullStoryWithFunction = (...testNames:string[]) => {
+const hasFullstoryWithFunction = (...testNames:string[]) => {
   const fs = ensureSnippetLoaded();
   return testNames.every((current) => fs[current]);
 };
 
 const guard = (name) => (...args) => {
   if (_isDevMode) {
-    const message = `FullStory is in dev mode and is not capturing: ${name} method not executed`;
+    const message = `Fullstory is in dev mode and is not capturing: ${name} method not executed`;
     console.warn(message);
     return message;
   }
 
-  const fs = _namespace ? getFullStory(_namespace) : undefined;
-  if (hasFullStoryWithFunction(name) && fs) {
+  const fs = _namespace ? getFullstory(_namespace) : undefined;
+  if (hasFullstoryWithFunction(name) && fs) {
     return fs[name](...args);
   }
   console.warn(`FS.${name} not ready`);
   return null;
 };
 
-const buildFullStoryShim = (): FSApi => {
+const buildFullstoryShim = (): FSApi => {
   const FS = (operation, options, source) => {
     const fs = ensureSnippetLoaded();
 
     if (_isDevMode) {
-      const message = `FullStory is in dev mode and is not capturing: ${operation} not executed`;
+      const message = `Fullstory is in dev mode and is not capturing: ${operation} not executed`;
       console.warn(message);
       return undefined;
     }
@@ -228,6 +228,6 @@ const buildFullStoryShim = (): FSApi => {
   return FS as FSApi;
 };
 
-const FullStory: FSApi = buildFullStoryShim();
+const Fullstory: FSApi = buildFullstoryShim();
 
-export { FullStory, init, isInitialized };
+export { Fullstory, Fullstory as FullStory, init, isInitialized };

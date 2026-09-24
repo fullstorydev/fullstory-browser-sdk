@@ -22,16 +22,16 @@ yarn add @fullstory/browser
 ```
 
 ## Migrating to Version 2.x.x
-In version 2.x.x, `init` is a separate named export from `FullStory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
+In version 2.x.x, `init` is a separate named export from `Fullstory`. You will need to update all of your wildcard (`'*'`) imports to explicit named imports.
 
 _Version 1.x.x_
 ```js
-import * as FullStory from '@fullstory/browser';
+import * as Fullstory from '@fullstory/browser';
 ```
 
 _Version 2.x.x_
 ```js
-import { FullStory, init } from '@fullstory/browser';
+import { Fullstory, init } from '@fullstory/browser';
 ```
 
 ### `init`
@@ -44,17 +44,17 @@ init({ orgId: 'my-org-id' })
 ```
 You can also rename the function for readability:
 ```js
-import { init as initFullStory } from '@fullstory/browser';
+import { init as initFullstory } from '@fullstory/browser';
 
-initFullStory({ orgId: 'my-org-id' })
+initFullstory({ orgId: 'my-org-id' })
 ```
 
-### `FullStory`
-The `FullStory` named export is equivalent to the global `FS` object described in the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/). You can use it to make all version 2 API calls:
+### `Fullstory`
+The `Fullstory` named export is equivalent to the global `FS` object described in the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/). You can use it to make all version 2 API calls:
 ```js
-import { FullStory } from '@fullstory/browser';
+import { Fullstory } from '@fullstory/browser';
 
-FullStory('trackEvent', {
+Fullstory('trackEvent', {
   name: 'My Event',
   properties: {
     product: 'Sprockets',
@@ -63,9 +63,11 @@ FullStory('trackEvent', {
 })
 ```
 
+> **NOTE:** The legacy spelling `FullStory` is also exported as an alias of `Fullstory`.
+
 ## Initialize the SDK
 
-Call the `init()` function with options as soon as you can in your website startup process. Calling init after successful initialization will trigger console warnings - if you need to programmatically check if `FullStory` has been initialized at some point in your code, you can call `isInitialized()`.
+Call the `init()` function with options as soon as you can in your website startup process. Calling init after successful initialization will trigger console warnings - if you need to programmatically check if `Fullstory` has been initialized at some point in your code, you can call `isInitialized()`.
 
 ### Configuration Options
 
@@ -89,7 +91,7 @@ The only required option is `orgId`, all others are optional.
 Your `orgId` encodes the data center your org lives in — for example the `eu1` in `o-ABC123-eu1`. The SDK reads that suffix and points `host`, `script` and `appHost` at the matching region, so an org outside the default (`na1`) data center does not need to configure anything beyond `orgId`:
 
 ```javascript
-FullStory.init({ orgId: 'o-ABC123-eu1' });
+init({ orgId: 'o-ABC123-eu1' });
 // loads https://edge.eu1.fullstory.com/s/fs.js and records to eu1.fullstory.com
 ```
 
@@ -114,10 +116,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { init as initFullStory } from '@fullstory/browser';
+import { init as initFullstory } from '@fullstory/browser';
 
 
-initFullStory({ orgId: '<your org id here>' });
+initFullstory({ orgId: '<your org id here>' });
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
@@ -126,7 +128,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ```javascript
 import { Component } from '@angular/core';
-import { init as initFullStory } from '@fullstory/browser';
+import { init as initFullstory } from '@fullstory/browser';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -137,7 +139,7 @@ import { environment } from '../environments/environment';
 export class AppComponent {
 
   constructor() {
-    initFullStory({
+    initFullstory({
       orgId: '<your org id here>',
       devMode: !environment.production,
     });
@@ -150,10 +152,10 @@ export class AppComponent {
 ```javascript
 import Vue from 'vue';
 import App from './App.vue';
-import { init as initFullStory, FullStory } from '@fullstory/browser';
+import { init as initFullstory, Fullstory } from '@fullstory/browser';
 
-initFullStory({ orgId: '<your org id here>' });
-Vue.prototype.$FullStory = FullStory;
+initFullstory({ orgId: '<your org id here>' });
+Vue.prototype.$Fullstory = Fullstory;
 
 new Vue({
   render: h => h(App)
@@ -165,23 +167,23 @@ new Vue({
 ```javascript
 import { createApp } from 'vue';
 import App from './App.vue';
-import { init as initFullStory, FullStory } from '@fullstory/browser';
+import { init as initFullstory, Fullstory } from '@fullstory/browser';
 
-initFullStory({ orgId: '<your org id here>' });
+initFullstory({ orgId: '<your org id here>' });
 
 const app = createApp(App);
-app.config.globalProperties.$FullStory = FullStory;
+app.config.globalProperties.$Fullstory = Fullstory;
 app.mount('#app');
 ```
 
 ## Using the SDK
 
-Once FullStory is initialized, you can make calls to the FullStory SDK. See the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/) for more information.
+Once Fullstory is initialized, you can make calls to the Fullstory SDK. See the [developer documentation](https://developer.fullstory.com/browser/v2/getting-started/) for more information.
 
 ### Sending custom events
 
 ```JavaScript
-FullStory('trackEvent', {
+Fullstory('trackEvent', {
   name: 'Subscribed',
   properties: {
     uid: '750948353',
@@ -205,13 +207,13 @@ FullStory('trackEvent', {
 ### Generating session replay links
 
 ```JavaScript
-const startOfPlayback = FullStory('getSession');
-const playbackAtThisMomentInTime = FullStory('getSession', { format: 'url.now' });
+const startOfPlayback = Fullstory('getSession');
+const playbackAtThisMomentInTime = Fullstory('getSession', { format: 'url.now' });
 ```
 
 ### Sending custom user properties
 ```JavaScript
-FullStory('setProperties', {
+Fullstory('setProperties', {
   type: 'user',
   properties: {
     displayName: 'Daniel Falko',
@@ -226,7 +228,7 @@ For more information on sending custom user properties, view the Fullstory help 
 
 ### Sending custom page properties
 ```JavaScript
-FullStory('setProperties', {
+Fullstory('setProperties', {
   type: 'page',
   properties: {
     pageName: 'Checkout', // what is the name of the page?

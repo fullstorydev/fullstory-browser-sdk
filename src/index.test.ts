@@ -47,41 +47,39 @@ beforeEach(() => {
   document.querySelectorAll('script[data-fs-namespace]').forEach((el) => { el.remove(); });
 });
 
-const loadSdk = async () => {
-  const mod = await import('.');
-  return {
-    FS: mod.FullStory,
-    init: mod.init,
-    isInitialized: mod.isInitialized,
-  };
-};
+describe('exports', () => {
+  it('should export FullStory (capital S) as an alias of Fullstory (for legacy purposes 🐬🐬🐬)', async () => {
+    const { FullStory, Fullstory } = await import('.');
+    expect(FullStory).toBe(Fullstory);
+  });
+});
 
 describe('init', () => {
   it('should throw error if not initialized with an orgId', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     expect(() => { init({} as SnippetOptions); }).toThrow();
   });
 
   it('should throw error if API called before init', async () => {
-    const { FS, init } = await loadSdk();
+    const { Fullstory, init } = await import('.');
     try {
-      FS('log', { msg: 'my log' });
+      Fullstory('log', { msg: 'my log' });
       throw new Error('this should have thrown');
     } catch (error) {
-      expect((error as Error).message).toMatch(/FullStory is not loaded/);
+      expect((error as Error).message).toMatch(/Fullstory is not loaded/);
     }
     init({ orgId: testOrg });
-    expect(() => { FS('log', { msg: 'my log' }); }).not.toThrow();
+    expect(() => { Fullstory('log', { msg: 'my log' }); }).not.toThrow();
   });
 
   it('should load FS onto the window under the default namespace', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: testOrg });
     expect((window as unknown as { FS?: unknown }).FS).toBeDefined();
   });
 
   it('should pass runInIframe via FS init env', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({
       orgId: testOrg,
       recordCrossDomainIFrames: true,
@@ -90,7 +88,7 @@ describe('init', () => {
   });
 
   it('should pass isOuterScript via FS init env', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({
       orgId: testOrg,
       recordOnlyThisIFrame: true,
@@ -99,7 +97,7 @@ describe('init', () => {
   });
 
   it('should stop recording when initialized with devMode', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({
       orgId: testOrg,
       devMode: true,
@@ -110,7 +108,7 @@ describe('init', () => {
   });
 
   it('should return whether initialized', async () => {
-    const { init, isInitialized } = await loadSdk();
+    const { init, isInitialized } = await import('.');
     expect(isInitialized()).toBe(false);
 
     init({
@@ -121,7 +119,7 @@ describe('init', () => {
   });
 
   it('should load fs-debug.js when debug is set', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({
       orgId: testOrg,
       debug: true,
@@ -132,7 +130,7 @@ describe('init', () => {
   });
 
   it('should pass sessionUid to FS init', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     const sessionUid = 'session-123';
 
     init({
@@ -144,7 +142,7 @@ describe('init', () => {
   });
 
   it('should pass cookieDomain, appHost, and assetMapId via FS init env', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({
       orgId: testOrg,
       cookieDomain: 'example.com',
@@ -161,14 +159,14 @@ describe('init', () => {
   });
 
   it('should use a custom namespace on window', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     init({
       orgId: testOrg,
       namespace: 'MyFS',
     });
 
     expect((window as unknown as { MyFS?: unknown }).MyFS).toBeDefined();
-    expect(() => { FS('log', { msg: 'ok' }); }).not.toThrow();
+    expect(() => { Fullstory('log', { msg: 'ok' }); }).not.toThrow();
   });
 });
 
@@ -178,14 +176,14 @@ describe('region resolution', () => {
   const euOrg = 'o-7Y9H-eu1';
 
   it('should fetch fs.js from the org region edge', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: euOrg });
 
     expect(injectedScriptSrc()).toContain('edge.eu1.fullstory.com/s/fs.js');
   });
 
   it('should pass the regional host and script to the snippet init', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: euOrg });
 
     const env = findSnippetInitEnv();
@@ -194,14 +192,14 @@ describe('region resolution', () => {
   });
 
   it('should regionalize the debug script', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: euOrg, debug: true });
 
     expect(injectedScriptSrc()).toContain('edge.eu1.fullstory.com/s/fs-debug.js');
   });
 
   it('should regionalize an explicitly set Fullstory host', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: euOrg, host: 'fullstory.com', appHost: 'app.fullstory.com' });
 
     expect(findSnippetInitEnv()?.host).toBe('eu1.fullstory.com');
@@ -209,7 +207,7 @@ describe('region resolution', () => {
   });
 
   it('should leave a self-hosted proxy untouched', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: euOrg, host: 'fs.example.com', script: 'fs.example.com/fs.js' });
 
     const env = findSnippetInitEnv();
@@ -219,7 +217,7 @@ describe('region resolution', () => {
   });
 
   it('should not change the defaults for an org with no region', async () => {
-    const { init } = await loadSdk();
+    const { init } = await import('.');
     init({ orgId: testOrg });
 
     const env = findSnippetInitEnv();
@@ -242,60 +240,60 @@ describe('devMode', () => {
   });
 
   it('should return a message for functions invoked when in devMode', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     expect(consoleWarnedMessage).toBeUndefined();
     init({
       orgId: testOrg,
       devMode: true,
     });
 
-    expect(consoleWarnedMessage).toMatch(/FullStory was initialized in devMode/);
+    expect(consoleWarnedMessage).toMatch(/Fullstory was initialized in devMode/);
 
-    FS('log', { msg: 'hello world' });
+    Fullstory('log', { msg: 'hello world' });
 
-    expect(consoleWarnedMessage).toBe('FullStory is in dev mode and is not capturing: log not executed');
+    expect(consoleWarnedMessage).toBe('Fullstory is in dev mode and is not capturing: log not executed');
   });
 });
 
 describe('getCurrentSessionURL', () => {
   it('should return null before fs.js is fully bootstrapped', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     init({ orgId: testOrg });
     // in theory, this is a race condition - assuming that fs.js
     // can't load by the time the following statement is executed
-    const url = FS('getSession');
+    const url = Fullstory('getSession');
     expect(url).toBeNull();
   });
 });
 
 describe('typescript safety', () => {
   it('provides type assistance matching the api', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     // Just a quick non-exhaustive check that types are working as expected.
     // The "@ts-expect-error" declaration will fail if the types do NOT throw
     // an error.
     init({ orgId: testOrg });
 
     // Passes TypeScript check
-    FS('getSession', { format: 'url.now' });
+    Fullstory('getSession', { format: 'url.now' });
 
     // Does not pass (improper format)
     // @ts-expect-error (for testing purposes)
-    FS('getSession', { format: '😏' });
+    Fullstory('getSession', { format: '😏' });
 
     // Does not pass (invalid action)
     // @ts-expect-error (for testing purposes)
-    FS('🦄');
+    Fullstory('🦄');
 
     // Passes TypeScript check
-    FS('observe', { type: 'start', callback: () => console.log('STARTED') });
+    Fullstory('observe', { type: 'start', callback: () => console.log('STARTED') });
 
     // Does not pass (improper type)
     // @ts-expect-error (for testing purposes)
-    FS('observe', { type: '🦂', callback: () => console.log('STARTED') });
+    Fullstory('observe', { type: '🦂', callback: () => console.log('STARTED') });
 
     // Disconnector can be `void` type
-    const disconnector = FS('observe', { type: 'start', callback: () => console.log('STARTED') });
+    const disconnector = Fullstory('observe', { type: 'start', callback: () => console.log('STARTED') });
 
     // README(scottnorvell): statements where we _don't_ null check the disconnector
     // work in the editor but not on CI so I got rid of them 🤷‍♂️
@@ -306,28 +304,28 @@ describe('typescript safety', () => {
 
     // LEGACY:
     // Passes TypeScript check
-    FS.setVars('user', { email: 'e@mail.com' });
+    Fullstory.setVars('user', { email: 'e@mail.com' });
 
     // Does not pass (improper VarScope)
     // @ts-expect-error (for testing purposes)
-    FS.setVars('🤯', { email: 'e@mail.com' });
+    Fullstory.setVars('🤯', { email: 'e@mail.com' });
 
     // Passes TypeScript check
-    FS.event('Order Complete', { product_id: 'asdf' });
+    Fullstory.event('Order Complete', { product_id: 'asdf' });
 
     // Does not pass (eventName must be string)
     // @ts-expect-error (for testing purposes)
-    FS.event(42, { product_id: 'asdf' });
+    Fullstory.event(42, { product_id: 'asdf' });
 
     // Assertion for posterity's sake...
     expect(true).toBe(true);
   });
 
   it('allows the optional "source" param', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     init({ orgId: testOrg });
 
-    FS('setProperties', {
+    Fullstory('setProperties', {
       type: 'user',
       properties: {
         a: 'a',
@@ -336,19 +334,19 @@ describe('typescript safety', () => {
       }
     }, 'segment-browser-actions');
 
-    FS.setUserVars({
+    Fullstory.setUserVars({
       a: 'a',
       b: 'b',
       c: 'c'
     }, 'segment-browser-actions');
 
-    FS.setVars('page', {
+    Fullstory.setVars('page', {
       a: 'a',
       b: 'b',
       c: 'c'
     }, 'segment-browser-actions');
 
-    FS.event('Segment Event', {
+    Fullstory.event('Segment Event', {
       a: 'a',
       b: 'b',
       c: 'c'
@@ -357,14 +355,14 @@ describe('typescript safety', () => {
 
   // NOTE: don't run this test, it will hang since fs.js isn't really running. It's only for typescript safety checks.
   it.skip('provides type assistance for the async api', async () => {
-    const { init, FS } = await loadSdk();
+    const { init, Fullstory } = await import('.');
     init({ orgId: testOrg });
 
-    const disconnector = await FS('observeAsync', { type: 'start', callback: () => console.log('STARTED') });
+    const disconnector = await Fullstory('observeAsync', { type: 'start', callback: () => console.log('STARTED') });
 
     disconnector.disconnect();
 
-    const url = await FS('getSessionAsync');
+    const url = await Fullstory('getSessionAsync');
     expect(url === null || typeof url === 'string' || typeof url === 'object').toBe(true); // type-check only
   });
 });
