@@ -41,7 +41,7 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Authenticate with registry
+          name: Publish package
           command: |
             #need to override the default NPM CLI install for the trusted publishing to work
             NPM_VERSION="11.20.0"
@@ -53,9 +53,6 @@ jobs:
               exit 1
             fi
             export NPM_ID_TOKEN
-      - run:
-          name: Publish package
-          command: |
             PACKAGE_VERSION=$(cat ./package.json \
               | grep version \
               | head -1 \
