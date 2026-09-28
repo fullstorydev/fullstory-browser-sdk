@@ -42,7 +42,17 @@ jobs:
           at: ~/repo
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+          command: |
+            #need to override the default NPM CLI install for the trusted publishing to work
+            NPM_VERSION="11.20.0"
+            npm install npm@${NPM_VERSION} -g
+            echo "Using npm@`npm -v`"
+            NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
+            if [[ $? -ne 0 ]]; then
+              echo "Failed to authenticate with npmjs.org"
+              exit 1
+            fi
+            export NPM_ID_TOKEN
       - run:
           name: Publish package
           command: |
