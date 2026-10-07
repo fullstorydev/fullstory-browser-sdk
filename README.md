@@ -63,7 +63,7 @@ Fullstory('trackEvent', {
 })
 ```
 
-> **NOTE:** The legacy spelling `FullStory` is also exported as an alias of `Fullstory`.
+> **NOTE:** The legacy capitalization `FullStory` is also exported as an alias of `Fullstory`.
 
 ## Initialize the SDK
 
